@@ -1,0 +1,25 @@
+.dashboard_center {
+  padding: 3em 2em;
+  height: 93dvh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.component {
+  display: flex;
+  flex-direction: column;
+  gap: 3em;
+  width: 100%;
+}
+
+.titles {
+  font-size: 1.7rem;
+}
+
+.stories_cover {
+  width: inherit;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1em;
+  margin-bottom: 4em;
+}

@@ -1,0 +1,151 @@
+.all_overview_wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 7em;
+  width: 100%;
+  margin: 5em 0 0 0;
+  padding: 7em 9em;
+  background-color: hsl(315, 10%, 12%);
+}
+
+.left_overview_wrapper {
+  display: flex;
+  justify-content: center;
+  flex: 0 0 65%;
+}
+
+.story_image {
+  margin-right: 3em;
+}
+
+.info_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info_wrapper h1 {
+  font-size: 2.7em;
+  font-weight: 300;
+}
+
+.description {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 1.1em;
+  font-weight: 200;
+  line-clamp: 5;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+
+.description_full {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 1.1em;
+  font-weight: 200;
+  line-clamp: unset;
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: unset;
+}
+
+.more_button {
+  display: block;
+  font-size: 1em;
+  font-weight: 200;
+  color: #ffbf29;
+  cursor: pointer;
+}
+
+.more_button_none {
+  display: none;
+}
+
+.genre_wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1em;
+}
+
+.link {
+  width: fit-content;
+}
+
+.read_now {
+  padding: 10px 15px;
+  margin: 0.5em 0;
+  background-color: #ffbf29;
+  border-radius: 7px;
+  font-size: 1.2em;
+  font-weight: 500;
+  width: fit-content;
+  color: #282126;
+  cursor: pointer;
+}
+
+.right_overview_wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5em 0;
+  flex: 0 0 20%;
+  font-size: 18px;
+}
+
+.all_parameters_wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 55%;
+  gap: 0.7em;
+}
+
+.parameter_value_wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.values {
+  font-weight: 600;
+}
+
+.star {
+  color: #ffbf29;
+  margin: 0.5em 0;
+  font-size: 1.2em;
+}
+
+.ratings_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  border-left: solid var(--line-color) 5px;
+  border-radius: 5px;
+  padding: 20px 0px;
+  gap: 1em;
+}
+
+.rate_story {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.rating_star {
+  color: #ffbf29;
+  margin: 10px 5px;
+  font-size: 1.5em;
+}
+
+.chapters_overview_wrapper {
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(180deg, #191518f0 25%, #000000e0 75%),
+    url("/wallpaper3.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 5rem 0;
+}

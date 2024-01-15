@@ -1,0 +1,75 @@
+.card_wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin-bottom: 3rem;
+  background: #2b2b2b;
+  border: solid 1px #2b2b2b;
+  padding: 40px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.head_wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.name_wrapper {
+  margin-left: 2rem;
+}
+
+.story_name {
+  font-size: 2.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+}
+
+.story_name_alt {
+  font-size: 2.7rem;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+}
+
+.name_underline {
+  width: 0%;
+  height: 1px;
+  background-color: #777777;
+  margin-top: 0.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.genres_wrapper {
+  font-size: large;
+  display: flex;
+  width: 30%;
+  justify-content: space-around;
+}
+
+.story_description {
+  font-size: large;
+  width: 85%;
+  margin-left: 1rem;
+  display: -webkit-box;
+  overflow: hidden;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.card_wrapper:hover {
+  background: linear-gradient(180deg, #2b2b2b 30%, #303030 100%);
+  box-shadow: 20px 50px 80px 0px rgba(0, 0, 0, 0.25);
+  border: #3a3a3a solid 1px;
+  .story_name {
+    font-size: 2.7rem;
+  }
+  .name_underline {
+    width: 100%;
+  }
+  transition: all 0.3s ease-in-out;
+}

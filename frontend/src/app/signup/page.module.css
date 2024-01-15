@@ -1,0 +1,84 @@
+.signup_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.signup_cover {
+  width: 500px;
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
+  background-color: #2b2b2b;
+}
+
+.signup_cover h1 {
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+.signup_cover form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2em;
+}
+
+.signup_cover form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  margin-bottom: 2em;
+}
+
+.signup_cover form label div {
+  font-size: 0.8em;
+  color: #b195aa;
+}
+
+.signup_cover form input[type="text"],
+.signup_cover form input[type="email"],
+.signup_cover form input[type="password"] {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+.signup_cover form input[type="submit"] {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #c49bff;
+  color: #000;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.signup_cover form input[type="submit"]:hover {
+  background-color: #c49bff;
+}
+
+.forget_password {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.signup_cover a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #b195aa;
+  text-decoration: none;
+}
+
+.signup_cover a:hover {
+  text-decoration: underline;
+}
+
+.already_account_log_in {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}

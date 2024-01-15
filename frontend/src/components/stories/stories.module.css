@@ -1,0 +1,22 @@
+.stories_wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    margin-top: 5rem;
+  }
+  .stories_text {
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+  }
+  .stories_line {
+    height: 1px;
+    background-color: var(--line-color);
+    align-self: center;
+    margin-bottom: 2.5rem;
+  }
+  .stories_cards_wrapper {
+    margin-top: 1rem;
+    
+  }

@@ -1,0 +1,17 @@
+.toggle_button {
+    background: #c49bff;
+    display: flex;
+    justify-content: space-between;
+    width: 70px;
+    padding: 2px 5px;
+    cursor: pointer;
+    border-radius: 20px;
+  }
+  
+  .toggle {
+    position: absolute;
+    height: 25px;
+    width: 25px;
+    background: #191518;
+    border-radius: 50%;
+  }

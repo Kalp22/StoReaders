@@ -1,0 +1,9 @@
+.story_wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 7em 0rem;
+    padding: 40px 0px;
+    border-radius: 20px;
+}
