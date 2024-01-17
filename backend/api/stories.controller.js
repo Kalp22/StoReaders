@@ -1,7 +1,5 @@
 const express = require("express");
 const router = express.Router();
-//for .env file
-require("dotenv").config();
 //Story model
 const StoryDetail = require("../models/storyDetail.model");
 
@@ -27,12 +25,13 @@ router.post("/add", async (req, res) => {
   try {
     const {
       storyName,
-      totalNumberOfChapters,
-      status,
       storyDescription,
       genre,
-      views,
     } = req.body;
+
+    const totalNumberOfChapters = 0;
+    const views = 0;
+    const status = true;
 
     const newStory = new StoryDetail({
       storyBasic: {

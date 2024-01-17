@@ -2,11 +2,9 @@ const mongoose = require("mongoose");
 
 const ChapterComments = require("./chapterComments.model");
 
+const connection = require("../config/chaptersConnection");
+
 const chapterScheme = new mongoose.Schema({
-  chapterId: {
-    type: String,
-    required: true,
-  },
   chapterNumber: {
     type: Number,
     required: true,
@@ -29,4 +27,6 @@ const chapterScheme = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Chapter", chapterScheme);
+const Chapters = connection.model("Chapter", chapterScheme);
+
+module.exports = Chapters;

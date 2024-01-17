@@ -25,6 +25,10 @@ const storyDetailScheme = new mongoose.Schema({
     type: Number,
     required: false,
   },
+  noOfRatings: {
+    type: Number,
+    required: false,
+  },
   reviewId: {
     type: [String],
     required: false,

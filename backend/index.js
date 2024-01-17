@@ -13,14 +13,13 @@ app.use(express.json());
 require("dotenv").config();
 
 //Routing Paths
-const users = require("./api/user");
+const users = require("./api/user.controller");
 const frogotPassword = require("./api/forgotPassword");
 
-const stories = require("./api/stories.js");
+const stories = require("./api/stories.controller");
 
-const paraAdd = require("./api/paraAdd");
-
-const read = require("./api/read");
+const chapters = require("./api/chapters.controller");
+const comments = require("./api/comments.controller");
 
 //Using routed Paths
 app.use("/user", users);
@@ -28,12 +27,11 @@ app.use("/user", frogotPassword);
 
 app.use("/stories", stories);
 
-app.use("/editChapter", paraAdd);
-
-app.use("/read", read);
+app.use("/chapters", chapters);
+app.use("/comments", comments);
 
 //Server port
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
   console.log(`Server Started on ${PORT}`);

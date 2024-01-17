@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
 
+const connection = require("../config/chaptersConnection");
+
 const chapterCommentsScheme = new mongoose.Schema({
-  commentId: {
-    type: String,
-    required: true,
-  },
   commentator: {
     type: String,
     required: true,
@@ -19,4 +17,9 @@ const chapterCommentsScheme = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("ChapterComments", chapterCommentsScheme);
+const ChapterComments = connection.model(
+  "ChapterComments",
+  chapterCommentsScheme
+);
+
+module.exports = ChapterComments;
