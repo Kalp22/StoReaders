@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
-const connection = require("../config/userConnection")
+const connection = require("../config/userConnection");
+const { ObjectId } = require("mongodb");
 
 const userScheme = new mongoose.Schema({
   username: {
@@ -24,11 +25,11 @@ const userScheme = new mongoose.Schema({
     required: false,
   },
   comments: {
-    type: [Number],
+    type: [ObjectId],
     required: false,
   },
   reviews: {
-    type: [Number],
+    type: [ObjectId],
     required: false,
   },
 });
