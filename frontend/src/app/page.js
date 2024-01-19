@@ -17,7 +17,7 @@ export default function Home() {
         <div className={styles.landing_cover}>
           <div className={styles.title}>StoReaders</div>
           <div className={styles.subtitle}>
-            A place to read stories written by me
+            A place to read stories
           </div>
         </div>
       </div>

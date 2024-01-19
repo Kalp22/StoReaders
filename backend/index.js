@@ -17,6 +17,7 @@ const users = require("./api/user.controller");
 const frogotPassword = require("./api/forgotPassword");
 
 const stories = require("./api/stories.controller");
+const reviews = require("./api/reviews.controller");
 
 const chapters = require("./api/chapters.controller");
 const comments = require("./api/comments.controller");
@@ -26,6 +27,7 @@ app.use("/user", users);
 app.use("/user", frogotPassword);
 
 app.use("/stories", stories);
+app.use("/reviews", reviews);
 
 app.use("/chapters", chapters);
 app.use("/comments", comments);

@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const commentReplies = require("./commentReply.model");
+
 const connection = require("../config/chaptersConnection");
 
 const chapterCommentsScheme = new mongoose.Schema({
@@ -14,6 +16,10 @@ const chapterCommentsScheme = new mongoose.Schema({
   commentContent: {
     type: String,
     required: true,
+  },
+  replies: {
+    type: [commentReplies.schema],
+    required: false,
   },
 });
 

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const StoryBasic = require("./storyBasic.model");
+const Reviews = require("./reviews.model");
 
 const connection = require("../config/storiesConnection");
 
@@ -29,8 +30,8 @@ const storyDetailScheme = new mongoose.Schema({
     type: Number,
     required: false,
   },
-  reviewId: {
-    type: [String],
+  reviews: {
+    type: [Reviews.schema],
     required: false,
   },
 });

@@ -28,12 +28,16 @@ const userScheme = new mongoose.Schema({
     type: [ObjectId],
     required: false,
   },
-  reviews: {
+  replies: {
     type: [ObjectId],
+    required: false,
+  },
+  reviews: {
+    type: [{ storyId: ObjectId, reviewId: ObjectId }],
     required: false,
   },
 });
 
 const users = connection.model("User", userScheme);
 
-module.exports = users
+module.exports = users;
