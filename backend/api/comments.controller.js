@@ -84,7 +84,7 @@ router.put("/reply/add", auth, async (req, res) => {
     await chapter.save();
     await commentor.save();
 
-    res.status(201).json({ status: true, updatedChapter: chapter });
+    res.status(201).json({ status: true, updatedReply: updatedReply });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: e.message });

@@ -22,12 +22,18 @@ const reviews = require("./api/reviews.controller");
 const chapters = require("./api/chapters.controller");
 const comments = require("./api/comments.controller");
 
+const ratings = require("./api/ratings.controller");
+const views = require("./api/views.controller");
+
 //Using routed Paths
 app.use("/user", users);
 app.use("/user", frogotPassword);
 
 app.use("/stories", stories);
 app.use("/reviews", reviews);
+
+app.use("/ratings", ratings);
+app.use("/view", views);
 
 app.use("/chapters", chapters);
 app.use("/comments", comments);

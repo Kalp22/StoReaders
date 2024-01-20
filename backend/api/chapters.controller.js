@@ -9,7 +9,8 @@ const Chapters = require("../models/chapters.model");
 
 router.get("/getAll", async (req, res) => {
   try {
-    const chapters = await Chapters.find().exec();
+    const { storyId } = req.body;
+    const chapters = await Chapters.find({ storyId: storyId }).exec();
 
     res.status(200).json({ chapters });
   } catch (e) {
@@ -24,11 +25,12 @@ router.get("/getAll", async (req, res) => {
 
 router.post("/add", async (req, res) => {
   try {
-    const { chapterNumber, chapterName, chapterContent } = req.body;
+    const { storyId, chapterNumber, chapterName, chapterContent } = req.body;
 
     const releaseDate = new Date().toJSON().slice(0, 10);
 
     const newChapter = new Chapters({
+      storyId,
       chapterNumber,
       chapterName,
       releaseDate,

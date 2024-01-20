@@ -20,8 +20,12 @@ const userScheme = new mongoose.Schema({
     type: Number,
     required: false,
   },
+  readStories: {
+    type: [{ storyId: ObjectId, noOfChapters: Number }],
+    required: false,
+  },
   readChapters: {
-    type: [Number],
+    type: [ObjectId],
     required: false,
   },
   comments: {
@@ -34,6 +38,10 @@ const userScheme = new mongoose.Schema({
   },
   reviews: {
     type: [{ storyId: ObjectId, reviewId: ObjectId }],
+    required: false,
+  },
+  ratings: {
+    type: [{ storyId: ObjectId, rating: Number }],
     required: false,
   },
 });

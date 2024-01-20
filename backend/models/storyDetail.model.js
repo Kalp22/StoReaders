@@ -24,11 +24,11 @@ const storyDetailScheme = new mongoose.Schema({
   },
   ratings: {
     type: Number,
-    required: false,
+    required: true,
   },
   noOfRatings: {
     type: Number,
-    required: false,
+    required: true,
   },
   reviews: {
     type: [Reviews.schema],
