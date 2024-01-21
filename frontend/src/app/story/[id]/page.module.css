@@ -5,7 +5,7 @@
   width: 100%;
   margin: 5em 0 0 0;
   padding: 7em 9em;
-  background-color: hsl(315, 10%, 12%);
+  background-color: var(--story-overview-background);
 }
 
 .left_overview_wrapper {
@@ -53,7 +53,7 @@
   display: block;
   font-size: 1em;
   font-weight: 200;
-  color: #ffbf29;
+  color: var(--read-more-button);
   cursor: pointer;
 }
 
@@ -75,7 +75,7 @@
 .read_now {
   padding: 10px 15px;
   margin: 0.5em 0;
-  background-color: #ffbf29;
+  background-color: var(--read-button);
   border-radius: 7px;
   font-size: 1.2em;
   font-weight: 500;
@@ -112,7 +112,7 @@
 }
 
 .star {
-  color: #ffbf29;
+  color: var(--read-button);
   margin: 0.5em 0;
   font-size: 1.2em;
 }
@@ -134,7 +134,7 @@
 }
 
 .rating_star {
-  color: #ffbf29;
+  color: var(--read-button);
   margin: 10px 5px;
   font-size: 1.5em;
 }
@@ -142,7 +142,7 @@
 .chapters_overview_wrapper {
   display: flex;
   justify-content: center;
-  background: linear-gradient(180deg, #191518f0 25%, #000000e0 75%),
+  background: var(--chapters-wrapper-gradient),
     url("/wallpaper3.jpg");
   background-size: cover;
   background-position: center;

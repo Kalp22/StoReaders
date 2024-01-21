@@ -6,13 +6,9 @@
   min-height: 100vh;
 }
 
-.empty_div_below_navbar {
-  height: 5em;
-}
-
 .landing_wrapper {
   width: 100%;
-  margin: 0rem 0px 5rem 0px;
+  margin: 5em 0px 5rem 0px;
   background: linear-gradient(var(--gradient-color), var(--background-color)),
     url(/wallpaper.jpg) no-repeat center center;
   user-select: none;

@@ -1,5 +1,6 @@
 .genre{
-    background: #3a3a3a;
+    background: var(--genre-background);
     padding: 5px 10px;
     border-radius: 5px;
+    border: 1px solid var(--card-hover-border);
 }

@@ -15,7 +15,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  border-bottom: 1px solid #3a3a3a;
+  border-bottom: 1px solid var(--card-hover-border);
   height: 7dvh;
   padding: 0px 3%;
 }
@@ -36,17 +36,11 @@
   align-items: center;
   flex: 0 0 22.5%;
   padding: 7.5dvh 0px;
-  background: linear-gradient(
-    270deg,
-    #191518 0%,
-    #1e1d1d 10%,
-    #201f1f 30%,
-    #2b2b2b 100%
-  );
+  background: var(--dashboard-left-gradient);
 }
 
 .icon_wrapper {
-  background-color: #3a3a3a;
+  background-color: var(--card-hover-border);
   border-radius: 50%;
   height: 200px;
   width: 200px;
@@ -86,7 +80,7 @@
   justify-content: space-between;
   font-size: 1.5rem;
   font-weight: 400;
-  background: #b195aa;
+  background: var(--toggle-color-hover);
   border-radius: 10px;
   color: black;
 }
@@ -101,7 +95,7 @@
 .dashboard_right {
   display: flex;
   flex-direction: column;
-  border-left: 1px solid #3a3a3a;
+  border-left: 1px solid var(--card-hover-border);
   flex: 0 0 20%;
 }
 
@@ -111,13 +105,13 @@
   align-self: end;
   width: 99%;
   padding: 20px;
-  background: #b195aa;
+  background: var(--toggle-color-hover);
   color: black;
   margin: 1.5em 0px;
 }
 
 .line {
-  border-bottom: 1px solid #3a3a3a;
+  border-bottom: 1px solid var(--card-hover-border);
   width: 90%;
   margin: 1em 0px;
 }
@@ -139,7 +133,7 @@
   border-radius: 20px;
   width: 95%;
   padding: 20px;
-  background: #2b2b2b;
+  background: var(--card-background);
 }
 
 .settings_wrapper {
@@ -175,13 +169,13 @@
   font-weight: 400;
   width: 100%;
   padding: 10px 20px;
-  background: #2b2b2b;
+  background: var(--card-background);
 }
 
 .settings_list li:hover,
 .settings:hover,
 .keep_reading:hover {
-  background: #3a3a3a;
+  background: var(--card-background-hover);
 }
 
 .settings_list li:nth-child(2) {

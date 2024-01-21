@@ -1,5 +1,4 @@
 "use client"
-
 import Image from "next/image";
 import { useState } from "react";
 
@@ -11,14 +10,11 @@ import StoriesComponent from "@/components/stories/stories";
 import About from "@/components/about/about";
 
 export default function Home() {
-  const [theme, setTheme] = useState(false);
   const description = false;
 
   return (
-    <main className={styles.main} data-theme={theme ? "light" : "dark"}>
+    <main className={styles.main}>
       <Navbar />
-      <div className={styles.empty_div_below_navbar}></div>{" "}
-      {/* This is to make sure the navbar doesn't cover the content */}
       <div className={styles.landing_wrapper}>
         <div className={styles.landing_cover}>
           <div className={styles.title}>StoReaders</div>
