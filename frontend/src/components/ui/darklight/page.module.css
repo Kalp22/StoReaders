@@ -1,17 +1,29 @@
 .toggle_button {
-    background: #c49bff;
-    display: flex;
-    justify-content: space-between;
-    width: 70px;
-    padding: 2px 5px;
-    cursor: pointer;
-    border-radius: 20px;
-  }
-  
-  .toggle {
-    position: absolute;
-    height: 25px;
-    width: 25px;
-    background: #191518;
-    border-radius: 50%;
-  }
+  background: var(--toggle-color);
+  display: flex;
+  justify-content: space-between;
+  width: 70px;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.svg {
+  color: #191518;
+  margin: 3px 3px 0px 3px;
+}
+
+.toggle {
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  margin: 2px 2px 0px 2px;
+  border-radius: 50%;
+  transition: 0.3s;
+  transform: translateX(5%);
+  background: #e3e1f0;
+}
+
+.toggle_alt {
+  background: #191518;
+  transform: translateX(160%);
+}

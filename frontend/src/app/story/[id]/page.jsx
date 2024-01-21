@@ -101,7 +101,7 @@ export default function StoryOverview({ params: { id } }) {
         </div>
       </div>
       <div className={styles.chapters_overview_wrapper}>
-        <Chapters _id = {_id}/>
+        <Chapters _id={_id} />
       </div>
     </div>
   );

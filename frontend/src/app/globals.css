@@ -1,19 +1,23 @@
-:root {
+.light {
   --text-color: #000;
   --foreground-color: #000;
   --background-color: #e3e1f0;
   --line-color: #9f9f9f;
   --gradient-color: #0000001a;
+  --toggle-color: #b580ff;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-color: #fff;
-    --foreground-color: #fff;
-    --background-color: #191518;
-    --line-color: #9f9f9f;
-    --gradient-color: #ffffff1a;
-  }
+.dark {
+  --text-color: #fff;
+  --foreground-color: #fff;
+  --background-color: #191518;
+  --line-color: #9f9f9f;
+  --gradient-color: #ffffff1a;
+  --toggle-color: #c49bff;
+  margin: 0;
+  padding: 0;
 }
 
 * {
@@ -28,18 +32,14 @@ body {
   overflow-x: hidden;
 }
 
-body {
+.dark,
+.light {
   color: var(--foreground-color);
   background-color: var(--background-color);
+  transition: color 0.2s ease-out, background-color 0.4s ease-out;
 }
 
 a {
   color: inherit;
   text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
 }
