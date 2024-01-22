@@ -58,7 +58,7 @@ router.post("/register", async (req, res) => {
  *@route GET /api/user/login
  */
 
-router.get("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     //Credentials from user taken
     const { email, password } = req.body;

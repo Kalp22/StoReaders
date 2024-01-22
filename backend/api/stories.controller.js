@@ -59,15 +59,13 @@ router.get("/getAll", async (req, res) => {
         totalNumberOfChapters: story.storyBasic.totalNumberOfChapters,
         status: story.storyBasic.status,
         description: story.storyDescription,
+        genre: story.genre,
       };
     });
 
     const storyImages = await getImageFromGoogleDrive(
       storyBasicInfo.map((story) => story.storyName)
     );
-
-    const len = storyImages.length;
-    console.log(storyImages, len);
 
     res.status(200).json({ status: true, storyBasicInfo, storyImages });
   } catch (e) {
@@ -80,17 +78,21 @@ router.get("/getAll", async (req, res) => {
  *@route GET /api/stories/get
  */
 
-router.get("/get", async (req, res) => {
+router.post("/get", async (req, res) => {
   try {
-    const storyId = req.body.storyId;
+    const storyName = req.body.storyName;
 
-    const story = await StoryDetail.findById(storyId);
+    const story = await StoryDetail.findOne({
+      "storyBasic.storyName": storyName,
+    });
+
+    console.log(story);
 
     const storyImages = await getImageFromGoogleDrive(
       story.storyBasic.storyName
     );
 
-    res.status(200).json({ status: true, story, storyImages });
+    res.status(200).json({ status: true, story: story, storyImages });
   } catch (e) {
     res.status(500).json({ message: e.message });
   }

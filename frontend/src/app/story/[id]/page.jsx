@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
-import React from "react";
+import { useState, useEffect } from "react";
 
 import Navbar from "@/components/navbar/navbar";
 import Genre from "@/components/genre/genre";
@@ -14,19 +14,39 @@ import { FaRegStar } from "react-icons/fa";
 import Chapters from "@/components/chapters/chapters";
 
 export default function StoryOverview({ params: { id } }) {
-  const _id = id;
+  const [story, setStory] = useState({
+    _id: "",
+    storyBasic: { storyName: "" },
+    genre: [],
+  });
+  const [descToggle, setDescToggle] = useState(true);
+  console.log(story);
 
-  const [descToggle, setDescToggle] = React.useState(true);
+  useEffect(() => {
+    fetch(" http://localhost:5000/stories/get", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        storyName: id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setStory(data.story);
+      });
+  }, []);
 
-  const descriptionToggle = () => {
+  function descriptionToggle() {
     const description = document.querySelector(`.${styles.description}`);
     description.classList.toggle(styles.description_full);
 
     setDescToggle(!descToggle);
-  };
+  }
 
   return (
-    <div>
+    <div className={styles.parent}>
       <Navbar />
       <div className={styles.all_overview_wrapper}>
         <div className={styles.left_overview_wrapper}>
@@ -38,31 +58,19 @@ export default function StoryOverview({ params: { id } }) {
             className={styles.story_image}
           />
           <div className={styles.info_wrapper}>
-            <h1>Story Name</h1>
+            <h1>{story.storyBasic.storyName}</h1>
             <div className={styles.genre_wrapper}>
-              <Genre />
-              <Genre />
-              <Genre />
+              {story &&
+                story.genre.map((genre, i) => {
+                  return <Genre genre={genre} key={i} />;
+                })}
             </div>
             <div className={styles.link}>
-              <Link href={`/story/${_id}/read/bdgg`}>
+              <Link href={`/story/${id}/read/bdgg`}>
                 <div className={styles.read_now}>Read Now</div>
               </Link>
             </div>
-            <p className={styles.description}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-              veritatis quam, tempore saepe optio deleniti consequatur eveniet
-              suscipit recusandae. Mollitia aut, autem at consectetur ab debitis
-              maxime quas dicta voluptates, blanditiis laborum necessitatibus.
-              Cupiditate nam neque dolore dignissimos quidem. Rerum provident
-              architecto distinctio quasi nemo aspernatur, laudantium incidunt
-              assumenda quidem ipsum debitis vel sed velit inventore itaque quo
-              harum. Architecto similique hic ut cum aspernatur rerum officia
-              labore est vero explicabo quae suscipit error, soluta repellendus
-              iusto harum facere quia quis saepe repellat. Ipsam, impedit sed.
-              Deserunt, magni voluptates, earum atque voluptatibus, iure quam
-              voluptatum consectetur sint animi vero commodi. Quisquam, quas
-            </p>
+            <p className={styles.description}>{story.storyDescription}</p>
             <div>
               <span
                 className={styles.more_button}
@@ -77,11 +85,13 @@ export default function StoryOverview({ params: { id } }) {
           <div className={styles.all_parameters_wrapper}>
             <div className={styles.parameter_value_wrapper}>
               <div className={styles.parameters}>Status</div>
-              <div className={styles.values}>Ongoing</div>
+              <div className={styles.values}>
+                {story.storyBasic.status ? "Ongoing" : "Completed"}
+              </div>
             </div>
             <div className={styles.parameter_value_wrapper}>
               <div className={styles.parameters}>Views</div>
-              <div className={styles.values}>0</div>
+              <div className={styles.values}>{story.views}</div>
             </div>
             <div className={styles.parameter_value_wrapper}>
               <FaStar className={styles.star} />
@@ -101,7 +111,7 @@ export default function StoryOverview({ params: { id } }) {
         </div>
       </div>
       <div className={styles.chapters_overview_wrapper}>
-        <Chapters _id={_id} />
+        <Chapters _id={story._id} story_name={id} />
       </div>
     </div>
   );

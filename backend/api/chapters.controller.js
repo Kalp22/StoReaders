@@ -7,12 +7,12 @@ const Chapters = require("../models/chapters.model");
  *@route GET /api/chapters/getAll
  */
 
-router.get("/getAll", async (req, res) => {
+router.post("/getAll", async (req, res) => {
   try {
     const { storyId } = req.body;
     const chapters = await Chapters.find({ storyId: storyId }).exec();
 
-    res.status(200).json({ chapters });
+    res.status(200).json({status: true, chapters });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: e.message });
