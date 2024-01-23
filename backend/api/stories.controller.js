@@ -8,7 +8,7 @@ const StoryDetail = require("../models/storyDetail.model");
 const { google } = require("googleapis");
 
 // Get Cover Image of each or specific story from Google Drive
-async function getImageFromGoogleDrive(storyName) {
+async function getImageFromGoogleDrive() {
   // Credentials for Google Drive API
   const client_id = process.env.CLIENT_ID;
   const client_secret = process.env.CLIENT_SECRET;
@@ -35,14 +35,10 @@ async function getImageFromGoogleDrive(storyName) {
   // Retrieve the metadata as a JSON object
   const response = await drive.files.list({
     q: "mimeType='image/jpeg'",
+    fields: "files(name, webViewLink)",
   });
 
-  // Filter the files with the story name
-  const resultFiles = response.data.files.filter((file) => {
-    return storyName.includes(file.name.split(".")[0]);
-  });
-
-  return resultFiles;
+  return response;
 }
 
 /*
@@ -63,11 +59,25 @@ router.get("/getAll", async (req, res) => {
       };
     });
 
-    const storyImages = await getImageFromGoogleDrive(
-      storyBasicInfo.map((story) => story.storyName)
-    );
+    const imagesResponse = await getImageFromGoogleDrive();
 
-    res.status(200).json({ status: true, storyBasicInfo, storyImages });
+    const imageNames = imagesResponse.data.files.map((file) => {
+      return file.name.split(".")[0];
+    });
+
+    const filterdResponse = imagesResponse.data.files.map((file, i) => {
+      if (imageNames[i] == storyBasicInfo[i].storyName) {
+        return file.webViewLink;
+      }
+    });
+
+    const finalResponse = filterdResponse.filter((item) => {
+      return item != undefined;
+    });
+
+    res
+      .status(200)
+      .json({ status: true, story: storyBasicInfo, dataURI: finalResponse });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: e.message });
@@ -86,13 +96,27 @@ router.post("/get", async (req, res) => {
       "storyBasic.storyName": storyName,
     });
 
-    console.log(story);
+    const imagesResponse = await getImageFromGoogleDrive();
 
-    const storyImages = await getImageFromGoogleDrive(
-      story.storyBasic.storyName
-    );
+    const imageNames = imagesResponse.data.files.map((file) => {
+      return file.name.split(".")[0];
+    });
 
-    res.status(200).json({ status: true, story: story, storyImages });
+    const filterdResponse = imagesResponse.data.files.map((file, i) => {
+      if (imageNames[i] == storyName) {
+        return file.webViewLink;
+      }
+    });
+
+    const finalResponse = filterdResponse.filter((item) => {
+      return item != undefined;
+    });
+
+    res.status(200).json({
+      status: true,
+      story: story,
+      dataURI: finalResponse,
+    });
   } catch (e) {
     res.status(500).json({ message: e.message });
   }

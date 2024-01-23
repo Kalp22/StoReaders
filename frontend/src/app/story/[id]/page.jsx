@@ -19,9 +19,30 @@ export default function StoryOverview({ params: { id } }) {
     storyBasic: { storyName: "" },
     genre: [],
   });
-  const [descToggle, setDescToggle] = useState(true);
-  console.log(story);
 
+  const [images, setImages] = useState([]);
+  const [backgroundImage, setBackgroundImage] = useState("url()");
+  const [descToggle, setDescToggle] = useState(true);
+
+  //extracting and filtering image urls from google drive
+  const imageURLS = images.map((image, i) => {
+    const reducedURI = image.slice(0, -18);
+    const id = reducedURI.split("/")[5];
+
+    const string = "uc?export=view&id=";
+
+    const url = `https://drive.google.com/${string}${id}`;
+    return url;
+  });
+
+  //setting background image
+  useEffect(() => {
+    if (imageURLS[0]) {
+      setBackgroundImage(`url(${imageURLS[0]})`);
+    }
+  }, [imageURLS]);
+
+  //fetching story data
   useEffect(() => {
     fetch(" http://localhost:5000/stories/get", {
       method: "POST",
@@ -35,9 +56,11 @@ export default function StoryOverview({ params: { id } }) {
       .then((res) => res.json())
       .then((data) => {
         setStory(data.story);
+        setImages(data.dataURI);
       });
   }, []);
 
+  //toggle description "read more" and "read less
   function descriptionToggle() {
     const description = document.querySelector(`.${styles.description}`);
     description.classList.toggle(styles.description_full);
@@ -46,12 +69,12 @@ export default function StoryOverview({ params: { id } }) {
   }
 
   return (
-    <div className={styles.parent}>
+    <div>
       <Navbar />
       <div className={styles.all_overview_wrapper}>
         <div className={styles.left_overview_wrapper}>
           <Image
-            src="/wallpaper.jpg"
+            src={imageURLS[0]}
             height={350}
             width={250}
             loading="lazy"
@@ -110,7 +133,15 @@ export default function StoryOverview({ params: { id } }) {
           </div>
         </div>
       </div>
-      <div className={styles.chapters_overview_wrapper}>
+      <div
+        style={{
+          backgroundImage: backgroundImage,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+        className={styles.chapters_overview_wrapper}
+      >
         <Chapters _id={story._id} story_name={id} />
       </div>
     </div>

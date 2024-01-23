@@ -16,7 +16,7 @@ export default function StoriesComponent({ description }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        setStories(data.storyBasicInfo);
+        setStories(data.story);
       });
   }, []);
 
