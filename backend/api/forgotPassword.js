@@ -45,7 +45,7 @@ router.put("/sendotp", async (req, res) => {
       user.save();
     }, 120000);
 
-    //OTP expires in 2 minutes
+    // OTP expires in 2 minutes
     expiry;
 
     //Sending otp
@@ -90,19 +90,20 @@ router.put("/sendotp", async (req, res) => {
 
 router.put("/checkotp", async (req, res) => {
   try {
-    const { otp } = req.body;
-    const { _id } = req.user;
+    const { otp, email } = req.body;
 
     if (!otp) res.status(400).json({ status: false, msg: "OTP not provided" });
 
     //Finding and storing collection with "username"
-    const user = await User.findById(_id);
+    const user = await User.findOne({ email: email });
 
     if (!user) res.status(400).json({ status: false, msg: "No User found" });
 
     //Checking otp
-    if (otp === user.otp && token) {
-      res.status(200).json({ status: true, msg: "OTP verified" });
+    if (otp == user.otp) {
+      user.otp = null;
+      await user.save();
+      res.status(200).json({ status: true, id: user._id, msg: "OTP verified" });
     } else {
       res.status(400).json({ status: false, msg: "OTP not verified" });
     }
@@ -113,19 +114,18 @@ router.put("/checkotp", async (req, res) => {
 });
 
 /*
- *@route PUT /api/user/changepassword
+ *@route PUT /api/user/resetpassword
  */
 
-router.put("/changepassword", async (req, res) => {
+router.put("/resetpassword", async (req, res) => {
   try {
-    const { password } = req.body;
-    const { _id } = req.user;
+    const { password, id } = req.body;
 
     if (!password)
       res.status(400).json({ status: false, msg: "Password not provided" });
 
     //Finding and storing collection with "username"
-    const user = await User.findById(_id);
+    const user = await User.findById(id);
 
     if (!user) res.status(400).json({ status: false, msg: "No User found" });
 
