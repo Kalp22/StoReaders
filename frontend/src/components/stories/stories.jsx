@@ -2,23 +2,7 @@ import styles from "./stories.module.css";
 
 import StoryCard from "../cards/story/storyCard";
 
-import { useState, useEffect } from "react";
-
-export default function StoriesComponent({ description }) {
-  const [stories, setStories] = useState([]);
-
-  useEffect(() => {
-    fetch(`${process.env.API_URL}stories/getAll`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setStories(data.story);
-      });
-  }, []);
+export default function StoriesComponent({ description, data }) {
 
   const descript = description;
 
@@ -32,8 +16,8 @@ export default function StoriesComponent({ description }) {
         <div className={styles.stories_line}></div>
       </div>
       <div className={styles.stories_cards_wrapper}>
-        {stories &&
-          stories.map((story, i) => (
+        {data &&
+          data.story.map((story, i) => (
             <StoryCard descript={descript} story={story} key={i} />
           ))}
       </div>

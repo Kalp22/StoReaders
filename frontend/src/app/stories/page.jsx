@@ -1,9 +1,8 @@
-"use client";
+// "use client";
 import styles from "./page.module.css";
 
 import Navbar from "@/components/navbar/navbar";
-import StoriesComponent from "@/components/stories/stories";
-import MainStoryComponent from "@/components/mainStoryComponent/mainStoryComponent";
+import Stories from "@/components/fetch/stories";
 
 export default function StoryPage() {
   const description = true;
@@ -12,8 +11,8 @@ export default function StoryPage() {
     <>
       <Navbar />
       <div className={styles.story_wrapper}>
-        <MainStoryComponent />
-        <StoriesComponent description={description} />
+        <Stories description={description} swiper={true} />
+        <Stories description={description} swiper={false} />
       </div>
     </>
   );

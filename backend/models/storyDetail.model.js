@@ -14,6 +14,10 @@ const storyDetailScheme = new mongoose.Schema({
     type: String,
     required: true,
   },
+  imageId: {
+    type: String,
+    required: true,
+  },
   genre: {
     type: [String],
     required: true,

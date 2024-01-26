@@ -35,7 +35,7 @@ async function getImageFromGoogleDrive() {
   // Retrieve the metadata as a JSON object
   const response = await drive.files.list({
     q: "mimeType='image/jpeg'",
-    fields: "files(name, webViewLink)",
+    fields: "files(id, name, webViewLink)",
   });
 
   return response;
@@ -55,24 +55,29 @@ router.get("/getAll", async (req, res) => {
         totalNumberOfChapters: story.storyBasic.totalNumberOfChapters,
         status: story.storyBasic.status,
         description: story.storyDescription,
+        imageId: story.imageId,
         genre: story.genre,
       };
     });
 
     const imagesResponse = await getImageFromGoogleDrive();
 
-    const imageNames = imagesResponse.data.files.map((file) => {
-      return file.name.split(".")[0];
+    const filteredResponse = storyBasicInfo.map((story) => {
+      return imagesResponse.data.files.map((file, i) => {
+        if (story.imageId == file.id) {
+          return file.webViewLink;
+        }
+      });
     });
 
-    const filterdResponse = imagesResponse.data.files.map((file, i) => {
-      if (imageNames[i] == storyBasicInfo[i].storyName) {
-        return file.webViewLink;
-      }
+    const nestedResponse = filteredResponse.map((item) => {
+      return item.filter((item) => {
+        return item != undefined;
+      });
     });
 
-    const finalResponse = filterdResponse.filter((item) => {
-      return item != undefined;
+    const finalResponse = nestedResponse.map((item) => {
+      return item[0];
     });
 
     res
@@ -98,12 +103,8 @@ router.post("/get", async (req, res) => {
 
     const imagesResponse = await getImageFromGoogleDrive();
 
-    const imageNames = imagesResponse.data.files.map((file) => {
-      return file.name.split(".")[0];
-    });
-
     const filterdResponse = imagesResponse.data.files.map((file, i) => {
-      if (imageNames[i] == storyName) {
+      if (story.imageId == file.id) {
         return file.webViewLink;
       }
     });
@@ -128,7 +129,7 @@ router.post("/get", async (req, res) => {
 
 router.post("/add", async (req, res) => {
   try {
-    const { storyName, storyDescription, genre } = req.body;
+    const { storyName, storyDescription, genre, imageId } = req.body;
 
     const totalNumberOfChapters = 0;
     const views = 0;
@@ -143,6 +144,7 @@ router.post("/add", async (req, res) => {
         status,
       },
       storyDescription,
+      imageId,
       genre,
       views,
       ratings,
