@@ -18,7 +18,7 @@
 }
 .main_story_left {
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   flex-direction: column;
   padding: 2.5em 0em;
   width: 55%;
