@@ -50,8 +50,6 @@ export default function ForgotPasswordPage() {
         localStorage.removeItem("user");
       }
 
-      // setForm1({ email: "" });
-
       if (data.status) {
         setIsConfirmed(true);
       }
