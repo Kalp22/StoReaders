@@ -36,6 +36,7 @@ export default function Login() {
         const user = {
           token: data.token,
           id: data.id,
+          rating: data.ratings,
         };
 
         if (localStorage.getItem("user")) {
@@ -50,7 +51,7 @@ export default function Login() {
         alert(data.msg);
       }
     } catch (e) {
-      console.log("error");
+      console.log(e);
     }
   };
 

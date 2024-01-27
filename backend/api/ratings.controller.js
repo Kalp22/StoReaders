@@ -7,7 +7,7 @@ const Users = require("../models/user.model");
 const Stories = require("../models/storyBasic.model");
 
 /*
- * @route   PUT api/stories/ratings
+ * @route   PUT api/ratings
  */
 
 router.put("/", async (req, res) => {

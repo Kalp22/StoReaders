@@ -36,6 +36,7 @@ export default function Signup() {
         const user = {
           token: data.token,
           id: data.id,
+          rating: null,
         };
 
         if (localStorage.getItem("user")) {

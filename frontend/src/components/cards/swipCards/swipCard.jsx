@@ -35,14 +35,6 @@ export default function SwipCard({ story, image }) {
             className={styles.main_story_image}
           />
         </Link>
-        {/* <div className={styles.arrows_wrapper}>
-            <div className={styles.arrow_cover}>
-              <div className={styles.left_arrow}></div>
-            </div>
-            <div className={styles.arrow_cover}>
-              <div className={styles.right_arrow}></div>
-            </div>
-          </div> */}
       </div>
     </div>
   );

@@ -8,10 +8,10 @@ import { useState, useEffect } from "react";
 
 import Navbar from "@/components/navbar/navbar";
 import Genre from "@/components/genre/genre";
+import Chapters from "@/components/chapters/chapters";
+import Rating from "@/components/rate/rating";
 
 import { FaStar } from "react-icons/fa";
-import { FaRegStar } from "react-icons/fa";
-import Chapters from "@/components/chapters/chapters";
 
 export default function StoryOverview({ params: { id } }) {
   const [story, setStory] = useState({
@@ -44,7 +44,7 @@ export default function StoryOverview({ params: { id } }) {
 
   //fetching story data
   useEffect(() => {
-    fetch(" http://localhost:5000/stories/get", {
+    fetch(`${process.env.API_URL}stories/get`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -74,6 +74,7 @@ export default function StoryOverview({ params: { id } }) {
       <div className={styles.all_overview_wrapper}>
         <div className={styles.left_overview_wrapper}>
           <Image
+            alt="story image"
             src={imageURLS[0]}
             height={350}
             width={250}
@@ -85,7 +86,7 @@ export default function StoryOverview({ params: { id } }) {
             <div className={styles.genre_wrapper}>
               {story &&
                 story.genre.map((genre, i) => {
-                  return <Genre genre={genre} key={i} />;
+                  return <Genre genre={genre} index={i} key={i} />;
                 })}
             </div>
             <div className={styles.link}>
@@ -122,14 +123,7 @@ export default function StoryOverview({ params: { id } }) {
             </div>
           </div>
           <div className={styles.ratings_wrapper}>
-            <div className={styles.rate_story}>Rate The Story</div>
-            <div>
-              <FaRegStar className={styles.rating_star} />
-              <FaRegStar className={styles.rating_star} />
-              <FaRegStar className={styles.rating_star} />
-              <FaRegStar className={styles.rating_star} />
-              <FaRegStar className={styles.rating_star} />
-            </div>
+            {story._id && <Rating storyId={story._id} />}
           </div>
         </div>
       </div>

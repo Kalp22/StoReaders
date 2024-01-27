@@ -72,36 +72,3 @@
   transition: all 0.3s ease-in-out;
 }
 
-/* .arrows_wrapper {
-    display: flex;
-    align-self: flex-end;
-    margin-left: 8em;
-  }
-  
-  .arrow_cover {
-    background-color: var(--arrow-background);
-    width: 40px;
-    height: 40px;
-    margin: 0.5em;
-    border-radius: 20px;
-    cursor: pointer;
-  }
-  
-  .left_arrow,
-  .right_arrow {
-    width: 10px;
-    height: 10px;
-  }
-  
-  .right_arrow {
-    border-right: solid var(--text-color2) 3px;
-    border-top: solid var(--text-color2) 3px;
-    transform: rotate(45deg) translate(20px, 2px);
-  }
-  
-  .left_arrow {
-    border-left: solid var(--text-color2) 3px;
-    border-bottom: solid var(--text-color2) 3px;
-    transform: rotate(45deg) translate(23px, 0px);
-  }
-   */

@@ -1,10 +1,11 @@
 "use client";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import Image from "next/image";
+import { A11y, Autoplay } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/css";
+import "swiper/css/navigation";
 
 import styles from "./swiper.module.css";
 import SwipCard from "../cards/swipCards/swipCard";
@@ -28,9 +29,14 @@ export default function SwiperComponent({ data }) {
 
   return (
     <Swiper
+      modules={[A11y, Autoplay]}  
+      autoplay={{
+        delay: 3500,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+      }}
       spaceBetween={50}
       slidesPerView={1}
-      //   onSwiper={(swiper) => console.log(swiper)}
       loop={true}
       className={styles.swiper_wrapper}
     >
@@ -41,7 +47,7 @@ export default function SwiperComponent({ data }) {
               <div
                 className={styles.container_image}
                 style={{
-                  backgroundImage: `url(${imagesReverse[i]})`,
+                  backgroundImage: `url(${imageURLS[i]})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
@@ -49,6 +55,14 @@ export default function SwiperComponent({ data }) {
               >
                 <SwipCard story={story} image={imageURLS[i]} />
               </div>
+              {/* <div className={styles.arrows_wrapper}>
+                <div className={styles.arrow_cover} onClick={()=>{swipMethod.slidePrev()}}>
+                  <div className={styles.left_arrow}></div>
+                </div>
+                <div className={styles.arrow_cover} onClick={()=>{swipMethod.slideNext()}}>
+                  <div className={styles.right_arrow}></div>
+                </div>
+              </div> */}
             </SwiperSlide>
           );
         })}

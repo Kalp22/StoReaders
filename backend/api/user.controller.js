@@ -89,6 +89,7 @@ router.post("/login", async (req, res) => {
         message: "User login successfully",
         token,
         id: user._id,
+        ratings: user.ratings,
       });
     } else {
       res.status(400).json({ message: "User login failed" });

@@ -23,7 +23,7 @@ export default function StoryCard({ descript, story }) {
           <div className={styles.genres_wrapper}>
             {story &&
               story.genre.map((genre, i) => {
-                return <Genre genre={genre} key={i} />;
+                return <Genre genre={genre} index={i} key={i} />;
               })}
           </div>
         </div>
@@ -41,7 +41,7 @@ export default function StoryCard({ descript, story }) {
         <div className={styles.genres_wrapper}>
           {story &&
             story.genre.map((genre, i) => {
-              return <Genre genre={genre} key={i} />;
+              return <Genre genre={genre} index={i} key={i} />;
             })}
         </div>
       </div>

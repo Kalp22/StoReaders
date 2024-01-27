@@ -1,0 +1,11 @@
+.rate_story {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.rating_star {
+  color: var(--read-button);
+  margin: 10px 5px;
+  font-size: 1.5em;
+  cursor: pointer;
+}

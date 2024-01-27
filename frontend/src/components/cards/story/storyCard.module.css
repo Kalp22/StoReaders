@@ -2,11 +2,11 @@
   display: flex;
   flex-direction: column;
   width: 90%;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   background: var(--card-background);
-  border: solid 1px var(--card-background);
+  border: solid 1px var(--background-color);
   padding: 40px;
-  border-radius: 20px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
@@ -46,8 +46,9 @@
 .genres_wrapper {
   font-size: large;
   display: flex;
+  justify-content: flex-end;
   width: 30%;
-  justify-content: space-around;
+  gap: 1rem;
 }
 
 .story_description {
@@ -62,9 +63,15 @@
 }
 
 .card_wrapper:hover {
-  background: linear-gradient(180deg, var(--card-background) 30%, var(--card-background-hover) 100%);
-  box-shadow: 10px 50px 80px 0px rgba(0, 0, 0, 0.2);
-  border: var(--card-hover-border) solid 1px;
+  background: linear-gradient(
+    180deg,
+    var(--card-background) 10%,
+    var(--card-background-hover) 50%,
+    var(--card-background) 90%
+  );
+  box-shadow: 10px 40px 15px 0px rgba(0, 0, 0, 0.2);
+  margin-bottom: 2.5rem;
+  transform: translateY(-5px);
   .story_name {
     font-size: 2.7rem;
   }
