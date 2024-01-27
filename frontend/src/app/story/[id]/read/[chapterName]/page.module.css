@@ -1,0 +1,56 @@
+.read_container {
+  min-width: 100dvw;
+  min-height: 100dvh;
+}
+
+.read_wrapper {
+  padding: 4em 7em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+}
+
+.darklight {
+  position: fixed;
+  top: 2em;
+  right: 2em;
+  display: flex;
+}
+
+.story_name {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+.chapterInfo {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  gap: 1.5em;
+  font-size: 1.2rem;
+  margin: 5em 0;
+}
+.commentsButton {
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+  padding: 15px;
+  background-color: var(--comment-button-color);
+  color: var(--text-color-opposite);
+  border-radius: 100%;
+  border: 1px solid var(--text-color-opposite);
+  cursor: pointer;
+}

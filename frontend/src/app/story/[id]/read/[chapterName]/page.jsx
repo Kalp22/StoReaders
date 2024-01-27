@@ -1,6 +1,10 @@
 "use client";
 import styles from "./page.module.css";
 
+import DarkLight from "@/components/ui/darklight/page";
+
+import { FaComments } from "react-icons/fa";
+
 import { useEffect, useState } from "react";
 
 export default function Read({ params: { id, chapterName } }) {
@@ -39,36 +43,29 @@ export default function Read({ params: { id, chapterName } }) {
   }, []);
 
   return (
-    <div className={styles.read_wrapper}>
-      <div>{id}</div>
-      <div>
-        <div>{chapter.chapterNumber}</div>
-        <div>{chapterName}</div>
-      </div>
-      <div>
-        <div>{chapter.chapterContent}</div>
-        <div>
-          {chapter.comments &&
-            chapter.comments.map((comment, i) => {
+    <div className={styles.read_container}>
+      <div className={styles.read_wrapper}>
+        <div className={styles.darklight}>
+          <DarkLight />
+        </div>
+        <div className={styles.story_name}>{id}</div>
+        <div className={styles.chapterInfo}>
+          <div>Chapter Number {chapter.chapterNumber} :</div>
+          <div>{chapterName}</div>
+        </div>
+        <div className={styles.content}>
+          {chapter.chapterContent &&
+            chapter.chapterContent.split("\n").map((para, i) => {
               return (
-                <div key={i}>
-                  <div>{comment.commentator}</div>
-                  <div>{comment.commentContent}</div>
-                  <div>
-                    {comment.replies &&
-                      comment.replies.map((reply, i) => {
-                        return (
-                          <div key={i}>
-                            <div>{reply.commentator}</div>
-                            <div>{reply.commentContent}</div>
-                          </div>
-                        );
-                      })}
-                  </div>
+                <div key={i} className={styles.paragraph}>
+                  {para}
                 </div>
               );
             })}
         </div>
+      </div>
+      <div className={styles.commentsButton}>
+        <FaComments size={35}/>
       </div>
     </div>
   );

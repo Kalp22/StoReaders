@@ -1,5 +1,6 @@
 .light {
   --text-color: #000;
+  --text-color-opposite: #d3cad1;
   --text-color2: #262626;
   --text-color-alt: #592c4c;
   --foreground-color: #000;
@@ -20,7 +21,7 @@
     180deg,
     #eae6e9d0 20%,
     #000000c0 75%
-  );
+    );
   --chapter-list-background: #cfc9cd;
   --dashboard-left-gradient: linear-gradient(
     270deg,
@@ -28,15 +29,17 @@
     #e1e0e0 10%,
     #dcdcdc 30%,
     #cccccc 100%
-  );
-  --arrow-background: #dedede;
-}
-
-.dark {
-  --text-color: #fff;
-  --text-color2: #dadada;
-  --text-color-alt: #b195aa;
-  --foreground-color: #fff;
+    );
+    --arrow-background: #dedede;
+    --comment-button-color: #382e35;
+  }
+  
+  .dark {
+    --text-color: #fff;
+    --text-color-opposite: hsl(313, 9%, 19%);
+    --text-color2: #dadada;
+    --text-color-alt: #b195aa;
+    --foreground-color: #fff;
   --background-color: #191518;
   --background-color2: #191518;
   --line-color: #9f9f9f;
@@ -54,16 +57,17 @@
     180deg,
     #191518f0 25%,
     #000000e0 75%
-  );
-  --chapter-list-background: #282427;
-  --dashboard-left-gradient: linear-gradient(
-    270deg,
-    #191518 0%,
-    #1e1d1d 10%,
-    #201f1f 30%,
+    );
+    --chapter-list-background: #282427;
+    --dashboard-left-gradient: linear-gradient(
+      270deg,
+      #191518 0%,
+      #1e1d1d 10%,
+      #201f1f 30%,
     #2b2b2b 100%
   );
   --arrow-background: #212121;
+  --comment-button-color: hsl(318, 10%, 75%);
 }
 
 * {
