@@ -7,7 +7,7 @@ const { ObjectId } = require("mongodb");
 
 const chapterScheme = new mongoose.Schema({
   storyId: {
-    type: ObjectId,
+    type: String,
     required: true,
   },
   chapterNumber: {

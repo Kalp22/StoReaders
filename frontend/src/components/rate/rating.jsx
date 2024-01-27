@@ -7,16 +7,18 @@ import { FaRegStar } from "react-icons/fa";
 
 export default function Rating({ storyId }) {
   const [ratings, setRatings] = useState(0);
+  const [User, setUser] = useState({});
 
   function getRatings(storyId) {
     try {
       console.log(storyId);
       if (localStorage.getItem("user") == null) return;
       const user = JSON.parse(localStorage.getItem("user"));
+      setUser(user);
       let rates;
-      if (user) {
-        if (user.rating) {
-          rates = user.rating.map((rating) => {
+      if (User) {
+        if (User.rating) {
+          rates = User.rating.map((rating) => {
             if (rating.storyId == storyId) {
               return rating.rating;
             }
@@ -44,8 +46,9 @@ export default function Rating({ storyId }) {
         return;
       }
       const user = JSON.parse(localStorage.getItem("user"));
-      if (user.rating) {
-        const rates = user.rating.map((rate) => {
+      setUser(user);
+      if (User.rating) {
+        const rates = User.rating.map((rate) => {
           if (rate.storyId == storyId) {
             rate.rating = rating;
           }
@@ -55,10 +58,10 @@ export default function Rating({ storyId }) {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${User.token}`,
           },
           body: JSON.stringify({
-            userId: user.id,
+            userId: User.id,
             storyId: storyId,
             rating: rates.rating,
           }),
@@ -76,11 +79,12 @@ export default function Rating({ storyId }) {
             Authorization: `Bearer ${user.token}`,
           },
           body: JSON.stringify({
-            userId: user.id,
+            userId: User.id,
             storyId: storyId,
             rating: rating,
           }),
         });
+
         const data = await res.json();
 
         if (data) {
@@ -88,49 +92,42 @@ export default function Rating({ storyId }) {
             storyId: storyId,
             rating: rating,
           };
-          user.rating.push(rate);
+          const rating = [...User.rating, rate];
+          user.rating = rating;
+          localStorage.setItem("user", JSON.stringify(user));
+          setUser(user);
           setRatings(rating);
         }
       }
     } catch (err) {
       console.log(err);
     }
+    console.log(User);
   }
 
   return (
     <>
       <div className={styles.rate_story}>Rate The Story</div>
       <div>
-        <FaRegStar
-          className={styles.rating_star}
-          onClick={() => {
-            Rater(1);
-          }}
-        />
-        <FaRegStar
-          className={styles.rating_star}
-          onClick={() => {
-            Rater(2);
-          }}
-        />
-        <FaRegStar
-          className={styles.rating_star}
-          onClick={() => {
-            Rater(3);
-          }}
-        />
-        <FaRegStar
-          className={styles.rating_star}
-          onClick={() => {
-            Rater(4);
-          }}
-        />
-        <FaRegStar
-          className={styles.rating_star}
-          onClick={() => {
-            Rater(5);
-          }}
-        />
+        {[...Array(5)].map((_, i) =>
+          i < ratings ? (
+            <FaStar
+              key={i}
+              className={styles.rating_star}
+              onClick={() => {
+                Rater(i + 1);
+              }}
+            />
+          ) : (
+            <FaRegStar
+              key={i}
+              className={styles.rating_star}
+              onClick={async () => {
+                await Rater(i + 1);
+              }}
+            />
+          )
+        )}
       </div>
     </>
   );

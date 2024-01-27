@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import styles from "./chapter.module.css";
 
-export default function Chapter({ chapter, story_name, key }) {
+export default function Chapter({ chapter, story_name }) {
   return (
     <li className={styles.list}>
       <div className={styles.chapter_label}>

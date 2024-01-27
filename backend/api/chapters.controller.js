@@ -4,7 +4,7 @@ const router = express.Router();
 const Chapters = require("../models/chapters.model");
 
 /*
- *@route GET /api/chapters/getAll
+ *@route POST /api/chapters/getAll
  */
 
 router.post("/getAll", async (req, res) => {
@@ -12,7 +12,23 @@ router.post("/getAll", async (req, res) => {
     const { storyId } = req.body;
     const chapters = await Chapters.find({ storyId: storyId }).exec();
 
-    res.status(200).json({status: true, chapters });
+    res.status(200).json({ status: true, chapters });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ message: e.message });
+  }
+});
+
+/*
+ *@route POST /api/chapters/getOne
+ */
+
+router.post("/getOne", async (req, res) => {
+  try {
+    const { chapterName } = req.body;
+    const chapter = await Chapters.findOne({ chapterName: chapterName }).exec();
+
+    res.status(200).json({ status: true, chapter: chapter });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: e.message });

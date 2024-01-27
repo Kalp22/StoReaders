@@ -1,25 +1,32 @@
 import { useState, useEffect } from "react";
 
 import styles from "./chapters.module.css";
+
 import Chapter from "../cards/chapter/chapter";
 
 export default function Chapters({ id, story_name }) {
   const [chapters, setChapters] = useState([]);
 
   useEffect(() => {
-    fetch(" http://localhost:5000/chapters/getAll", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        storyId: id,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setChapters(data.chapters);
-      });
+    try {
+      fetch(`${process.env.API_URL}chapters/getAll`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          storyId: id,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(id);
+          console.log(data);
+          setChapters(data.chapters);
+        });
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   return (

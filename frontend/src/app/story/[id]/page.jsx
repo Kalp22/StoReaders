@@ -136,7 +136,7 @@ export default function StoryOverview({ params: { id } }) {
         }}
         className={styles.chapters_overview_wrapper}
       >
-        <Chapters _id={story._id} story_name={id} />
+        {story && story._id && <Chapters id={story._id} story_name={id} />}
       </div>
     </div>
   );
