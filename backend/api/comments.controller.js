@@ -18,7 +18,7 @@ router.put("/add", auth, async (req, res) => {
     const { userId, chapterId, content } = req.body;
 
     //Date added
-    const dateAdded = new Date().toJSON().slice(0, 10);
+    const dateAdded = new Date().toJSON();
     //Find commentator
     const commentor = await User.findById(userId).exec();
     const commentatorName = commentor.username;
@@ -58,7 +58,7 @@ router.put("/reply/add", auth, async (req, res) => {
     const { userId, chapterId, commentId, content } = req.body;
 
     //Date added
-    const dateAdded = new Date().toJSON().slice(0, 10);
+    const dateAdded = new Date().toJSON();
     //Find commentator
     const commentor = await User.findById(userId).exec();
     const commentatorName = commentor.username;

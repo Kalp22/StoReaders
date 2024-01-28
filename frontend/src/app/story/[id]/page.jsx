@@ -14,6 +14,7 @@ import Rating from "@/components/rate/rating";
 import { FaStar } from "react-icons/fa";
 
 export default function StoryOverview({ params: { id } }) {
+  const storyName = id.replace(/-/g, " ");
   const [story, setStory] = useState({
     _id: "",
     storyBasic: { storyName: "" },
@@ -50,7 +51,7 @@ export default function StoryOverview({ params: { id } }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        storyName: id,
+        storyName: storyName,
       }),
     })
       .then((res) => res.json())
@@ -136,7 +137,7 @@ export default function StoryOverview({ params: { id } }) {
         }}
         className={styles.chapters_overview_wrapper}
       >
-        {story && story._id && <Chapters id={story._id} story_name={id} />}
+        {story && story._id && <Chapters id={story._id} story_name={storyName} />}
       </div>
     </div>
   );

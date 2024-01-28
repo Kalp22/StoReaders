@@ -9,7 +9,8 @@ export default function StoryCard({ descript, story }) {
   const router = useRouter();
 
   function goToStory() {
-    router.push(`/story/${story.storyName}`);
+    const storyRoute = story.storyName.replace(/\s/g, "-");
+    router.push(`/story/${storyRoute}`);
   }
 
   if (descript) {

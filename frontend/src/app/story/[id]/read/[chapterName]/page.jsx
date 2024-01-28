@@ -7,6 +7,8 @@ import Comments from "@/components/comments/comments";
 import { useEffect, useState } from "react";
 
 export default function Read({ params: { id, chapterName } }) {
+  const storyName = id.replace(/-/g, " ");
+  const chapter_name = chapterName.replace(/-/g, " ");
   const [chapter, setChapter] = useState({
     _id: "",
     storyId: "",
@@ -28,11 +30,12 @@ export default function Read({ params: { id, chapterName } }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          chapterName: chapterName,
+          chapterName: chapter_name,
         }),
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(chapterName);
           console.log(data);
           setChapter(data.chapter);
         });
@@ -47,12 +50,12 @@ export default function Read({ params: { id, chapterName } }) {
         <div className={styles.darklight}>
           <DarkLight />
         </div>
-        <div className={styles.story_name}>{id}</div>
+        <div className={styles.story_name}>{storyName}</div>
         <div className={styles.chapter_info}>
           <div>
             Chapter Number {chapter.chapterNumber && chapter.chapterNumber} :
           </div>
-          <div>{chapterName}</div>
+          <div>{chapter_name}</div>
         </div>
         <div className={styles.content}>
           {chapter.chapterContent &&
@@ -65,12 +68,10 @@ export default function Read({ params: { id, chapterName } }) {
             })}
         </div>
       </div>
-
       <Comments
-        params={{
-          id: id,
-          chapterName: chapterName,
-        }}
+        storyName={storyName}
+        chapterName={chapterName}
+        chapterId={chapter._id}
         comments={chapter.comments}
       />
     </div>

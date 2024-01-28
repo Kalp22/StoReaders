@@ -1,6 +1,6 @@
 .comments_button {
   position: fixed;
-  bottom: 2em;
+  top: 90dvh;
   right: 2em;
   padding: 15px;
   background-color: var(--comment-button-color);
@@ -8,7 +8,7 @@
   border-radius: 100%;
   border: 1px solid var(--text-color-opposite);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .comments_button2 {
@@ -21,26 +21,36 @@
   color: var(--text-color);
   cursor: pointer;
   z-index: 3;
+  transition: all 0.3s ease;
 }
 
 .comments_button:hover,
 .comments_button2:hover {
   transform: scale(1.1);
 }
+
+.no_display,
+.comments_container {
+  position: fixed;
+  right: 1em;
+  width: 40em;
+  transition: all 0.3s ease;
+}
+
 .no_display {
-  display: none;
+  top: 100dvh;
+  z-index: -1;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .comments_container {
-  position: fixed;
   top: 6em;
-  right: 1em;
-  width: 40em;
   height: 90vh;
   padding: 1.5em 2em;
   background-color: var(--card-background);
   color: var(--text-color);
-  border-radius: 10px;
+  border-radius: 10px 10px 0 0;
   z-index: 2;
 }
 
@@ -69,4 +79,69 @@
   width: 100%;
   height: 1px;
   background-color: var(--line-color);
+}
+
+.comments {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.comment {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  align-items: center;
+}
+
+.comment_text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.commentator {
+  font-weight: bold;
+}
+
+.replies {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-left: 2em;
+}
+
+.add_comment {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  position: fixed;
+  bottom: 2em;
+  width: 37em;
+  gap: 1em;
+  align-items: center;
+  padding: 0 2em;
+}
+
+.comment_form {
+  width: 100%;
+}
+
+.comment_form input[type="text"] {
+  width: 100%;
+  height: 5em;
+  padding: 10px 3em 10px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--line-color);
+  resize: none;
+  outline: none;
+}
+
+.send_button {
+  position: fixed;
+  bottom: 3.3em;
+  right: 4.5em;
+  color: var(--card-background);
+  cursor: pointer;
 }
