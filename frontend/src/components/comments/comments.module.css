@@ -1,0 +1,72 @@
+.comments_button {
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+  padding: 15px;
+  background-color: var(--comment-button-color);
+  color: var(--text-color-opposite);
+  border-radius: 100%;
+  border: 1px solid var(--text-color-opposite);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.comments_button2 {
+  position: fixed;
+  top: 7.3em;
+  right: 2.5em;
+  margin-right: 5px;
+  padding: 5px;
+  background-color: var(--card-background);
+  color: var(--text-color);
+  cursor: pointer;
+  z-index: 3;
+}
+
+.comments_button:hover,
+.comments_button2:hover {
+  transform: scale(1.1);
+}
+.no_display {
+  display: none;
+}
+
+.comments_container {
+  position: fixed;
+  top: 6em;
+  right: 1em;
+  width: 40em;
+  height: 90vh;
+  padding: 1.5em 2em;
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border-radius: 10px;
+  z-index: 2;
+}
+
+.comments {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  overflow-y: scroll;
+  padding: 1em;
+}
+
+.comments_header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+.comments_title {
+  font-size: 1.5rem;
+  margin-left: 5px;
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: var(--line-color);
+}
