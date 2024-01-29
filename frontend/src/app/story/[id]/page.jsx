@@ -56,6 +56,7 @@ export default function StoryOverview({ params: { id } }) {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setStory(data.story);
         setImages(data.dataURI);
       });
@@ -76,7 +77,7 @@ export default function StoryOverview({ params: { id } }) {
         <div className={styles.left_overview_wrapper}>
           <Image
             alt="story image"
-            src={imageURLS[0]}
+            src={imageURLS && imageURLS[0]}
             height={350}
             width={250}
             loading="lazy"
@@ -137,7 +138,9 @@ export default function StoryOverview({ params: { id } }) {
         }}
         className={styles.chapters_overview_wrapper}
       >
-        {story && story._id && <Chapters id={story._id} story_name={storyName} />}
+        {story && story._id && (
+          <Chapters id={story._id} story_name={storyName} />
+        )}
       </div>
     </div>
   );

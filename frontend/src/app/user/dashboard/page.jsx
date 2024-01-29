@@ -7,12 +7,20 @@ import DarkLight from "@/components/ui/darklight/page";
 import DashboardCenter from "@/components/dashboardCenter/dashboardCenter";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function UserDashboard() {
+  const router = useRouter();
   const settingsToggle = () => {
     const settingsList = document.querySelector(`.${styles.settings_wrapper}`);
     settingsList.classList.toggle(`${styles.settings_wrapper_open}`);
   };
+
+  const user = localStorage.getItem("user");
+
+  if (!user) {
+    router.push("/login");
+  }
 
   return (
     <div className={styles.dashboard_wrapper}>

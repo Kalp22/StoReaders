@@ -36,6 +36,7 @@ export default function Login() {
         const user = {
           token: data.token,
           id: data.id,
+          username: data.username,
           rating: data.ratings,
         };
 

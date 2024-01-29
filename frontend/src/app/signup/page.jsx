@@ -36,6 +36,7 @@ export default function Signup() {
         const user = {
           token: data.token,
           id: data.id,
+          username: data.username,
           rating: null,
         };
 

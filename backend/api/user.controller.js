@@ -44,6 +44,7 @@ router.post("/register", async (req, res) => {
         message: "User register successfully",
         token,
         id: newUser._id,
+        username: newUser.username,
       });
     } else {
       res.status(400).json({ message: "User registration failed" });
@@ -89,6 +90,7 @@ router.post("/login", async (req, res) => {
         message: "User login successfully",
         token,
         id: user._id,
+        username: user.username,
         ratings: user.ratings,
       });
     } else {

@@ -17,7 +17,7 @@ const auth = (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       //Add user to request
-      req.user = verified.id;
+      req.user = decoded;
       
       //Continue
       next();

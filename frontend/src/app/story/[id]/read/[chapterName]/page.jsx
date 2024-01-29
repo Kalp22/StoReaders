@@ -35,8 +35,6 @@ export default function Read({ params: { id, chapterName } }) {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(chapterName);
-          console.log(data);
           setChapter(data.chapter);
         });
     } catch (error) {
@@ -68,12 +66,7 @@ export default function Read({ params: { id, chapterName } }) {
             })}
         </div>
       </div>
-      <Comments
-        storyName={storyName}
-        chapterName={chapterName}
-        chapterId={chapter._id}
-        comments={chapter.comments}
-      />
+      <Comments chapterId={chapter._id} comments={chapter.comments} />
     </div>
   );
 }

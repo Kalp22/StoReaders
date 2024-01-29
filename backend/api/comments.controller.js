@@ -99,6 +99,14 @@ router.delete("/reply/delete", auth, async (req, res) => {
   try {
     const { userId, chapterId, commentId, replyId } = req.body;
 
+    const user = await User.findById(userId).exec();
+    if (!user.replies.includes(replyId)) {
+      res
+        .status(401)
+        .json({ message: "You are Unauthorized to delete this Reply" });
+      return;
+    }
+
     //Remove reply from user replies Array
     await User.findByIdAndUpdate(userId, {
       $pull: { replies: replyId },
@@ -130,6 +138,14 @@ router.delete("/delete", auth, async (req, res) => {
     //Credentials from user taken
     const { userId, chapterId, commentId } = req.body;
 
+    const user = await User.findById(userId).exec();
+    if (!user.comments.includes(commentId)) {
+      res
+        .status(401)
+        .json({ message: "You are Unauthorized to delete this Comment" });
+      return;
+    }
+
     //Remove comment from user comments Array
     await User.findByIdAndUpdate(userId, {
       $pull: { comments: commentId },
@@ -138,7 +154,7 @@ router.delete("/delete", auth, async (req, res) => {
     //Remove comment from chapter comments Array
     const chapter = await Chapters.findById(chapterId).exec();
     //If comment has no replies, delete comment
-    if ((chapter.comments.id(commentId).replies.length = 0))
+    if (chapter.comments.id(commentId).replies.length == 0)
       chapter.comments.pull(commentId);
     //Else, change comment content to "Deleted"
     else {
