@@ -6,7 +6,6 @@ import Link from "next/link";
 import { FaUser } from "react-icons/fa";
 
 import DarkLight from "../ui/darklight/page";
-import { use } from "react";
 
 export default function Navbar() {
   const user = localStorage.getItem("user");
@@ -30,12 +29,10 @@ export default function Navbar() {
           <div className={styles.partitioner}></div>
           {user ? (
             <>
-              <div>
-                <Link href="/user/dashboard">
-                  <FaUser size={25} />
-                  <p>{JSON.parse(user).username}</p>
-                </Link>
-              </div>
+              <Link href="/user/dashboard" className={styles.user}>
+                <FaUser size={25} />
+                <p>{JSON.parse(user).username}</p>
+              </Link>
             </>
           ) : (
             <>
