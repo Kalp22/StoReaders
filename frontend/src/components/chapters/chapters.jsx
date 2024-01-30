@@ -20,8 +20,6 @@ export default function Chapters({ id, story_name }) {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(id);
-          console.log(data);
           setChapters(data.chapters);
         });
     } catch (err) {

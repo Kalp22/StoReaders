@@ -10,6 +10,10 @@ const chapterScheme = new mongoose.Schema({
     type: String,
     required: true,
   },
+  storyName: {
+    type: String,
+    required: true,
+  },
   chapterNumber: {
     type: Number,
     required: true,

@@ -41,7 +41,7 @@ const userScheme = new mongoose.Schema({
     required: false,
   },
   ratings: {
-    type: [{ storyId: ObjectId, rating: Number }],
+    type: [{ storyId: String, rating: Number }],
     required: false,
   },
 });

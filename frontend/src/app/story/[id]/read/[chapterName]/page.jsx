@@ -5,13 +5,16 @@ import DarkLight from "@/components/ui/darklight/page";
 import Comments from "@/components/comments/comments";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Read({ params: { id, chapterName } }) {
+  const router = useRouter();
   const storyName = id.replace(/-/g, " ");
   const chapter_name = chapterName.replace(/-/g, " ");
   const [chapter, setChapter] = useState({
     _id: "",
     storyId: "",
+    storyName: "",
     chapterNumber: "",
     comments: [
       {
@@ -35,6 +38,9 @@ export default function Read({ params: { id, chapterName } }) {
       })
         .then((res) => res.json())
         .then((data) => {
+          if (data.chapter.storyName != storyName) {
+            router.push(`/story/${id}`);
+          }
           setChapter(data.chapter);
         });
     } catch (error) {
@@ -48,7 +54,7 @@ export default function Read({ params: { id, chapterName } }) {
         <div className={styles.darklight}>
           <DarkLight />
         </div>
-        <div className={styles.story_name}>{storyName}</div>
+        <div className={styles.story_name}>{chapter.storyName}</div>
         <div className={styles.chapter_info}>
           <div>
             Chapter Number {chapter.chapterNumber && chapter.chapterNumber} :

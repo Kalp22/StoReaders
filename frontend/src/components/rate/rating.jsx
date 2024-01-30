@@ -9,31 +9,23 @@ export default function Rating({ storyId }) {
   const [ratings, setRatings] = useState(0);
   const [User, setUser] = useState({});
 
-  function getRatings(storyId) {
-    try {
+  useEffect(() => {
+    let rates = (storyId) => {
       console.log(storyId);
       if (localStorage.getItem("user") == null) return;
       const user = JSON.parse(localStorage.getItem("user"));
-      setUser(user);
       let rates;
-      if (User) {
-        if (User.rating) {
-          rates = User.rating.map((rating) => {
-            if (rating.storyId == storyId) {
-              return rating.rating;
-            }
-          });
-        }
+      if (JSON.parse(user).rating) {
+        rates = User.rating.map((ratings) => {
+          if (ratings.storyId == storyId) {
+            return ratings.rating;
+          }
+        });
       }
+      setUser(user);
 
       return rates;
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  useEffect(() => {
-    let rates = getRatings(storyId);
+    };
     if (rates) {
       setRatings(rates[0]);
     }
@@ -45,8 +37,8 @@ export default function Rating({ storyId }) {
         alert("Please login to rate");
         return;
       }
-      const user = JSON.parse(localStorage.getItem("user"));
-      setUser(user);
+      setUser(JSON.parse(localStorage.getItem("user")));
+      console.log(User);
       if (User.rating) {
         const rates = User.rating.map((rate) => {
           if (rate.storyId == storyId) {
@@ -69,6 +61,14 @@ export default function Rating({ storyId }) {
         const data = await res.json();
 
         if (data) {
+          const rate = {
+            storyId: storyId,
+            rating: rating,
+          };
+          const ratings = [...User.rating, rate];
+          User.rating = ratings;
+          localStorage.setItem("user", JSON.stringify(User));
+          setUser(User);
           setRatings(rating);
         }
       } else {
@@ -76,7 +76,7 @@ export default function Rating({ storyId }) {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${User.token}`,
           },
           body: JSON.stringify({
             userId: User.id,
@@ -93,9 +93,9 @@ export default function Rating({ storyId }) {
             rating: rating,
           };
           const rating = [...User.rating, rate];
-          user.rating = rating;
-          localStorage.setItem("user", JSON.stringify(user));
-          setUser(user);
+          User.rating = rating;
+          localStorage.setItem("user", JSON.stringify(User));
+          setUser(User);
           setRatings(rating);
         }
       }

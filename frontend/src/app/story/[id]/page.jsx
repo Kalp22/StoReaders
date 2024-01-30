@@ -56,7 +56,6 @@ export default function StoryOverview({ params: { id } }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setStory(data.story);
         setImages(data.dataURI);
       });
@@ -92,7 +91,7 @@ export default function StoryOverview({ params: { id } }) {
                 })}
             </div>
             <div className={styles.link}>
-              <Link href={`/story/${id}/read/bdgg`}>
+              <Link href={`/story/${id}/read/the`}>
                 <div className={styles.read_now}>Read Now</div>
               </Link>
             </div>

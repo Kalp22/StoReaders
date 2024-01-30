@@ -41,12 +41,13 @@ router.post("/getOne", async (req, res) => {
 
 router.post("/add", async (req, res) => {
   try {
-    const { storyId, chapterNumber, chapterName, chapterContent } = req.body;
+    const { storyId, storyName, chapterNumber, chapterName, chapterContent } = req.body;
 
     const releaseDate = new Date().toJSON().slice(0, 10);
 
     const newChapter = new Chapters({
       storyId,
+      storyName,
       chapterNumber,
       chapterName,
       releaseDate,
