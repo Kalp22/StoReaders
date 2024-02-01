@@ -37,6 +37,7 @@ export default function Login() {
           token: data.token,
           id: data.id,
           username: data.username,
+          email: form.email,
           rating: data.ratings,
         };
 

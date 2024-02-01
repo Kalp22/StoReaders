@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import Navbar from "@/components/navbar/navbar";
 import Genre from "@/components/genre/genre";
@@ -14,6 +15,7 @@ import Rating from "@/components/rate/rating";
 import { FaStar } from "react-icons/fa";
 
 export default function StoryOverview({ params: { id } }) {
+  const router = useRouter();
   const storyName = id.replace(/-/g, " ");
   const [story, setStory] = useState({
     _id: "",
@@ -56,6 +58,11 @@ export default function StoryOverview({ params: { id } }) {
     })
       .then((res) => res.json())
       .then((data) => {
+        if (!data.status) {
+          alert("Story not found");
+          router.push("/stories");
+          return;
+        }
         setStory(data.story);
         setImages(data.dataURI);
       });
@@ -120,7 +127,7 @@ export default function StoryOverview({ params: { id } }) {
             </div>
             <div className={styles.parameter_value_wrapper}>
               <FaStar className={styles.star} />
-              <div className={styles.values}>9.5</div>
+              <div className={styles.values}>{story.ratings}</div>
             </div>
           </div>
           <div className={styles.ratings_wrapper}>

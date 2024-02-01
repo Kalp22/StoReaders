@@ -21,11 +21,11 @@ const userScheme = new mongoose.Schema({
     required: false,
   },
   readStories: {
-    type: [{ storyId: ObjectId, noOfChapters: Number }],
+    type: [{ storyId: String, noOfChapters: Number }],
     required: false,
   },
   readChapters: {
-    type: [ObjectId],
+    type: [String],
     required: false,
   },
   comments: {

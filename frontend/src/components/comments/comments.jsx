@@ -303,8 +303,10 @@ export default function Comments({ chapterId, comments }) {
                           id={`moreButton${i}`}
                           size={20}
                           className={styles.action_buttons}
+                          onMouseOver={() =>
+                            setCommentator(comment.commentator)
+                          }
                           onClick={() => {
-                            setCommentator(comment.commentator);
                             setContent(comment.commentContent);
                             var reply = document.querySelector(
                               `#moreButton${i}`
@@ -361,8 +363,10 @@ export default function Comments({ chapterId, comments }) {
                                   id={`more_button${j}`}
                                   size={20}
                                   className={styles.action_buttons}
+                                  onMouseOver={() =>
+                                    setCommentator(reply.commentator)
+                                  }
                                   onClick={() => {
-                                    setCommentator(reply.commentator);
                                     setContent(reply.commentContent);
                                     const replyElement = document.querySelector(
                                       `#more_button${j}`

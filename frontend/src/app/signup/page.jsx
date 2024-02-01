@@ -37,6 +37,7 @@ export default function Signup() {
           token: data.token,
           id: data.id,
           username: data.username,
+          email: form.email,
           rating: null,
         };
 

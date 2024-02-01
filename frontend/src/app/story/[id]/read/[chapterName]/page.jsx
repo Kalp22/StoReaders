@@ -7,10 +7,13 @@ import Comments from "@/components/comments/comments";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function Read({ params: { id, chapterName } }) {
+export default function chapterRead({ params: { id, chapterName } }) {
   const router = useRouter();
+
   const storyName = id.replace(/-/g, " ");
   const chapter_name = chapterName.replace(/-/g, " ");
+
+  const user = JSON.parse(localStorage.getItem("user"));
   const [chapter, setChapter] = useState({
     _id: "",
     storyId: "",
@@ -33,11 +36,15 @@ export default function Read({ params: { id, chapterName } }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          userId: user.id,
           chapterName: chapter_name,
         }),
       })
         .then((res) => res.json())
         .then((data) => {
+          if (data.chapter == null) {
+            router.push(`/story/${id}`);
+          }
           if (data.chapter.storyName != storyName) {
             router.push(`/story/${id}`);
           }
@@ -65,9 +72,9 @@ export default function Read({ params: { id, chapterName } }) {
           {chapter.chapterContent &&
             chapter.chapterContent.split("\n").map((para, i) => {
               return (
-                <div key={i} className={styles.paragraph}>
+                <p key={i} className={styles.paragraph}>
                   {para}
-                </div>
+                </p>
               );
             })}
         </div>
