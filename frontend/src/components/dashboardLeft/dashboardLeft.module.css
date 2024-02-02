@@ -1,0 +1,45 @@
+.icon_wrapper {
+  background-color: var(--card-hover-border);
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+  margin-bottom: 1em;
+}
+.user_icon {
+  margin: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user_name {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.user_email {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-top: 1rem;
+}
+
+.user_stats {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 70%;
+  margin-top: 2em;
+}
+
+.no_of {
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  font-weight: 400;
+  background: var(--toggle-color-hover);
+  border-radius: 10px;
+  color: black;
+}

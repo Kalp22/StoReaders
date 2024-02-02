@@ -15,7 +15,7 @@ const User = require("../models/user.model");
 router.put("/add", async (req, res) => {
   try {
     //Credentials from user taken
-    const { userId, storyId, content } = req.body;
+    const { userId, storyId, storyName, content } = req.body;
 
     //Find reviewer
     const reviewer = await User.findById(userId).exec();
@@ -49,7 +49,11 @@ router.put("/add", async (req, res) => {
     const reviewId = updatedReview._id;
 
     //Add review id to user reviews Array
-    reviewer.reviews.push({ storyId: storyId, reviewId: reviewId });
+    reviewer.reviews.push({
+      storyId: storyId,
+      storyName: storyName,
+      reviewId: reviewId,
+    });
 
     await story.save();
     await reviewer.save();

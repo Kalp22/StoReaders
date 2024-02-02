@@ -138,3 +138,12 @@
   min-height: 34dvh;
   transform: translateY(5em);
 }
+
+.reviews_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  width: 80%;
+  margin: 2em auto 0 auto;
+  padding: 5em 8em;
+}

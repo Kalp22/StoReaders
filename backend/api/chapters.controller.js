@@ -75,18 +75,27 @@ router.post("/add", async (req, res) => {
 
     const releaseDate = new Date().toJSON().slice(0, 10);
 
-    const newChapter = new Chapters({
-      storyId,
-      storyName,
-      chapterNumber,
-      chapterName,
-      releaseDate,
-      chapterContent,
-    });
+    const story = await Stories.findById(storyId);
 
-    await newChapter.save();
+    if (!story) {
+      return res.status(404).json({ message: "Story not found" });
+    } else {
+      story.storyBasic.noOfChapters = story.storyBasic.noOfChapters + 1;
 
-    res.status(201).json({ message: "Chapter added successfully" });
+      const newChapter = new Chapters({
+        storyId,
+        storyName,
+        chapterNumber,
+        chapterName,
+        releaseDate,
+        chapterContent,
+      });
+
+      await story.save();
+      await newChapter.save();
+
+      res.status(201).json({ message: "Chapter added successfully" });
+    }
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: e.message });

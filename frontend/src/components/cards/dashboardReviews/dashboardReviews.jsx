@@ -1,6 +1,7 @@
-import styles from "./dashboardComments.module.css";
+import styles from "./dashboardReviews.module.css";
 
-export default function DashboardComments() {
+export default function DashboardReviews({ storyName, reviewDate, review}) {
+  console.log(storyName, reviewDate, review);
   return (
     <div className={styles.comment_wrapper}>
       <div className={styles.comment_head}>

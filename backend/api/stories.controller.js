@@ -2,6 +2,9 @@ require("dotenv").config();
 
 const express = require("express");
 const router = express.Router();
+
+const auth = require("../middleware/authServer.middleware");
+
 //Story model
 const StoryDetail = require("../models/storyDetail.model");
 
@@ -101,8 +104,10 @@ router.post("/get", async (req, res) => {
       "storyBasic.storyName": storyName,
     });
 
-    if(!story) {
-      return res.status(404).json({ status: false, message: "Story not found" });
+    if (!story) {
+      return res
+        .status(404)
+        .json({ status: false, message: "Story not found" });
     }
 
     const imagesResponse = await getImageFromGoogleDrive();

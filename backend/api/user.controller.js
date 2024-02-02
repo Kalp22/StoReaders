@@ -9,6 +9,10 @@ const auth = require("../middleware/authServer.middleware");
 
 //User model
 const User = require("../models/user.model");
+//Story model
+const Story = require("../models/storyDetail.model");
+//Review model
+const Review = require("../models/reviews.model");
 
 /*
  *@route POST /api/user/register
@@ -56,7 +60,7 @@ router.post("/register", async (req, res) => {
 });
 
 /*
- *@route GET /api/user/login
+ *@route POST /api/user/login
  */
 
 router.post("/login", async (req, res) => {
@@ -103,20 +107,49 @@ router.post("/login", async (req, res) => {
 });
 
 /*
- *@route GET /api/user/get
+ *@route POST /api/user/get
  */
 
 router.post("/get", auth, async (req, res) => {
   try {
-    const { userId } = req.body;
-    const user = await User.findById(userId);
+    const { username } = req.body;
+    const user = await User.findOne({ username: username });
     if (!user) {
       return res.status(404).json({ status: false, message: "User not found" });
     }
-
     user.password = undefined;
     user.otp = undefined;
-    res.status(200).json({ status: true, user: user });
+    if (user.readStories.length !== 0) {
+      const ids = user.readStories.map((story) => story.storyId);
+      const stories = await Story.find({
+        _id: {
+          $in: ids,
+        },
+      });
+
+      if (user.reviews.length !== 0) {
+        const reviews = await Review.find({
+          _id: {
+            $in: user.reviews.reviewId,
+          },
+        });
+        res.status(200).json({
+          status: true,
+          user: user,
+          stories: stories,
+          reviews: reviews,
+        });
+      } else {
+        res
+          .status(200)
+          .json({ status: true, user: user, stories: stories, reviews: [] });
+      }
+      // res.status(200).json({ status: true, user: user, stories: stories });
+    } else {
+      res
+        .status(200)
+        .json({ status: true, user: user, stories: [], reviews: [] });
+    }
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: e.message });

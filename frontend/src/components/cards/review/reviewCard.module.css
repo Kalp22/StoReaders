@@ -1,0 +1,49 @@
+.review_card {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem 0;
+  padding: 1rem 1rem;
+  background: var(--review-background);
+  border-radius: 5px;
+  width: 100%;
+  gap: 1rem;
+}
+
+.head {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.head div:nth-child(1) {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  align-items: center;
+}
+
+.user_icon {
+  width: 2em;
+  height: 2em;
+  border-radius: 100%;
+  background-color: var(--comment-button-color);
+  color: var(--text-color-opposite);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user_name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color2);
+}
+
+.dots {
+  cursor: pointer;
+}
+
+.content {
+  padding: 5px 15px;
+}

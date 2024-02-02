@@ -9,8 +9,9 @@ import { useRouter } from "next/navigation";
 
 import Navbar from "@/components/navbar/navbar";
 import Genre from "@/components/genre/genre";
-import Chapters from "@/components/chapters/chapters";
 import Rating from "@/components/rate/rating";
+import Chapters from "@/components/chapters/chapters";
+import Reviews from "@/components/reviews/reviews";
 
 import { FaStar } from "react-icons/fa";
 
@@ -77,7 +78,7 @@ export default function StoryOverview({ params: { id } }) {
   }
 
   return (
-    <div>
+    <>
       <Navbar />
       <div className={styles.all_overview_wrapper}>
         <div className={styles.left_overview_wrapper}>
@@ -148,6 +149,9 @@ export default function StoryOverview({ params: { id } }) {
           <Chapters id={story._id} story_name={storyName} />
         )}
       </div>
-    </div>
+      <div className={styles.reviews_wrapper}>
+        <Reviews storyId={story._id} />
+      </div>
+    </>
   );
 }

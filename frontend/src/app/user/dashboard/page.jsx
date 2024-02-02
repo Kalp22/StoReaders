@@ -1,26 +1,62 @@
 "use client";
 import styles from "./page.module.css";
 
-import { FaUser } from "react-icons/fa";
-
 import DarkLight from "@/components/ui/darklight/page";
+import DashboardLeft from "@/components/dashboardLeft/dashboardLeft";
 import DashboardCenter from "@/components/dashboardCenter/dashboardCenter";
+import DashboardRight from "@/components/dashboardRight/dashboardRight";
 
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function UserDashboard() {
   const router = useRouter();
-  const settingsToggle = () => {
-    const settingsList = document.querySelector(`.${styles.settings_wrapper}`);
-    settingsList.classList.toggle(`${styles.settings_wrapper_open}`);
-  };
+  const [userDetails, setUserDetails] = useState({
+    username: "",
+    email: "",
+    readStories: [],
+  });
+  const [Reviews, setReviews] = useState([
+    {
+      _id: "",
+      reviewer: "",
+      reviewContent: "",
+    },
+  ]);
+  const [stories, setStories] = useState([
+    {
+      _id: "",
+      storyBasic: {
+        storyName: "",
+        totalNoOfChapters: 0,
+        status: false,
+      },
+    },
+  ]);
 
-  const user = localStorage.getItem("user");
-
-  if (!user) {
-    router.push("/login");
-  }
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      router.push("/");
+    }
+    fetch(`${process.env.API_URL}user/get`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify({
+        username: user.username,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUserDetails(data.user);
+        setStories(data.stories);
+        setReviews(data.reviews);
+      });
+  }, []);
 
   return (
     <div className={styles.dashboard_wrapper}>
@@ -32,48 +68,18 @@ export default function UserDashboard() {
       </div>
       <div className={styles.dashboard_cover}>
         <div className={styles.dashboard_left}>
-          <div className={styles.icon_wrapper}>
-            <div className={styles.user_icon}>
-              <FaUser size={150} />
-            </div>
-          </div>
-          <div className={styles.user_name}>Kalpesh</div>
-          <div className={styles.user_email}>kalpesh22nimje@gmail.com</div>
-          <div className={styles.user_stats}>
-            <div className={styles.no_of}>
-              <div>Stories Read</div>
-              <div>0</div>
-            </div>
-            <div className={styles.no_of}>
-              <div>Chapters Read</div>
-              <div>0</div>
-            </div>
-          </div>
+          <DashboardLeft
+            readStories={userDetails.readStories}
+            readChapters={userDetails.readChapters}
+            email={userDetails.email}
+            username={userDetails.username}
+          />
         </div>
         <div className={styles.dashboard_center}>
-          <DashboardCenter />
+          <DashboardCenter stories={stories} user={userDetails} reviews={Reviews}/>
         </div>
         <div className={styles.dashboard_right}>
-          <div className={styles.options_wrapper}>
-            <Link href={"/"} className={styles.latest_chapter}>
-              <div>Latest Chapter</div>
-            </Link>
-            <div className={styles.line}></div>
-            <div className={styles.options_cover}>
-              <Link href={"/stories"} className={styles.keep_reading}>
-                <div>Keep Reading</div>
-              </Link>
-              <div className={styles.settings} onClick={() => settingsToggle()}>
-                Account Settings
-              </div>
-              <div className={styles.settings_wrapper}>
-                <ul className={styles.settings_list}>
-                  <li>Log Out</li>
-                  <li>Delete Account</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          <DashboardRight />
         </div>
       </div>
     </div>

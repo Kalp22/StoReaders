@@ -6,6 +6,7 @@
   --foreground-color: #000;
   --background-color: #eae6e9;
   --background-color2: #c5bfc4;
+  --review-background: #dbd7da;
   --line-color: #9f9f9f;
   --gradient-color: #0000001a;
   --toggle-color: #b580ff;
@@ -43,6 +44,7 @@
   --foreground-color: #fff;
   --background-color: #191518;
   --background-color2: #191518;
+  --review-background: #201d1f;
   --line-color: #9f9f9f;
   --gradient-color: #ffffff1a;
   --toggle-color: #c49bff;

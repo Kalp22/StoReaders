@@ -37,7 +37,7 @@ const userScheme = new mongoose.Schema({
     required: false,
   },
   reviews: {
-    type: [{ storyId: ObjectId, reviewId: ObjectId }],
+    type: [{ storyId: ObjectId, storyName: String, reviewId: ObjectId }],
     required: false,
   },
   ratings: {
