@@ -10,14 +10,30 @@
 }
 
 .latest_chapter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
   cursor: pointer;
   border-radius: 20px 0px 0px 20px;
   align-self: end;
   width: 99%;
-  padding: 20px;
+  padding: 15px 20px;
   background: var(--toggle-color-hover);
   color: black;
   margin: 1.5em 0px;
+  transition: all 0.15s ease-in;
+}
+
+.latest_chapter:hover {
+  background: var(--toggle-color);
+  transform: translateX(-10px);
+  transition: all 0.15s ease-in;
+}
+
+.latest_chapter p:nth-child(2) {
+  font-size: 1.7rem;
+  font-weight: 500;
+  margin-left: 15px;  
 }
 
 .keep_reading,

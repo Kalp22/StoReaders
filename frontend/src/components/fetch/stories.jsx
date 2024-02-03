@@ -11,8 +11,6 @@ export default async function Stories({ description, swiper }) {
 
   const data = await res.json();
 
-  // All Image Urls not fetching error
-  console.log(data.dataURI);
   if (swiper) {
     return <SwiperComponent data={data} />;
   } else {

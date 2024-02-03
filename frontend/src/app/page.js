@@ -1,7 +1,7 @@
 import styles from "./page.module.css";
 
 import Navbar from "@/components/navbar/navbar";
-import LatestChapter from "@/components/latestChapter/latestChapter";
+import LatestStory from "@/components/latestChapter/latestChapter";
 import About from "@/components/about/about";
 import Stories from "@/components/fetch/stories";
 
@@ -17,7 +17,7 @@ export default function Home() {
           <div className={styles.subtitle}>A place to read stories</div>
         </div>
       </div>
-      <LatestChapter />
+      <LatestStory />
       <Stories description={description} />
       <About />
     </main>

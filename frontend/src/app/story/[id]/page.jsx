@@ -22,6 +22,7 @@ export default function StoryOverview({ params: { id } }) {
     _id: "",
     storyBasic: { storyName: "" },
     genre: [],
+    reviews: [],
   });
 
   const [images, setImages] = useState([]);
@@ -99,7 +100,7 @@ export default function StoryOverview({ params: { id } }) {
                 })}
             </div>
             <div className={styles.link}>
-              <Link href={`/story/${id}/read/the`}>
+              <Link href="#chapters">
                 <div className={styles.read_now}>Read Now</div>
               </Link>
             </div>
@@ -137,6 +138,7 @@ export default function StoryOverview({ params: { id } }) {
         </div>
       </div>
       <div
+        id="chapters"
         style={{
           backgroundImage: backgroundImage,
           backgroundRepeat: "no-repeat",
@@ -150,7 +152,11 @@ export default function StoryOverview({ params: { id } }) {
         )}
       </div>
       <div className={styles.reviews_wrapper}>
-        <Reviews storyId={story._id} />
+        <Reviews
+          storyId={story._id}
+          story_name={storyName}
+          reviews={story.reviews}
+        />
       </div>
     </>
   );

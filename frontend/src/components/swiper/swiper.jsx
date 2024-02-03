@@ -12,7 +12,7 @@ import SwipCard from "../cards/swipCards/swipCard";
 
 export default function SwiperComponent({ data }) {
   const stories = data.story;
-  const images = data.dataURI;
+  let images = data.dataURI;
 
   const imageURLS = images.map((image, i) => {
     const reducedURI = image.slice(0, -18);
@@ -24,14 +24,11 @@ export default function SwiperComponent({ data }) {
     return url;
   });
 
-  const imagesReverse = imageURLS.reverse();
-  console.log(imagesReverse);
-
   return (
     <Swiper
-      modules={[A11y, Autoplay]}  
+      modules={[A11y, Autoplay]}
       autoplay={{
-        delay: 3500,
+        delay: 3000,
         disableOnInteraction: false,
         pauseOnMouseEnter: true,
       }}
@@ -41,6 +38,7 @@ export default function SwiperComponent({ data }) {
       className={styles.swiper_wrapper}
     >
       {stories &&
+        imageURLS &&
         stories.map((story, i) => {
           return (
             <SwiperSlide key={i}>
@@ -55,14 +53,6 @@ export default function SwiperComponent({ data }) {
               >
                 <SwipCard story={story} image={imageURLS[i]} />
               </div>
-              {/* <div className={styles.arrows_wrapper}>
-                <div className={styles.arrow_cover} onClick={()=>{swipMethod.slidePrev()}}>
-                  <div className={styles.left_arrow}></div>
-                </div>
-                <div className={styles.arrow_cover} onClick={()=>{swipMethod.slideNext()}}>
-                  <div className={styles.right_arrow}></div>
-                </div>
-              </div> */}
             </SwiperSlide>
           );
         })}

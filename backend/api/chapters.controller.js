@@ -77,9 +77,12 @@ router.post("/add", async (req, res) => {
 
     const story = await Stories.findById(storyId);
 
+    var isStory;
+
     if (!story) {
-      return res.status(404).json({ message: "Story not found" });
+      isStory = false;
     } else {
+      isStory = true;
       story.storyBasic.noOfChapters = story.storyBasic.noOfChapters + 1;
 
       const newChapter = new Chapters({
@@ -94,7 +97,13 @@ router.post("/add", async (req, res) => {
       await story.save();
       await newChapter.save();
 
-      res.status(201).json({ message: "Chapter added successfully" });
+      res
+        .status(201)
+        .json(
+          isStory
+            ? { message: "Chapter added successfully" }
+            : { message: "Story not found" }
+        );
     }
   } catch (e) {
     console.log(e);

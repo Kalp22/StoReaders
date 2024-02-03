@@ -11,8 +11,6 @@ const auth = require("../middleware/authServer.middleware");
 const User = require("../models/user.model");
 //Story model
 const Story = require("../models/storyDetail.model");
-//Review model
-const Review = require("../models/reviews.model");
 
 /*
  *@route POST /api/user/register
@@ -128,11 +126,29 @@ router.post("/get", auth, async (req, res) => {
       });
 
       if (user.reviews.length !== 0) {
-        const reviews = await Review.find({
+        const ids = user.reviews.map((review) => review.storyId);
+
+        const reviewedStories = await Story.find({
           _id: {
-            $in: user.reviews.reviewId,
+            $in: ids,
           },
         });
+
+        const reviews = user.reviews.map((review) => {
+          const story = reviewedStories.find(
+            (story) => story._id.toString() === review.storyId.toString()
+          );
+          return {
+            storyId: story._id,
+            storyName: story.storyBasic.storyName,
+            reviewContent: story.reviews.find((r) => r.reviewer === username)
+              .reviewContent,
+            reviewDate: story.reviews.find((r) => r.reviewer === username)
+              .reviewDate,
+            reviewId: review.reviewId,
+          };
+        });
+
         res.status(200).json({
           status: true,
           user: user,

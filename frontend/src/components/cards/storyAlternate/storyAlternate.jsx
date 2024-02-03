@@ -1,8 +1,13 @@
 import styles from "./storyAlternate.module.css";
 
+import Link from "next/link";
+
 export default function StoryAlternate({ story, readChapters }) {
+  const storyId =
+    story.storyBasic.storyName &&
+    story.storyBasic.storyName.replace(/\s/g, "-");
   return (
-    <div className={styles.story_wrapper}>
+    <Link href={`/story/${storyId}`} className={styles.story_wrapper}>
       <div className={styles.name_wrap}>
         <div className={styles.story_name}>{story.storyBasic.storyName}</div>
         <div className={styles.line}></div>
@@ -25,6 +30,6 @@ export default function StoryAlternate({ story, readChapters }) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

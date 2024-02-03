@@ -76,7 +76,11 @@ export default function UserDashboard() {
           />
         </div>
         <div className={styles.dashboard_center}>
-          <DashboardCenter stories={stories} user={userDetails} reviews={Reviews}/>
+          <DashboardCenter
+            stories={stories}
+            user={userDetails}
+            reviews={Reviews}
+          />
         </div>
         <div className={styles.dashboard_right}>
           <DashboardRight />

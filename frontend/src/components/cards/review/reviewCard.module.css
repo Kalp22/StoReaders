@@ -40,10 +40,26 @@
   color: var(--text-color2);
 }
 
+.date{
+  font-size: 0.9rem;
+  color: var(--text-color3);
+}
+
 .dots {
   cursor: pointer;
 }
 
 .content {
   padding: 5px 15px;
+}
+
+.delete{
+  font-size: 1em;
+  padding: 10px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.delete:hover {
+  background-color: var(--option-hover);
 }

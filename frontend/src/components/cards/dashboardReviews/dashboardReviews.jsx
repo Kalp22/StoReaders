@@ -1,21 +1,21 @@
 import styles from "./dashboardReviews.module.css";
 
-export default function DashboardReviews({ storyName, reviewDate, review}) {
-  console.log(storyName, reviewDate, review);
+import Link from "next/link";
+
+export default function DashboardReviews({ storyName, reviewDate, review }) {
+  const storyId = storyName && storyName.replace(/\s/g, "-");
+  
   return (
-    <div className={styles.comment_wrapper}>
+    <Link href={`/story/${storyId}`} className={styles.comment_wrapper}>
       <div className={styles.comment_head}>
-        <span>Story Name</span>
+        <span>{storyName}</span>
         <div className={styles.comment_chapter}>
-          <div className={styles.comment_chapter_title}>Chapter</div>
-          <p>100</p>
+          <div className={styles.comment_chapter_title}>
+            {reviewDate && reviewDate.slice(0, 10)}
+          </div>
         </div>
       </div>
-      <div className={styles.comment_details}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-        voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Quisquam, voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing
-      </div>
-    </div>
+      <div className={styles.comment_details}>{review}</div>
+    </Link>
   );
 }

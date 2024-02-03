@@ -133,6 +133,29 @@ router.post("/get", async (req, res) => {
 });
 
 /*
+ *@route GET /api/stories/getLatest
+ */
+
+router.get("/getLatest", async (req, res) => {
+  try {
+    const latestStory = await StoryDetail.findOne().sort({ _id: -1 }).exec();
+
+    if (!latestStory) {
+      return res
+        .status(404)
+        .json({ status: false, message: "Story not found" });
+    }
+
+    res.status(200).json({
+      status: true,
+      storyName: latestStory.storyBasic.storyName,
+    });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+});
+
+/*
  *@route POST /api/stories/add
  */
 

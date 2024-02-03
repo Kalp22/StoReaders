@@ -17,48 +17,53 @@ router.put("/add", async (req, res) => {
     //Credentials from user taken
     const { userId, storyId, storyName, content } = req.body;
 
+    var isReviewed;
     //Find reviewer
     const reviewer = await User.findById(userId).exec();
     const reviewerName = reviewer.username;
 
     //Check if user has already reviewed the story
-    if (reviewer.reviews != undefined)
+    if (reviewer.reviews.length > 0) {
       reviewer.reviews.forEach((review) => {
         if (review.storyId == storyId) {
-          res.status(401).json({
-            status: false,
-            message: "You have already reviewed this story!",
-          });
+          isReviewed = true;
         }
       });
+    } else {
+      //Date added
+      const reviewDate = new Date().toJSON().slice(0, 10);
 
-    //Date added
-    const reviewDate = new Date().toJSON().slice(0, 10);
+      //Find story
+      const story = await Story.findById(storyId).exec();
+      //Push review to Story
+      story.reviews.push({
+        reviewer: reviewerName,
+        reviewDate: reviewDate,
+        reviewContent: content,
+      });
 
-    //Find story
-    const story = await Story.findById(storyId).exec();
-    //Push review to Story
-    story.reviews.push({
-      reviewer: reviewerName,
-      reviewDate: reviewDate,
-      reviewContent: content,
-    });
+      //Get review Id by getting the last Object in reviews Array
+      var updatedReview = story.reviews.at(-1);
+      const reviewId = updatedReview._id;
 
-    //Get review Id by getting the last Object in reviews Array
-    const updatedReview = story.reviews.at(-1);
-    const reviewId = updatedReview._id;
+      //Add review id to user reviews Array
+      reviewer.reviews.push({
+        storyId: storyId,
+        storyName: storyName,
+        reviewId: reviewId,
+      });
 
-    //Add review id to user reviews Array
-    reviewer.reviews.push({
-      storyId: storyId,
-      storyName: storyName,
-      reviewId: reviewId,
-    });
-
-    await story.save();
-    await reviewer.save();
-
-    res.status(201).json({ status: true, updatedReview: updatedReview });
+      await story.save();
+      await reviewer.save();
+    }
+    res.status(201).json(
+      isReviewed
+        ? {
+            status: false,
+            message: "You have already reviewed this story!",
+          }
+        : { status: true, updatedReview: updatedReview }
+    );
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: e.message });
@@ -75,9 +80,9 @@ router.delete("/delete", async (req, res) => {
     const { userId, storyId, reviewId } = req.body;
 
     //Remove review from user reviews Array
-    await User.findByIdAndUpdate(userId, {
-      $pull: { reviews: { storyId: storyId, reviewId: reviewId } },
-    }).exec();
+    const user = await User.findById(userId).exec();
+
+    user.reviews.pull({ storyId: storyId, reviewId: reviewId });
 
     //Remove review from story reviews Array
     const story = await Story.findById(storyId).exec();
@@ -86,6 +91,8 @@ router.delete("/delete", async (req, res) => {
 
     //Save story
     await story.save();
+    //Save user
+    await user.save();
 
     res
       .status(201)

@@ -38,7 +38,7 @@
 
 .dark {
   --text-color: #fff;
-  --text-color-opposite: hsl(313, 9%, 19%);
+  --text-color-opposite: #352c33;
   --text-color2: #dadada;
   --text-color-alt: #b195aa;
   --foreground-color: #fff;
@@ -71,7 +71,7 @@
     #2b2b2b 100%
   );
   --arrow-background: #212121;
-  --comment-button-color: hsl(318, 10%, 75%);
+  --comment-button-color: #c6b9c2;
 }
 
 * {

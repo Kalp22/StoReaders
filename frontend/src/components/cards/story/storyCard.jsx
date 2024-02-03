@@ -1,21 +1,15 @@
-"use client";
 import styles from "./storyCard.module.css";
 
 import Genre from "../../genre/genre";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function StoryCard({ descript, story }) {
-  const router = useRouter();
-
-  function goToStory() {
-    const storyRoute = story.storyName.replace(/\s/g, "-");
-    router.push(`/story/${storyRoute}`);
-  }
+  const storyRoute = story.storyName.replace(/\s/g, "-");
 
   if (descript) {
     return (
-      <div className={styles.card_wrapper} onClick={goToStory}>
+      <Link href={`/story/${storyRoute}`} className={styles.card_wrapper}>
         <div className={styles.head_wrapper}>
           <div className={styles.name_wrapper}>
             <div className={styles.story_name}>{story.storyName}</div>
@@ -29,11 +23,11 @@ export default function StoryCard({ descript, story }) {
           </div>
         </div>
         <div className={styles.story_description}>{story.description}</div>
-      </div>
+      </Link>
     );
   }
   return (
-    <div className={styles.card_wrapper} onClick={goToStory}>
+    <Link href={`/story/${storyRoute}`} className={styles.card_wrapper}>
       <div className={styles.head_wrapper}>
         <div className={styles.name_wrapper}>
           <div className={styles.story_name_alt}>{story.storyName}</div>
@@ -46,6 +40,6 @@ export default function StoryCard({ descript, story }) {
             })}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

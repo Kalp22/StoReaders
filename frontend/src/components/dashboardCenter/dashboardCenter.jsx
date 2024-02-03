@@ -27,25 +27,19 @@ export default function DashboardCenter({ stories, user, reviews }) {
         </div>
       </div>
       <div className={styles.component}>
-        <div className={styles.titles}>Your Comments</div>
+        <div className={styles.titles}>Your Reviews</div>
         <div>
           {reviews &&
             reviews.map((review, i) => {
               return (
                 <DashboardReviews
                   key={i}
-                  storyName={
-                    user.reviews &&
-                    user.reviews.find((reviews) => {
-                      reviews.reviewId === review._id;
-                    })
-                  }
+                  storyName={review.storyName}
                   reviewDate={review.reviewDate}
                   review={review.reviewContent}
                 />
               );
             })}
-          <DashboardReviews />
         </div>
       </div>
     </div>

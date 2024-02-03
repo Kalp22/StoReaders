@@ -50,7 +50,6 @@ export default function Comments({ chapterId, comments }) {
         alert("Please enter the comment");
         return;
       }
-      console.log(comment);
 
       const res = await fetch(`${process.env.API_URL}comments/add`, {
         method: "PUT",
