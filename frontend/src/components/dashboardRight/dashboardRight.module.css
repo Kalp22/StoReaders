@@ -26,7 +26,8 @@
 
 .latest_chapter:hover {
   background: var(--toggle-color);
-  transform: translateX(-10px);
+  transform: translateX(-5px);
+  box-shadow: 10px 5px 10px 0px #000000aa;
   transition: all 0.15s ease-in;
 }
 
