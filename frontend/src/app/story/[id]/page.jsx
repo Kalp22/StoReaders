@@ -129,7 +129,7 @@ export default function StoryOverview({ params: { id } }) {
             </div>
             <div className={styles.parameter_value_wrapper}>
               <FaStar className={styles.star} />
-              <div className={styles.values}>{story.ratings}</div>
+              <div className={styles.values}>{story.ratings/story.noOfRatings}</div>
             </div>
           </div>
           <div className={styles.ratings_wrapper}>

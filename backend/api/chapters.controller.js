@@ -33,29 +33,45 @@ router.post("/getOne", async (req, res) => {
     const chapter = await Chapters.findOne({ chapterName: chapterName }).exec();
 
     const user = await Users.findById(userId);
-    const story = await Stories.findById(chapter.storyId);
 
     //Check if user has already read the story
     if (!user.readStories.find((story) => story.storyId == chapter.storyId)) {
       //Increment views and add story to user's readStories
-      story.views = story.views + 1;
+      await Stories.findByIdAndUpdate(chapter.storyId, {
+        $inc: { "storyBasic.views": 1 },
+      });
 
-      user.readStories.push({ storyId: chapter.storyId, noOfChapters: 0 });
+      await Users.findByIdAndUpdate(userId, {
+        $push: {
+          readStories: {
+            storyId: chapter.storyId,
+            noOfChapters: 1,
+          },
+        },
+      });
     }
 
     //Check if user has already read the chapter
     if (!user.readChapters.includes(chapter._id)) {
       //add chapter to user's readChapters and increment noOfChapters in readStories
-      user.readChapters.push(chapter._id);
-
-      user.readStories.forEach((readStory) => {
-        if (readStory.storyId == chapter.storyId) {
-          readStory.noOfChapters = readStory.noOfChapters + 1;
-        }
+      await Users.findByIdAndUpdate(userId, {
+        $push: {
+          readChapters: chapter._id,
+        },
       });
+
+      await Users.findByIdAndUpdate(
+        userId,
+        {
+          $inc: {
+            "readStories.$[elem].noOfChapters": 1,
+          },
+        },
+        {
+          arrayFilters: [{ "elem.storyId": chapter.storyId }],
+        }
+      );
     }
-    await story.save();
-    await user.save();
 
     res.status(200).json({ status: true, chapter: chapter });
   } catch (e) {
@@ -73,7 +89,7 @@ router.post("/add", async (req, res) => {
     const { storyId, storyName, chapterNumber, chapterName, chapterContent } =
       req.body;
 
-    const releaseDate = new Date().toJSON().slice(0, 10);
+    const releaseDate = new Date().toJSON();
 
     const story = await Stories.findById(storyId);
 

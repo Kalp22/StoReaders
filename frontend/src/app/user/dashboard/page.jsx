@@ -39,6 +39,7 @@ export default function UserDashboard() {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) {
       router.push("/");
+      return;
     }
     fetch(`${process.env.API_URL}user/get`, {
       method: "POST",

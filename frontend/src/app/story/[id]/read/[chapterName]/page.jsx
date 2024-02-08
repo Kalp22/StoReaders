@@ -19,13 +19,7 @@ export default function chapterRead({ params: { id, chapterName } }) {
     storyId: "",
     storyName: "",
     chapterNumber: "",
-    comments: [
-      {
-        commentator: "",
-        commentContent: "",
-        replies: [{ commentator: "", commentContent: "" }],
-      },
-    ],
+    commentId: [],
   });
 
   useEffect(() => {
@@ -53,7 +47,7 @@ export default function chapterRead({ params: { id, chapterName } }) {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [chapter]);
 
   return (
     <div className={styles.read_container}>
@@ -79,7 +73,7 @@ export default function chapterRead({ params: { id, chapterName } }) {
             })}
         </div>
       </div>
-      <Comments chapterId={chapter._id} comments={chapter.comments} />
+      <Comments chapterId={chapter._id} commentIds={chapter.commentId} />
     </div>
   );
 }

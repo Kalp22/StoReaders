@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-const ChapterComments = require("./chapterComments.model");
-
 const connection = require("../config/chaptersConnection");
 const { ObjectId } = require("mongodb");
 
@@ -30,8 +28,8 @@ const chapterScheme = new mongoose.Schema({
     type: String,
     required: true,
   },
-  comments: {
-    type: [ChapterComments.schema],
+  commentId: {
+    type: [ObjectId],
     required: false,
   },
 });

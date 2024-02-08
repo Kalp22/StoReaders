@@ -1,0 +1,50 @@
+# DELETE
+
+###
+DELETE http://localhost:5000/comments/reply/delete HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWFlN2VhNTBkNzM3ZTc4Mzk4MzE1MzQiLCJpYXQiOjE3MDcwNDUxODB9.XJ55zq2td6EKnMBLMhuYu-V3mBVJQHaRPQMzm7JkGxg
+
+{
+    "userId":"65ae7ea50d737e7839831534",
+    "commentId":"65c29bd0ce5f1b8024c6cc68",
+    "replyId": "65c29df4602f33e01eee8de4"
+}
+
+# ADD
+
+
+###
+
+PUT http://localhost:5000/comments/add HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId":"65ae7ea50d737e7839831534",
+    "chapterId": "65a7f277060a245c66e58202",
+    "content":"This is next commentjkbkjds fj  fj"
+}
+
+# Reply ADD
+
+###
+
+PUT http://localhost:5000/comments/reply/add HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId":"65ae7ea50d737e7839831534",
+    "commentId": "65c29bd0ce5f1b8024c6cc68",
+    "content":"This is next reply fj  fj"
+}
+
+# Reply GetAll
+
+###
+
+POST http://localhost:5000/comments/reply/getAll HTTP/1.1
+Content-Type: application/json
+
+{
+    "commentId":"65c29befce5f1b8024c6cc72"
+}

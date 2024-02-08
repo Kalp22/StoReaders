@@ -133,6 +133,24 @@
   cursor: pointer;
 }
 
+.view_replies {
+  display: flex;
+  flex-direction: row;
+  font-weight: 600;
+  color: var(--comment-button-color);
+  gap: 0.5em;
+  align-items: center;
+  cursor: pointer;
+}
+
+.caret_down {
+  transition: transform 0.3s ease-in-out;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
+
 .replies {
   display: flex;
   flex-direction: column;

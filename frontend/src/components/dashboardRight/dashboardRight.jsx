@@ -2,8 +2,10 @@ import styles from "./dashboardRight.module.css";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function DashboardRight() {
+  const router = useRouter();
   const [latestStoryName, setLatestStoryName] = useState("");
   useEffect(() => {
     try {
@@ -49,17 +51,37 @@ export default function DashboardRight() {
             <ul className={styles.settings_list}>
               <li
                 onClick={() => {
-                  localStorage.removeItem("user");
                   router.push("/");
+                  localStorage.removeItem("user");
                 }}
               >
                 Log Out
               </li>
-              <li>Delete Account</li>
+              <li onClick={()=>{
+                document.getElementById('dialog').showModal();
+              }}>Delete Account</li>
             </ul>
           </div>
         </div>
       </div>
+      <dialog id="dialog" className={styles.ask_dialog}>
+        <div className={styles.ask_dialog_box}>
+          <p>Are you sure you want to delete your account?</p>
+          <div className={styles.ask_dialog_buttons}>
+            <button
+              onClick={() => {
+                localStorage.removeItem("user");
+                router.push("/");
+              }}
+            >
+              Yes
+            </button>
+            <button onClick={()=>{
+              document.getElementById('dialog').close();
+            }}>No</button>
+          </div>
+        </div>
+      </dialog>
     </>
   );
 }

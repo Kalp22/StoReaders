@@ -3,8 +3,13 @@ const mongoose = require("mongoose");
 const commentReplies = require("./commentReply.model");
 
 const connection = require("../config/chaptersConnection");
+const { ObjectId } = require("mongodb");
 
 const chapterCommentsScheme = new mongoose.Schema({
+  chapterId: {
+    type: String,
+    required: true,
+  },
   commentator: {
     type: String,
     required: true,
@@ -17,8 +22,8 @@ const chapterCommentsScheme = new mongoose.Schema({
     type: String,
     required: true,
   },
-  replies: {
-    type: [commentReplies.schema],
+  replyId: {
+    type: [String],
     required: false,
   },
 });

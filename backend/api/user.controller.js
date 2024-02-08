@@ -128,16 +128,12 @@ router.post("/get", auth, async (req, res) => {
       if (user.reviews.length !== 0) {
         const ids = user.reviews.map((review) => review.storyId);
 
-        const reviewedStories = await Story.find({
-          _id: {
-            $in: ids,
-          },
-        });
+        const reviewedStories = await Story.find({ _id: { $in: ids } });
 
         const reviews = user.reviews.map((review) => {
-          const story = reviewedStories.find(
-            (story) => story._id.toString() === review.storyId.toString()
-          );
+          const story = reviewedStories.find((story) => {
+            return story._id.toString() === review.storyId.toString();
+          });
           return {
             storyId: story._id,
             storyName: story.storyBasic.storyName,

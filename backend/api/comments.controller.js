@@ -7,42 +7,77 @@ const auth = require("../middleware/authServer.middleware");
 const Chapters = require("../models/chapters.model");
 // User model
 const User = require("../models/user.model");
+// Comment model
+const Comment = require("../models/chapterComments.model");
+//Reply model
+const Reply = require("../models/commentReply.model");
+
+/*
+ *@route POST /api/comments/getAll
+ */
+
+router.post("/getAll", async (req, res) => {
+  try {
+    const { chapterId } = req.body;
+    const comments = await Comment.find({ chapterId: chapterId }).exec();
+
+    res.status(200).json({ status: true, comments });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ message: e.message });
+  }
+});
+
+/*
+ *@route POST /api/comments/reply/getAll
+ */
+
+router.post("/reply/getAll", async (req, res) => {
+  try {
+    const { commentId } = req.body;
+    const replies = await Reply.find({ commentId: commentId }).exec();
+
+    res.status(200).json({ status: true, replies });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ message: e.message });
+  }
+});
 
 /*
  *@route PUT /api/comments/add
  */
 
-router.put("/add", auth, async (req, res) => {
+router.put("/add", async (req, res) => {
   try {
     //Credentials from user taken
     const { userId, chapterId, content } = req.body;
 
-    //Date added
-    const dateAdded = new Date().toJSON();
     //Find commentator
     const commentor = await User.findById(userId).exec();
-    const commentatorName = commentor.username;
-
     //Find chapter
-    const chapter = await Chapters.findById(chapterId).exec();
-    //Push comment to Chapter
-    chapter.comments.push({
-      commentator: commentatorName,
-      dateAdded: dateAdded,
+    const comment = new Comment({
+      chapterId: chapterId,
+      commentator: commentor.username,
+      dateAdded: new Date().toJSON(),
       commentContent: content,
     });
 
+    const chapter = await Chapters.findById(chapterId).exec();
+
     //Get comment Id by getting the last Object in comments Array
-    const updatedComment = chapter.comments.at(-1);
-    const commentId = updatedComment._id;
+    const commentId = comment._id.toString();
 
+    //Push comment to Chapter
+    await chapter.updateOne({ $push: { commentId: commentId } });
     //Add comment id to user comments Array
-    commentor.comments.push(commentId);
+    await commentor.updateOne({ $push: { comments: commentId } });
 
+    await comment.save();
     await chapter.save();
     await commentor.save();
 
-    res.status(201).json({ status: true, updatedComment: updatedComment });
+    res.status(201).json({ status: true, updatedComment: comment });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: e.message });
@@ -53,38 +88,38 @@ router.put("/add", auth, async (req, res) => {
  *@route PUT /api/comments/reply/add
  */
 
-router.put("/reply/add", auth, async (req, res) => {
+router.put("/reply/add", async (req, res) => {
   try {
-    const { userId, chapterId, commentId, content } = req.body;
+    const { userId, commentId, content } = req.body;
 
-    //Date added
-    const dateAdded = new Date().toJSON();
     //Find commentator
     const commentor = await User.findById(userId).exec();
-    const commentatorName = commentor.username;
 
-    //Find chapter
-    const chapter = await Chapters.findById(chapterId).exec();
-    //Find comment
-    const comment = chapter.comments.id(commentId);
-    //Push reply to Comment
-    comment.replies.push({
-      commentator: commentatorName,
-      dateAdded: dateAdded,
+    //Find Reply
+    const reply = new Reply({
+      commentId: commentId,
+      commentator: commentor.username,
+      dateAdded: new Date().toJSON(),
       commentContent: content,
     });
 
-    //Get reply Id by getting the last Object in comments Array
-    const updatedReply = comment.replies.at(-1);
-    const replyId = updatedReply._id;
+    // const comment = await Comment.findById(commentId).exec();
 
-    //Add comment id to user comments Array
-    commentor.replies.push(replyId);
+    const replyId = reply._id.toString();
 
-    await chapter.save();
-    await commentor.save();
+    //Push reply to Comment
+    await Comment.findByIdAndUpdate(commentId, {
+      $push: { replyId: replyId },
+    }).exec();
 
-    res.status(201).json({ status: true, updatedReply: updatedReply });
+    //Add reply id to user replies Array
+    await User.findByIdAndUpdate(userId, {
+      $push: { replies: replyId },
+    }).exec();
+
+    await reply.save();
+
+    res.status(201).json({ status: true, updatedReply: reply });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: e.message });
@@ -97,28 +132,26 @@ router.put("/reply/add", auth, async (req, res) => {
 
 router.delete("/reply/delete", auth, async (req, res) => {
   try {
-    const { userId, chapterId, commentId, replyId } = req.body;
+    const { userId, commentId, replyId } = req.body;
 
-    const user = await User.findById(userId).exec();
-    if (!user.replies.includes(replyId)) {
+    //Remove reply from user replies Array
+    if (
+      !(await User.findByIdAndUpdate(userId, {
+        $pull: { replies: replyId },
+      }).exec())
+    ) {
       res
         .status(401)
         .json({ message: "You are Unauthorized to delete this Reply" });
       return;
     }
-
-    //Remove reply from user replies Array
-    await User.findByIdAndUpdate(userId, {
-      $pull: { replies: replyId },
+    //Remove reply from comment replies Array
+    await Comment.findByIdAndUpdate(commentId, {
+      $pull: { replyId: replyId },
     }).exec();
 
-    //Remove reply from chapter comments Array
-    const chapter = await Chapters.findById(chapterId).exec();
-    const comment = chapter.comments.id(commentId);
-    comment.replies.pull(replyId);
-
-    //Save chapter
-    await chapter.save();
+    //Delete reply
+    await Reply.findByIdAndDelete(replyId).exec();
 
     res
       .status(201)
@@ -138,31 +171,23 @@ router.delete("/delete", auth, async (req, res) => {
     //Credentials from user taken
     const { userId, chapterId, commentId } = req.body;
 
-    const user = await User.findById(userId).exec();
-    if (!user.comments.includes(commentId)) {
+    if (
+      !(await User.findByIdAndUpdate(userId, {
+        $pull: { comments: commentId },
+      }).exec())
+    ) {
       res
         .status(401)
         .json({ message: "You are Unauthorized to delete this Comment" });
       return;
     }
-
-    //Remove comment from user comments Array
-    await User.findByIdAndUpdate(userId, {
-      $pull: { comments: commentId },
+    //Remove comment from chapter comments Array
+    await Chapters.findByIdAndUpdate(chapterId, {
+      $pull: { commentId: commentId },
     }).exec();
 
-    //Remove comment from chapter comments Array
-    const chapter = await Chapters.findById(chapterId).exec();
-    //If comment has no replies, delete comment
-    if (chapter.comments.id(commentId).replies.length == 0)
-      chapter.comments.pull(commentId);
-    //Else, change comment content to "Deleted"
-    else {
-      chapter.comments.id(commentId).commentContent = "Deleted";
-    }
-
-    //Save chapter
-    await chapter.save();
+    //Delete comment
+    await Comment.findByIdAndDelete(commentId).exec();
 
     res
       .status(201)

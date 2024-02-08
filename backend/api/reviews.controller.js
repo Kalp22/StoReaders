@@ -81,15 +81,18 @@ router.delete("/delete", async (req, res) => {
 
     //Remove review from user reviews Array
     const user = await User.findById(userId).exec();
-
-    user.reviews.pull({ storyId: storyId, reviewId: reviewId });
+  
+    user.reviews.map((review) => {
+      if (review.reviewId == reviewId) {
+        user.reviews.pull(review);
+      }
+    });
 
     //Remove review from story reviews Array
     const story = await Story.findById(storyId).exec();
 
     story.reviews.pull(reviewId);
-
-    //Save story
+  
     await story.save();
     //Save user
     await user.save();
