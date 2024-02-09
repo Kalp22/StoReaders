@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const StoryBasic = require("./storyBasic.model");
-const Reviews = require("./reviews.model");
 
 const connection = require("../config/storiesConnection");
+const { ObjectId } = require("mongodb");
 
 const storyDetailScheme = new mongoose.Schema({
   storyBasic: {
@@ -34,8 +34,8 @@ const storyDetailScheme = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  reviews: {
-    type: [Reviews.schema],
+  reviewId: {
+    type: [ObjectId],
     required: false,
   },
 });

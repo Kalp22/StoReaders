@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-//User model
+// User model
 const Users = require("../models/user.model");
-//Story model
+// Story model
 const Stories = require("../models/storyDetail.model");
 
 /*
@@ -12,30 +12,33 @@ const Stories = require("../models/storyDetail.model");
 
 router.put("/", async (req, res) => {
   try {
-    //Credentials from request body
+    // Credentials from request body
     const { userId, storyId, rating } = req.body;
 
-    //Find user
+    // Find user
     const user = await Users.findById(userId);
 
     const allRatings = user.ratings;
 
-    //Check if user has already rated the story
-    if (allRatings.includes({ storyId: storyId })) {
-      allRatings.forEach(async (ratings) => {
-        if (ratings.storyId == storyId) {
-          const previousRating = ratings.rating;
+    // Check if user has already rated the story
+    const existingRatingIndex = allRatings.findIndex((rating) => {
+      // Convert the storyId to a string for comparison
+      return rating.storyId.toString() === storyId.toString();
+    });
 
-          ratings.rating = rating;
+    if (existingRatingIndex !== -1) {
+      // User has already rated the story
+      const previousRating = allRatings[existingRatingIndex].rating;
 
-          const story = await Stories.findById(storyId);
+      allRatings[existingRatingIndex].rating = rating;
 
-          story.ratings = story.ratings - previousRating + rating;
+      const story = await Stories.findById(storyId);
 
-          await story.save();
-        }
-      });
+      story.ratings = story.ratings - previousRating + rating;
+
+      await story.save();
     } else {
+      // User is rating the story for the first time
       user.ratings.push({ storyId: storyId, rating: rating });
 
       const story = await Stories.findById(storyId);
@@ -50,7 +53,7 @@ router.put("/", async (req, res) => {
 
     res.status(200).json({ status: true, msg: "Rating added" });
   } catch (err) {
-    res.status(400).json({ msg: err });
+    res.status(400).json({ msg: err.message });
   }
 });
 

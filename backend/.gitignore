@@ -3,4 +3,6 @@
 package-lock.json
 yarn.lock
 .env
+.env.local
+main.rest
 

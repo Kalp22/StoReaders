@@ -156,6 +156,28 @@ router.get("/getLatest", async (req, res) => {
 });
 
 /*
+ *@route GET /api/stories/getReadStories
+ */
+
+router.post("/getReadStories", async (req, res) => {
+  try {
+    const { storyIds } = req.body;
+    const stories = await StoryDetail.find({ _id: { $in: storyIds } }).exec();
+    const storiesBasicInfo = stories.map((story) => {
+      return {
+        storyId: story._id,
+        storyName: story.storyBasic.storyName,
+        totalNumberOfChapters: story.storyBasic.totalNumberOfChapters,
+        status: story.storyBasic.status,
+      };
+    });
+    res.status(200).json({ status: true, stories: storiesBasicInfo });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+});
+
+/*
  *@route POST /api/stories/add
  */
 

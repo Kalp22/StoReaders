@@ -279,10 +279,10 @@ export default function Comments({ chapterId, commentIds }) {
   };
 
   const checkCanDelete = () => {
-    if (JSON.parse(user).username == commentator) {
-      setCanDelete(true);
-    } else {
+    if (!JSON.parse(user) || JSON.parse(user).username != commentator) {
       setCanDelete(false);
+    } else {
+      setCanDelete(true);
     }
     const dialog = document.querySelector("#moreDialog");
     dialog.showModal();

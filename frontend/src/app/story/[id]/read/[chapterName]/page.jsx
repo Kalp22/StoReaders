@@ -30,7 +30,7 @@ export default function chapterRead({ params: { id, chapterName } }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: user.id,
+          userId: user ? user.id : null,
           chapterName: chapter_name,
         }),
       })

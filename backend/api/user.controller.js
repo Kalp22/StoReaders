@@ -9,8 +9,6 @@ const auth = require("../middleware/authServer.middleware");
 
 //User model
 const User = require("../models/user.model");
-//Story model
-const Story = require("../models/storyDetail.model");
 
 /*
  *@route POST /api/user/register
@@ -117,51 +115,9 @@ router.post("/get", auth, async (req, res) => {
     }
     user.password = undefined;
     user.otp = undefined;
-    if (user.readStories.length !== 0) {
-      const ids = user.readStories.map((story) => story.storyId);
-      const stories = await Story.find({
-        _id: {
-          $in: ids,
-        },
-      });
+    user.__v = undefined;
 
-      if (user.reviews.length !== 0) {
-        const ids = user.reviews.map((review) => review.storyId);
-
-        const reviewedStories = await Story.find({ _id: { $in: ids } });
-
-        const reviews = user.reviews.map((review) => {
-          const story = reviewedStories.find((story) => {
-            return story._id.toString() === review.storyId.toString();
-          });
-          return {
-            storyId: story._id,
-            storyName: story.storyBasic.storyName,
-            reviewContent: story.reviews.find((r) => r.reviewer === username)
-              .reviewContent,
-            reviewDate: story.reviews.find((r) => r.reviewer === username)
-              .reviewDate,
-            reviewId: review.reviewId,
-          };
-        });
-
-        res.status(200).json({
-          status: true,
-          user: user,
-          stories: stories,
-          reviews: reviews,
-        });
-      } else {
-        res
-          .status(200)
-          .json({ status: true, user: user, stories: stories, reviews: [] });
-      }
-      // res.status(200).json({ status: true, user: user, stories: stories });
-    } else {
-      res
-        .status(200)
-        .json({ status: true, user: user, stories: [], reviews: [] });
-    }
+    res.status(200).json({ status: true, user: user });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: e.message });

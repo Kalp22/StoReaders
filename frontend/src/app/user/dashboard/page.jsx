@@ -7,7 +7,7 @@ import DashboardCenter from "@/components/dashboardCenter/dashboardCenter";
 import DashboardRight from "@/components/dashboardRight/dashboardRight";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 
 export default function UserDashboard() {
@@ -15,25 +15,9 @@ export default function UserDashboard() {
   const [userDetails, setUserDetails] = useState({
     username: "",
     email: "",
-    readStories: [],
+    readStories: [{ storyId: "", noOfChapters: 0 }],
+    reviews: [{ storyId: "" }],
   });
-  const [Reviews, setReviews] = useState([
-    {
-      _id: "",
-      reviewer: "",
-      reviewContent: "",
-    },
-  ]);
-  const [stories, setStories] = useState([
-    {
-      _id: "",
-      storyBasic: {
-        storyName: "",
-        totalNoOfChapters: 0,
-        status: false,
-      },
-    },
-  ]);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -54,8 +38,6 @@ export default function UserDashboard() {
       .then((res) => res.json())
       .then((data) => {
         setUserDetails(data.user);
-        setStories(data.stories);
-        setReviews(data.reviews);
       });
   }, []);
 
@@ -77,11 +59,13 @@ export default function UserDashboard() {
           />
         </div>
         <div className={styles.dashboard_center}>
-          <DashboardCenter
-            stories={stories}
-            user={userDetails}
-            reviews={Reviews}
-          />
+          {userDetails.readStories && userDetails.reviews && (
+            <DashboardCenter
+              readStories={userDetails.readStories}
+              username={userDetails.username}
+              reviews={userDetails.reviews}
+            />
+          )}
         </div>
         <div className={styles.dashboard_right}>
           <DashboardRight />

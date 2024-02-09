@@ -1,23 +1,51 @@
 import styles from "./reviews.module.css";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { MdSend } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 
-export default function Reviews({ storyId, story_name, reviews }) {
+export default function Reviews({ storyId, story_name, reviewId }) {
   const user = localStorage.getItem("user");
   const [review, setReview] = useState("");
-  const [reviewId, setReviewId] = useState("");
+  const [reviewDeleteId, setReviewDeleteId] = useState("");
   const [coordinates, setCoordinates] = useState({ top: 0, left: 0 });
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    const getReviews = async () => {
+      try {
+        const res = await fetch(`${process.env.API_URL}reviews/getAll`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            storyName: story_name,
+          }),
+        });
+
+        const data = await res.json();
+        if (data.message) {
+          alert(data.message);
+          return;
+        }
+        console.log(data.reviews);
+        setReviews(data.reviews);
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+    getReviews();
+  }, []);
 
   const handleReview = async (e) => {
     try {
       e.preventDefault();
 
       if (!user) {
-        alert("Please login to comment");
+        alert("Please login to Review");
         return;
       }
       // Add review to the database
@@ -39,12 +67,22 @@ export default function Reviews({ storyId, story_name, reviews }) {
       });
 
       const data = await res.json();
-      if (data.message) {
+      if (data.message !== "Review added") {
         alert(data.message);
         return;
       }
       // Add review to the reviews list
-      reviews.push(data.updatedReview);
+      setReviews([
+        ...reviews,
+        {
+          _id: data.newReview._id,
+          storyId: storyId,
+          storyName: story_name,
+          reviewer: JSON.parse(user).username,
+          reviewDate: new Date().toJSON(),
+          reviewContent: review,
+        },
+      ]);
 
       setReview("");
     } catch (err) {
@@ -69,7 +107,7 @@ export default function Reviews({ storyId, story_name, reviews }) {
         body: JSON.stringify({
           userId: JSON.parse(user).id,
           storyId: storyId,
-          reviewId: reviewId,
+          reviewId: reviewDeleteId,
         }),
       });
 
@@ -80,11 +118,8 @@ export default function Reviews({ storyId, story_name, reviews }) {
         return;
       }
       if (data.status) {
-        reviews.forEach((rev, i) => {
-          if (rev._id === reviewId) {
-            reviews.splice(i, 1);
-          }
-        });
+        const newReviews = reviews.filter((rev) => rev._id !== reviewDeleteId);
+        setReviews(newReviews);
       }
     } catch (err) {
       console.error(err.message);
@@ -124,14 +159,6 @@ export default function Reviews({ storyId, story_name, reviews }) {
         {reviews &&
           reviews.map((rev, i) => {
             return (
-              // <ReviewCard
-              //   key={i}
-              //   storyId={storyId}
-              //   id={review._id}
-              //   content={review.reviewContent}
-              //   date={review.reviewDate}
-              //   reviewer={review.reviewer}
-              // />
               <div key={i} id={`Card${i}`} className={styles.review_card}>
                 <header className={styles.head}>
                   <div>
@@ -144,13 +171,13 @@ export default function Reviews({ storyId, story_name, reviews }) {
                     </div>
                   </div>
                   <div>
-                    {rev.reviewer === JSON.parse(user).username && (
+                    {JSON.parse(user) && rev.reviewer === JSON.parse(user).username && (
                       <HiDotsVertical
                         id={`Dots${i}`}
                         size={25}
                         className={styles.dots}
                         onMouseOver={() => {
-                          setReviewId(rev._id);
+                          setReviewDeleteId(rev._id);
                         }}
                         onClick={() => {
                           const dots = document.getElementById(`Dots${i}`);

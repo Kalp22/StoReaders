@@ -31,7 +31,10 @@ router.post("/getOne", async (req, res) => {
   try {
     const { userId, chapterName } = req.body;
     const chapter = await Chapters.findOne({ chapterName: chapterName }).exec();
-
+    if (userId === null || userId === undefined) {
+      res.status(200).json({ status: true, chapter: chapter });
+      return;
+    }
     const user = await Users.findById(userId);
 
     //Check if user has already read the story

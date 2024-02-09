@@ -1,35 +1,33 @@
 import styles from "./rating.module.css";
-
 import { useState, useEffect } from "react";
-
 import { FaStar } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";
 
 export default function Rating({ storyId }) {
   const [ratings, setRatings] = useState(0);
-  const [User, setUser] = useState({});
 
   useEffect(() => {
-    let rates = (storyId) => {
+    const fetchRatings = () => {
       console.log(storyId);
       if (localStorage.getItem("user") == null) return;
+
       const user = JSON.parse(localStorage.getItem("user"));
-      let rates;
-      if (JSON.parse(user).rating) {
-        rates = User.rating.map((ratings) => {
-          if (ratings.storyId == storyId) {
-            return ratings.rating;
+      let rate = 0;
+
+      if (user.rating) {
+        user.rating.forEach((rating) => {
+          if (rating.storyId === storyId) {
+            rate = rating.rating;
           }
         });
       }
-      setUser(user);
 
-      return rates;
+      return rate;
     };
-    if (rates) {
-      setRatings(rates[0]);
-    }
-  }, []);
+
+    const rate = fetchRatings();
+    setRatings(rate);
+  }, [storyId]); // Include storyId in dependency array
 
   async function Rater(rating) {
     try {
@@ -37,72 +35,60 @@ export default function Rating({ storyId }) {
         alert("Please login to rate");
         return;
       }
-      setUser(JSON.parse(localStorage.getItem("user")));
-      console.log(User);
-      if (User.rating) {
-        const rates = User.rating.map((rate) => {
+
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      let rates = [];
+
+      if (user.rating) {
+        rates = user.rating.map((rate) => {
           if (rate.storyId == storyId) {
             rate.rating = rating;
           }
           return rate;
         });
-        const res = await fetch(`${process.env.API_URL}ratings`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${User.token}`,
-          },
-          body: JSON.stringify({
-            userId: User.id,
-            storyId: storyId,
-            rating: rates.rating,
-          }),
-        });
-        const data = await res.json();
+      }
 
-        if (data) {
-          const rate = {
-            storyId: storyId,
-            rating: rating,
-          };
-          const ratings = [...User.rating, rate];
-          User.rating = ratings;
-          localStorage.setItem("user", JSON.stringify(User));
-          setUser(User);
-          setRatings(rating);
-        }
-      } else {
-        const res = await fetch(`${process.env.API_URL}ratings`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${User.token}`,
-          },
-          body: JSON.stringify({
-            userId: User.id,
-            storyId: storyId,
-            rating: rating,
-          }),
+      const res = await fetch(`${process.env.API_URL}ratings`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({
+          userId: user.id,
+          storyId: storyId,
+          rating: rating,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data) {
+        const rates = user.rating || []; // Retrieve existing ratings or set to an empty array
+        const updatedRatings = rates.map((rate) => {
+          if (rate.storyId === storyId) {
+            return { ...rate, rating: rating };
+          }
+          return rate;
         });
 
-        const data = await res.json();
+        const existingRating = updatedRatings.find(
+          (rate) => rate.storyId === storyId
+        );
 
-        if (data) {
-          const rate = {
-            storyId: storyId,
-            rating: rating,
-          };
-          const rating = [...User.rating, rate];
-          User.rating = rating;
-          localStorage.setItem("user", JSON.stringify(User));
-          setUser(User);
-          setRatings(rating);
+        if (!existingRating) {
+          // If the story hasn't been rated before, add a new object
+          updatedRatings.push({ storyId: storyId, rating: rating });
         }
+
+        user.rating = updatedRatings;
+        localStorage.setItem("user", JSON.stringify(user));
+        setRatings(rating);
       }
     } catch (err) {
       console.log(err);
     }
-    console.log(User);
   }
 
   return (
@@ -122,8 +108,8 @@ export default function Rating({ storyId }) {
             <FaRegStar
               key={i}
               className={styles.rating_star}
-              onClick={async () => {
-                await Rater(i + 1);
+              onClick={() => {
+                Rater(i + 1);
               }}
             />
           )
