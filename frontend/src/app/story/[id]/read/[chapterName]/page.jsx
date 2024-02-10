@@ -6,6 +6,7 @@ import Comments from "@/components/comments/comments";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Toaster } from "sonner";
 
 export default function chapterRead({ params: { id, chapterName } }) {
   const router = useRouter();
@@ -21,6 +22,25 @@ export default function chapterRead({ params: { id, chapterName } }) {
     chapterNumber: "",
     commentId: [],
   });
+  const [theme, setTheme] = useState(true);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedTheme = localStorage.getItem("theme");
+      setTheme(storedTheme === "true");
+    };
+
+    // Attach event listener for changes in localStorage
+    window.addEventListener("storage", handleStorageChange);
+
+    // Initial setup
+    handleStorageChange();
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [localStorage]); // Include localStorage in the dependency array
 
   useEffect(() => {
     try {
@@ -45,7 +65,7 @@ export default function chapterRead({ params: { id, chapterName } }) {
           setChapter(data.chapter);
         });
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   }, [chapter]);
 
@@ -74,6 +94,7 @@ export default function chapterRead({ params: { id, chapterName } }) {
         </div>
       </div>
       <Comments chapterId={chapter._id} commentIds={chapter.commentId} />
+      <Toaster theme={theme ? "dark" : "light"} position="bottom-left" />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { MdSend } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
+import { toast } from "sonner";
 
 export default function Reviews({ storyId, story_name, reviewId }) {
   const user = localStorage.getItem("user");
@@ -28,10 +29,9 @@ export default function Reviews({ storyId, story_name, reviewId }) {
 
         const data = await res.json();
         if (data.message) {
-          alert(data.message);
+          toast.error(data.message);
           return;
         }
-        console.log(data.reviews);
         setReviews(data.reviews);
       } catch (err) {
         console.error(err.message);
@@ -45,12 +45,12 @@ export default function Reviews({ storyId, story_name, reviewId }) {
       e.preventDefault();
 
       if (!user) {
-        alert("Please login to Review");
+        toast.warning("Please login to add a review");
         return;
       }
       // Add review to the database
       if (!review) {
-        alert("Please write a review");
+        toast.warning("Please write a review");
         return;
       }
       const res = await fetch(`${process.env.API_URL}reviews/add`, {
@@ -68,7 +68,7 @@ export default function Reviews({ storyId, story_name, reviewId }) {
 
       const data = await res.json();
       if (data.message !== "Review added") {
-        alert(data.message);
+        toast.error(data.message);
         return;
       }
       // Add review to the reviews list
@@ -83,6 +83,7 @@ export default function Reviews({ storyId, story_name, reviewId }) {
           reviewContent: review,
         },
       ]);
+      toast.success(data.message);
 
       setReview("");
     } catch (err) {
@@ -95,7 +96,7 @@ export default function Reviews({ storyId, story_name, reviewId }) {
       e.preventDefault();
 
       if (!user) {
-        alert("Please login to delete review");
+        toast.warning("Please login to delete review");
         return;
       }
 
@@ -114,11 +115,12 @@ export default function Reviews({ storyId, story_name, reviewId }) {
       const data = await res.json();
 
       if (data.message !== "Review deleted") {
-        alert(data.message);
+        toast.error(data.message);
         return;
       }
       if (data.status) {
         const newReviews = reviews.filter((rev) => rev._id !== reviewDeleteId);
+        toast.success(data.message);
         setReviews(newReviews);
       }
     } catch (err) {
@@ -171,23 +173,24 @@ export default function Reviews({ storyId, story_name, reviewId }) {
                     </div>
                   </div>
                   <div>
-                    {JSON.parse(user) && rev.reviewer === JSON.parse(user).username && (
-                      <HiDotsVertical
-                        id={`Dots${i}`}
-                        size={25}
-                        className={styles.dots}
-                        onMouseOver={() => {
-                          setReviewDeleteId(rev._id);
-                        }}
-                        onClick={() => {
-                          const dots = document.getElementById(`Dots${i}`);
-                          const rect = dots.getBoundingClientRect();
-                          setCoordinates({ top: rect.top, left: rect.left });
-                          const dialog = document.querySelector("dialog");
-                          dialog.showModal();
-                        }}
-                      />
-                    )}
+                    {JSON.parse(user) &&
+                      rev.reviewer === JSON.parse(user).username && (
+                        <HiDotsVertical
+                          id={`Dots${i}`}
+                          size={25}
+                          className={styles.dots}
+                          onMouseOver={() => {
+                            setReviewDeleteId(rev._id);
+                          }}
+                          onClick={() => {
+                            const dots = document.getElementById(`Dots${i}`);
+                            const rect = dots.getBoundingClientRect();
+                            setCoordinates({ top: rect.top, left: rect.left });
+                            const dialog = document.querySelector("dialog");
+                            dialog.showModal();
+                          }}
+                        />
+                      )}
                   </div>
                 </header>
                 <div className={styles.content}>

@@ -7,8 +7,9 @@ import DashboardCenter from "@/components/dashboardCenter/dashboardCenter";
 import DashboardRight from "@/components/dashboardRight/dashboardRight";
 
 import Link from "next/link";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Toaster } from "sonner";
 
 export default function UserDashboard() {
   const router = useRouter();
@@ -18,6 +19,25 @@ export default function UserDashboard() {
     readStories: [{ storyId: "", noOfChapters: 0 }],
     reviews: [{ storyId: "" }],
   });
+  const [theme, setTheme] = useState(true);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedTheme = localStorage.getItem("theme");
+      setTheme(storedTheme === "true");
+    };
+
+    // Attach event listener for changes in localStorage
+    window.addEventListener("storage", handleStorageChange);
+
+    // Initial setup
+    handleStorageChange();
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [localStorage]); // Include localStorage in the dependency array
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -71,6 +91,7 @@ export default function UserDashboard() {
           <DashboardRight />
         </div>
       </div>
+      <Toaster theme={theme ? "dark" : "light"} position="bottom-left" />
     </div>
   );
 }

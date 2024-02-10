@@ -1,5 +1,7 @@
 import styles from "./rating.module.css";
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
+
 import { FaStar } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";
 
@@ -32,7 +34,7 @@ export default function Rating({ storyId }) {
   async function Rater(rating) {
     try {
       if (localStorage.getItem("user") == null) {
-        alert("Please login to rate");
+        toast.warning("Please login to rate the story");
         return;
       }
 
@@ -84,10 +86,11 @@ export default function Rating({ storyId }) {
 
         user.rating = updatedRatings;
         localStorage.setItem("user", JSON.stringify(user));
+        toast.success("Rating added");
         setRatings(rating);
       }
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   }
 

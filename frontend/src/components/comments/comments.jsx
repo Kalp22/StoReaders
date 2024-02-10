@@ -1,6 +1,7 @@
 import styles from "./comments.module.css";
 
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 import { FaComments } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
@@ -24,14 +25,7 @@ export default function Comments({ chapterId, commentIds }) {
       showReplies: false,
     },
   ]);
-  const [replies, setReplies] = useState([
-    {
-      _id: "",
-      commentId: "",
-      commentator: "",
-      commentContent: "",
-    },
-  ]);
+
   const [comment, setComment] = useState("");
   const [reply, setReply] = useState("");
   const [coordinates, setCoordinates] = useState({ top: 0, left: 0 });
@@ -68,7 +62,7 @@ export default function Comments({ chapterId, commentIds }) {
         .then((res) => res.json())
         .then((data) => {
           if (!data.status) {
-            alert(data.message);
+            toast.error(data.message);
             return;
           }
           setComments(data.comments);
@@ -93,7 +87,7 @@ export default function Comments({ chapterId, commentIds }) {
       const data = await res.json();
 
       if (!data.status) {
-        alert(data.message);
+        toast.error(data.message);
         return;
       }
       const updatedComments = [...comments];
@@ -116,12 +110,12 @@ export default function Comments({ chapterId, commentIds }) {
       e.preventDefault();
 
       if (!user) {
-        alert("Please login to comment");
+        toast.warning("Please login to comment");
         return;
       }
 
       if (!comment) {
-        alert("Please enter the comment");
+        toast.warning("Please enter the comment");
         return;
       }
 
@@ -141,7 +135,7 @@ export default function Comments({ chapterId, commentIds }) {
       const data = await res.json();
 
       if (data.message) {
-        alert(data.message);
+        toast.error(data.message);
         return;
       }
 
@@ -156,9 +150,10 @@ export default function Comments({ chapterId, commentIds }) {
         },
       ]);
 
+      toast.success("Comment added");
       setComment("");
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
     }
   };
 
@@ -167,12 +162,12 @@ export default function Comments({ chapterId, commentIds }) {
       e.preventDefault();
 
       if (!user) {
-        alert("Please login to comment");
+        toast.warning("Please login to reply");
         return;
       }
 
       if (!reply) {
-        alert("Please enter the comment");
+        toast.warning("Please enter the reply");
         return;
       }
 
@@ -192,18 +187,19 @@ export default function Comments({ chapterId, commentIds }) {
       const data = await res.json();
 
       if (data.message) {
-        alert(data.message);
+        toast.error(data.message);
         const dialog = document.querySelector("dialog");
         dialog.close();
         return;
       }
 
+      toast.success("Reply added");
       setReply("");
 
       const dialog = document.querySelector("dialog");
       dialog.close();
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
     }
   };
 
@@ -212,7 +208,7 @@ export default function Comments({ chapterId, commentIds }) {
       e.preventDefault();
 
       if (!user) {
-        alert("Please login to delete comment");
+        toast.warning("Please login to delete");
         return;
       }
 
@@ -233,7 +229,7 @@ export default function Comments({ chapterId, commentIds }) {
         const data = await res.json();
 
         if (data.message != "Comment deleted") {
-          alert(data.message);
+          toast.error(data.message);
           const dialog = document.querySelector("#moreDialog");
           dialog.close();
           return;
@@ -243,6 +239,7 @@ export default function Comments({ chapterId, commentIds }) {
           (comment) => comment._id != deleteId.id
         );
 
+        toast.success(data.message);
         setComments(updatedComments);
 
         const dialog = document.querySelector("#moreDialog");
@@ -264,12 +261,13 @@ export default function Comments({ chapterId, commentIds }) {
         const data = await res.json();
 
         if (data.message != "Reply deleted") {
-          alert(data.message);
+          toast.error(data.message);
           const dialog = document.querySelector("#moreDialog");
           dialog.close();
           return;
         }
 
+        toast.success(data.message);
         const dialog = document.querySelector("#moreDialog");
         dialog.close();
       }
@@ -290,13 +288,12 @@ export default function Comments({ chapterId, commentIds }) {
 
   const copyText = () => {
     navigator.clipboard.writeText(content);
+    toast.success("Text copied");
     const dialog = document.querySelector("#moreDialog");
     dialog.close();
   };
 
-  const toggleComments = () => {
-    setCommentsToggle(!commentsToggle);
-  };
+  const toggleComments = () => setCommentsToggle(!commentsToggle);
 
   return (
     <>

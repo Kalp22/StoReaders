@@ -21,11 +21,19 @@ export default function DarkLight() {
   return (
     <div className={styles.toggle_button} onClick={toggleButton}>
       <div>
-        <MdOutlineLightMode size={"22px"} className={styles.svg} />
+        <MdOutlineLightMode
+          id="lightImage"
+          size={`22px`}
+          className={styles.svg}
+        />
       </div>
       <div className={styles.toggle}></div>
       <div>
-        <MdOutlineDarkMode size={"22px"} className={styles.svg} />
+        <MdOutlineDarkMode
+          id="darkImage"
+          size={`22px`}
+          className={styles.svg}
+        />
       </div>
     </div>
   );

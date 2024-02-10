@@ -8,7 +8,8 @@ import { FaUser } from "react-icons/fa";
 import DarkLight from "../ui/darklight/page";
 
 export default function Navbar() {
-  const user = localStorage.getItem("user");
+  const user =
+    typeof localStorage !== "undefined" && localStorage.getItem("user");
 
   return (
     <nav className={styles.navbar_wrapper}>

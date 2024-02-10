@@ -1,12 +1,32 @@
 "use client";
 import styles from "./page.module.css";
 
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Toaster, toast } from "sonner";
 
 export default function Login() {
   const router = useRouter();
+  const [theme, setTheme] = useState(true);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedTheme = localStorage.getItem("theme");
+      setTheme(storedTheme === "true");
+    };
+
+    // Attach event listener for changes in localStorage
+    window.addEventListener("storage", handleStorageChange);
+
+    // Initial setup
+    handleStorageChange();
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [localStorage]); // Include localStorage in the dependency array
 
   const [form, setForm] = useState({ email: "", password: "" });
 
@@ -15,7 +35,7 @@ export default function Login() {
       e.preventDefault();
 
       if (!form.email || !form.password) {
-        alert("Please fill in all fields");
+        toast.warning("Please fill in all fields");
         return;
       }
 
@@ -33,6 +53,7 @@ export default function Login() {
       const data = await res.json();
 
       if (data.token) {
+        toast.success("Logged in successfully");
         const user = {
           token: data.token,
           id: data.id,
@@ -44,13 +65,14 @@ export default function Login() {
         if (localStorage.getItem("user")) {
           localStorage.removeItem("user");
         }
+
         localStorage.setItem("user", JSON.stringify(user));
 
         setForm({ email: "", password: "" });
 
         router.push("/");
       } else {
-        alert(data.msg);
+        toast.error(data.msg);
       }
     } catch (e) {
       console.log(e);
@@ -98,6 +120,7 @@ export default function Login() {
           </div>
         </div>
       </div>
+      <Toaster theme={theme ? "dark" : "light"} position="bottom-left" />
     </div>
   );
 }

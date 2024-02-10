@@ -4,17 +4,37 @@ import styles from "./page.module.css";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Toaster, toast } from "sonner";
 
 export default function Signup() {
   const router = useRouter();
   const [form, setForm] = useState({ username: "", email: "", password: "" });
+  const [theme, setTheme] = useState(true);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedTheme = localStorage.getItem("theme");
+      setTheme(storedTheme === "true");
+    };
+
+    // Attach event listener for changes in localStorage
+    window.addEventListener("storage", handleStorageChange);
+
+    // Initial setup
+    handleStorageChange();
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [localStorage]); // Include localStorage in the dependency array
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
 
       if (!form.username || !form.email || !form.password) {
-        alert("Please fill in all fields");
+        toast.warning("Please fill in all fields");
         return;
       }
 
@@ -33,6 +53,7 @@ export default function Signup() {
       const data = await res.json();
 
       if (data.token) {
+        toast.success("Signed up successfully");
         const user = {
           token: data.token,
           id: data.id,
@@ -50,10 +71,10 @@ export default function Signup() {
 
         router.push("/");
       } else {
-        alert(data.msg);
+        toast.error(data.msg);
       }
     } catch (error) {
-      console.log("error");
+      console.log(error);
     }
   };
   return (
@@ -106,6 +127,7 @@ export default function Signup() {
           </div>
         </div>
       </div>
+      <Toaster theme={theme ? "dark" : "light"} position="bottom-left" />
     </div>
   );
 }

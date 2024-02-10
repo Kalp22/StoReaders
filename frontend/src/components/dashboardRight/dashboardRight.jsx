@@ -57,9 +57,13 @@ export default function DashboardRight() {
               >
                 Log Out
               </li>
-              <li onClick={()=>{
-                document.getElementById('dialog').showModal();
-              }}>Delete Account</li>
+              <li
+                onClick={() => {
+                  document.getElementById("dialog").showModal();
+                }}
+              >
+                Delete Account
+              </li>
             </ul>
           </div>
         </div>
@@ -76,9 +80,13 @@ export default function DashboardRight() {
             >
               Yes
             </button>
-            <button onClick={()=>{
-              document.getElementById('dialog').close();
-            }}>No</button>
+            <button
+              onClick={() => {
+                document.getElementById("dialog").close();
+              }}
+            >
+              No
+            </button>
           </div>
         </div>
       </dialog>

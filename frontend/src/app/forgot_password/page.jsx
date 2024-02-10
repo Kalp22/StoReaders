@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Toaster, toast } from "sonner";
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
@@ -11,6 +12,25 @@ export default function ForgotPasswordPage() {
 
   const [form1, setForm1] = useState({ email: "" });
   const [form2, setForm2] = useState({ otp: "" });
+  const [theme, setTheme] = useState(true);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedTheme = localStorage.getItem("theme");
+      setTheme(storedTheme === "true");
+    };
+
+    // Attach event listener for changes in localStorage
+    window.addEventListener("storage", handleStorageChange);
+
+    // Initial setup
+    handleStorageChange();
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [localStorage]); // Include localStorage in the dependency array
 
   useEffect(() => {
     if (isConfirmed) {
@@ -30,7 +50,7 @@ export default function ForgotPasswordPage() {
       e.preventDefault();
 
       if (!form1.email) {
-        alert("Please enter the email");
+        toast.warning("Please enter your email address");
         return;
       }
 
@@ -51,10 +71,11 @@ export default function ForgotPasswordPage() {
       }
 
       if (data.status) {
+        toast.success("OTP sent successfully");
         setIsConfirmed(true);
       }
     } catch (e) {
-      console.log("error");
+      console.log(e.message);
     }
   }
 
@@ -62,11 +83,9 @@ export default function ForgotPasswordPage() {
     e.preventDefault();
 
     if (!form2.otp) {
-      alert("Please enter the OTP");
+      toast.warning("Please enter the OTP");
       return;
     }
-
-    console.log(form1.email);
 
     const res = await fetch(`${process.env.API_URL}user/checkotp`, {
       method: "PUT",
@@ -88,6 +107,7 @@ export default function ForgotPasswordPage() {
     setForm2({ otp: "" });
 
     if (data.status) {
+      toast.success("OTP verified successfully");
       const user = {
         id: data.id,
         fpass: true,
@@ -135,6 +155,7 @@ export default function ForgotPasswordPage() {
           </form>
         </div>
       </div>
+      <Toaster theme={theme ? "dark" : "light"} position="bottom-left" />
     </div>
   );
 }

@@ -19,8 +19,6 @@ export default function DashboardCenter({ readStories, username, reviews }) {
 
   useEffect(() => {
     try {
-      // console.log(readStories);
-      // console.log(storyIds);
       fetch(`${process.env.API_URL}stories/getReadStories`, {
         method: "POST",
         headers: {
@@ -36,7 +34,7 @@ export default function DashboardCenter({ readStories, username, reviews }) {
           setStories(data.stories);
         });
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
     }
   }, [readStories]);
 
@@ -58,7 +56,7 @@ export default function DashboardCenter({ readStories, username, reviews }) {
           setReviews(data.reviews);
         });
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
     }
   }, [reviews]);
 

@@ -6,6 +6,7 @@ import Image from "next/image";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Toaster } from "sonner";
 
 import Navbar from "@/components/navbar/navbar";
 import Genre from "@/components/genre/genre";
@@ -16,6 +17,27 @@ import Reviews from "@/components/reviews/reviews";
 import { FaStar } from "react-icons/fa";
 
 export default function StoryOverview({ params: { id } }) {
+  const [theme, setTheme] = useState(true);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedTheme = localStorage.getItem("theme");
+      setTheme(storedTheme === "true");
+    };
+
+    // Attach event listener for changes in localStorage
+    window.addEventListener("storage", handleStorageChange);
+
+    // Initial setup
+    handleStorageChange();
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [localStorage]); // Include localStorage in the dependency array
+
+  console.log(theme);
   const router = useRouter();
   const storyName = id.replace(/-/g, " ");
   const [story, setStory] = useState({
@@ -162,6 +184,7 @@ export default function StoryOverview({ params: { id } }) {
           reviewId={story.reviewId}
         />
       </div>
+      <Toaster theme={theme ? "dark" : "light"} position="bottom-left" />
     </>
   );
 }

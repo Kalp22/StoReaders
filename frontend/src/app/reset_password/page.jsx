@@ -2,24 +2,44 @@
 import styles from "./page.module.css";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Toaster, toast } from "sonner";
 
 export default function ResetPasswordPage() {
   const router = useRouter();
 
   const [form, setForm] = useState({ password: "", confirmPassword: "" });
+  const [theme, setTheme] = useState(true);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedTheme = localStorage.getItem("theme");
+      setTheme(storedTheme === "true");
+    };
+
+    // Attach event listener for changes in localStorage
+    window.addEventListener("storage", handleStorageChange);
+
+    // Initial setup
+    handleStorageChange();
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [localStorage]); // Include localStorage in the dependency array
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
 
       if (!form.password || !form.confirmPassword) {
-        alert("Please fill in all fields");
+        toast.warning("Please fill in all fields");
         return;
       }
 
       if (form.password !== form.confirmPassword) {
-        alert("Passwords do not match");
+        toast.warning("Passwords do not match");
         return;
       }
 
@@ -37,14 +57,15 @@ export default function ResetPasswordPage() {
       const data = await res.json();
 
       if (data.status) {
+        toast.success("Password reset successfully");
         setForm({ password: "", confirmPassword: "" });
         localStorage.removeItem("user");
         router.push("/login");
       } else {
-        alert(data.msg);
+        toast.error(data.msg);
       }
     } catch (e) {
-      console.log("error");
+      console.log(e.message);
     }
   };
 
@@ -86,6 +107,7 @@ export default function ResetPasswordPage() {
             <input type="submit" value="Reset" onClick={handleSubmit} />
           </form>
         </div>
+        <Toaster theme={theme ? "dark" : "light"} position="bottom-left" />
       </div>
     );
   }

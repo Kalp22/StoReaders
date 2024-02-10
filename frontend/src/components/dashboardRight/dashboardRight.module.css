@@ -101,7 +101,7 @@
   align-items: center;
   justify-content: center;
   padding: 1em 1.5em;
-  /* background: var(--card-background); */
+  background: var(--card-background);
   border: 1px solid var(--card-background);
   border-radius: 20px;
 }

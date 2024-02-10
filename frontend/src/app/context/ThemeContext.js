@@ -8,7 +8,10 @@ export const ThemeContext = createContext();
 
 export default function ThemeContextProvider({ children }) {
   // This is a hook that will check if the user has a preference for dark mode
-  const preference = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const preference =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+
   const [theme, setTheme] = useLocalStorage("theme", !preference);
 
   // This is a function that will toggle the theme
@@ -23,4 +26,3 @@ export default function ThemeContextProvider({ children }) {
     </ThemeContext.Provider>
   );
 }
-

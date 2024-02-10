@@ -5,16 +5,16 @@
   height: 100px;
 }
 .latest_chapter_cover {
-  width: 33%;
+  width: fit-content;
   height: inherit;
   border-radius: 0px 50px 50px 0px;
   background-color: var(--toggle-color);
   padding: 20px 80px;
+  cursor: pointer;
   transition: all 0.15s ease-in;
 }
 
 .latest_chapter_cover:hover {
-  transform: translateX(30px);
   box-shadow: -20px 10px 10px 5px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease-in;
 }
