@@ -27,3 +27,20 @@
   background: #191518;
   transform: translateX(160%);
 }
+
+@media (max-width: 600px){
+  .toggle_button {
+    margin-top: 2px;
+    width: 60px;
+  }
+  .svg {
+    margin: 2px 2px 0px 2px;
+  }
+  .toggle {
+    height: 23px;
+    width: 23px;
+  }
+  .toggle_alt {
+    transform: translateX(140%);
+  }
+}

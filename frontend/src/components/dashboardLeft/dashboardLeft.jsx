@@ -8,7 +8,6 @@ export default function DashboardLeft({
   username,
   email,
 }) {
-  console.log("readStory", readStories, "readChapter", readChapters);
   return (
     <>
       <div className={styles.icon_wrapper}>

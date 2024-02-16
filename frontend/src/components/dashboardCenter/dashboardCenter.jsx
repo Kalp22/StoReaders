@@ -52,7 +52,6 @@ export default function DashboardCenter({ readStories, reviews }) {
         .then((res) => res.json())
         .then((data) => {
           if (!data.status) return console.log(data.message);
-          console.log(data.reviews);
           setReviews(data.reviews);
         });
     } catch (e) {
