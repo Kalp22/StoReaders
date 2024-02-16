@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import StoryAlternate from "../cards/storyAlternate/storyAlternate";
 import DashboardReviews from "../cards/dashboardReviews/dashboardReviews";
 
-export default function DashboardCenter({ readStories, username, reviews }) {
+export default function DashboardCenter({ readStories, reviews }) {
   const storyIds = readStories.map((story) => story.storyId);
   const reviewIds = reviews.map((review) => review.reviewId);
   const [stories, setStories] = useState([
