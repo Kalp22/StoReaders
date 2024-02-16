@@ -42,17 +42,7 @@ export default function SwiperComponent({ data }) {
         stories.map((story, i) => {
           return (
             <SwiperSlide key={i}>
-              <div
-                className={styles.container_image}
-                style={{
-                  backgroundImage: `url(${imageURLS[i]})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                }}
-              >
-                <SwipCard story={story} image={imageURLS[i]} />
-              </div>
+              <SwipCard story={story} image={imageURLS[i]} />
             </SwiperSlide>
           );
         })}

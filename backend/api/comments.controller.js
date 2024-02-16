@@ -186,6 +186,24 @@ router.delete("/delete", auth, async (req, res) => {
       $pull: { commentId: commentId },
     }).exec();
 
+    //Delete comment replies
+    const comment = await Comment.findById(commentId).exec();
+    const replies = comment.replyId.length != 0 && comment.replyId;
+    if (replies.length !== 0) {
+      for (let i = 0; i < replies.length; i++) {
+        const reply = await Reply.findById(replies[i]).exec();
+        //Remove reply from user replies Array
+        await User.findOneAndUpdate(
+          { username: reply.commentator },
+          {
+            $pull: { replies: replies[i] },
+          }
+        ).exec();
+        //Delete reply
+        await Reply.findByIdAndDelete(replies[i]).exec();
+      }
+    }
+
     //Delete comment
     await Comment.findByIdAndDelete(commentId).exec();
 

@@ -14,7 +14,7 @@ export default function chapterRead({ params: { id, chapterName } }) {
   const storyName = id.replace(/-/g, " ");
   const chapter_name = chapterName.replace(/-/g, " ");
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const [user, setUser] = useState({});
   const [chapter, setChapter] = useState({
     _id: "",
     storyId: "",
@@ -25,47 +25,63 @@ export default function chapterRead({ params: { id, chapterName } }) {
   const [theme, setTheme] = useState(true);
 
   useEffect(() => {
-    const handleStorageChange = () => {
-      const storedTheme = localStorage.getItem("theme");
-      setTheme(storedTheme === "true");
-    };
-
-    // Attach event listener for changes in localStorage
-    window.addEventListener("storage", handleStorageChange);
-
-    // Initial setup
-    handleStorageChange();
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, [localStorage]); // Include localStorage in the dependency array
+    // Check if window is defined to ensure it's executed on the client side
+    if (typeof window !== "undefined") {
+      setUser(JSON.parse(localStorage.getItem("user")));
+    }
+  }, []);
 
   useEffect(() => {
-    try {
-      fetch(`${process.env.API_URL}chapters/getOne`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: user ? user.id : null,
-          chapterName: chapter_name,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.chapter == null) {
-            router.push(`/story/${id}`);
-          }
-          if (data.chapter.storyName != storyName) {
-            router.push(`/story/${id}`);
-          }
-          setChapter(data.chapter);
-        });
-    } catch (error) {
-      console.log(error.message);
+    const handleStorageChange = () => {
+      // Check if window is defined to ensure it's executed on the client side
+      if (typeof window !== "undefined") {
+        const storedTheme = localStorage.getItem("theme");
+        setTheme(storedTheme === "true");
+      }
+    };
+
+    // Check if window is defined to ensure it's executed on the client side
+    if (typeof window !== "undefined") {
+      // Attach event listener for changes in localStorage
+      window.addEventListener("storage", handleStorageChange);
+
+      // Initial setup
+      handleStorageChange();
+
+      // Clean up the event listener when the component unmounts
+      return () => {
+        window.removeEventListener("storage", handleStorageChange);
+      };
+    }
+  }, []); // Empty dependency array as it runs once on mount
+
+  useEffect(() => {
+    // Check if window is defined to ensure it's executed on the client side
+    if (typeof window !== "undefined") {
+      try {
+        fetch(`${process.env.API_URL}chapters/getOne`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: user ? user.id : null,
+            chapterName: chapter_name,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.chapter == null) {
+              router.push(`/story/${id}`);
+            }
+            if (data.chapter.storyName != storyName) {
+              router.push(`/story/${id}`);
+            }
+            setChapter(data.chapter);
+          });
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   }, [chapter]);
 
