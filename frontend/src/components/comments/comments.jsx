@@ -12,7 +12,7 @@ import MoreDialog from "./moreDialog";
 import CommentForm from "./commentForm";
 
 export default function Comments({ chapterId, commentIds }) {
-  const user = localStorage.getItem("user");
+  const [user, setUser] = useState({});
 
   const [commentsToggle, setCommentsToggle] = useState(false);
   const [timeout, setTimeoutState] = useState(true);
@@ -40,6 +40,10 @@ export default function Comments({ chapterId, commentIds }) {
   const [commentator, setCommentator] = useState("");
   const [content, setContent] = useState("");
   const [commentReplies, setCommentReplies] = useState({});
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user")));
+  }, []);
 
   useEffect(() => {
     try {
