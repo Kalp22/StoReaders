@@ -30,51 +30,42 @@ router.post("/getAll", async (req, res) => {
 router.post("/getOne", async (req, res) => {
   try {
     const { userId, chapterName } = req.body;
-    const chapter = await Chapters.findOne({ chapterName: chapterName }).exec();
-    if (userId === null || userId === undefined) {
+    const chapter = await Chapters.findOne({ chapterName }).exec();
+
+    if (!userId) {
       res.status(200).json({ status: true, chapter: chapter });
       return;
     }
+
     const user = await Users.findById(userId);
 
-    //Check if user has already read the story
-    if (!user.readStories.find((story) => story.storyId == chapter.storyId)) {
-      //Increment views and add story to user's readStories
+    // Check if user has already read the story
+    const hasReadStory = user.readStories.some(
+      (story) => story.storyId === chapter.storyId
+    );
+
+    if (!hasReadStory) {
+      // Increment views and add story to user's readStories
       await Stories.findByIdAndUpdate(chapter.storyId, {
         $inc: { "storyBasic.views": 1 },
       });
 
-      await Users.findByIdAndUpdate(userId, {
-        $push: {
-          readStories: {
-            storyId: chapter.storyId,
-            noOfChapters: 1,
-          },
-        },
+      user.readStories.push({
+        storyId: chapter.storyId,
+        noOfChapters: 1,
       });
     }
 
-    //Check if user has already read the chapter
-    if (!user.readChapters.includes(chapter._id)) {
-      //add chapter to user's readChapters and increment noOfChapters in readStories
-      await Users.findByIdAndUpdate(userId, {
-        $push: {
-          readChapters: chapter._id,
-        },
-      });
+    // Check if user has already read the chapter
+    const hasReadChapter = user.readChapters.includes(chapter._id);
 
-      await Users.findByIdAndUpdate(
-        userId,
-        {
-          $inc: {
-            "readStories.$[elem].noOfChapters": 1,
-          },
-        },
-        {
-          arrayFilters: [{ "elem.storyId": chapter.storyId }],
-        }
-      );
+    if (!hasReadChapter) {
+      // Add chapter to user's readChapters
+      user.readChapters.push(chapter._id);
     }
+
+    // Save the user document
+    await user.save();
 
     res.status(200).json({ status: true, chapter: chapter });
   } catch (e) {

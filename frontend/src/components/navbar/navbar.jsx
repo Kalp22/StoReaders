@@ -1,15 +1,19 @@
 "use client";
+import { useState, useEffect } from "react";
 import styles from "./navbar.module.css";
 
 import Link from "next/link";
-
 import { FaUser } from "react-icons/fa";
 
 import DarkLight from "../ui/darklight/page";
 
 export default function Navbar() {
-  const user =
-    typeof localStorage !== "undefined" && localStorage.getItem("user");
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    setUser(storedUser);
+  }, []); // Run this effect only once on component mount
 
   return (
     <nav className={styles.navbar_wrapper}>

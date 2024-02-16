@@ -65,19 +65,19 @@ export default function DashboardCenter({ readStories, username, reviews }) {
       <div className={styles.component}>
         <div className={styles.titles}>Stories Read</div>
         <div className={styles.stories_cover}>
-          {readStories ? (
+          {readStories.length != 0 ? (
             stories &&
             stories.map((story, i) => {
               return (
                 <StoryAlternate
                   key={i}
                   story={story}
-                  readChapters={readStories && readStories[i].noOfChapters}
+                  readChapters={readStories[i].noOfChapters}
                 />
               );
             })
           ) : (
-            <div>No stories read yet</div>
+            <div className={styles.nothing}>No stories read yet</div>
           )}
         </div>
       </div>
@@ -97,7 +97,7 @@ export default function DashboardCenter({ readStories, username, reviews }) {
               );
             })
           ) : (
-            <div>You haven't reviewed yet</div>
+            <div className={styles.nothing}>You haven't reviewed yet</div>
           )}
         </div>
       </div>

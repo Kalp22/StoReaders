@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Toaster, toast } from "sonner";
@@ -17,17 +17,20 @@ export default function Signup() {
       setTheme(storedTheme === "true");
     };
 
-    // Attach event listener for changes in localStorage
-    window.addEventListener("storage", handleStorageChange);
+    // Check if window is defined to ensure it's executed on the client side
+    if (typeof window !== "undefined") {
+      // Attach event listener for changes in localStorage
+      window.addEventListener("storage", handleStorageChange);
 
-    // Initial setup
-    handleStorageChange();
+      // Initial setup
+      handleStorageChange();
 
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, [localStorage]); // Include localStorage in the dependency array
+      // Clean up the event listener when the component unmounts
+      return () => {
+        window.removeEventListener("storage", handleStorageChange);
+      };
+    }
+  }, []); // Empty dependency array as it runs once on mount
 
   const handleSubmit = async (e) => {
     try {

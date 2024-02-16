@@ -8,6 +8,7 @@ import { Toaster, toast } from "sonner";
 export default function ResetPasswordPage() {
   const router = useRouter();
 
+  const [user, setUser] = useState({});
   const [form, setForm] = useState({ password: "", confirmPassword: "" });
   const [theme, setTheme] = useState(true);
 
@@ -17,17 +18,20 @@ export default function ResetPasswordPage() {
       setTheme(storedTheme === "true");
     };
 
-    // Attach event listener for changes in localStorage
-    window.addEventListener("storage", handleStorageChange);
+    // Check if window is defined to ensure it's executed on the client side
+    if (typeof window !== "undefined") {
+      // Attach event listener for changes in localStorage
+      window.addEventListener("storage", handleStorageChange);
 
-    // Initial setup
-    handleStorageChange();
+      // Initial setup
+      handleStorageChange();
 
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, [localStorage]); // Include localStorage in the dependency array
+      // Clean up the event listener when the component unmounts
+      return () => {
+        window.removeEventListener("storage", handleStorageChange);
+      };
+    }
+  }, []); // Empty dependency array as it runs once on mount
 
   const handleSubmit = async (e) => {
     try {
@@ -43,6 +47,13 @@ export default function ResetPasswordPage() {
         return;
       }
 
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      if (!user) {
+        toast.error("User not found");
+        return;
+      }
+
       const res = await fetch(`${process.env.API_URL}user/resetpassword`, {
         method: "PUT",
         headers: {
@@ -50,7 +61,7 @@ export default function ResetPasswordPage() {
         },
         body: JSON.stringify({
           password: form.password,
-          id: JSON.parse(localStorage.getItem("user")).id,
+          id: user.id,
         }),
       });
 
@@ -69,10 +80,13 @@ export default function ResetPasswordPage() {
     }
   };
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user")));
+  }, []);
 
   if (!user || user.fpass === false) {
     router.push("/");
+    return null; // Add a return statement to handle the case where the component is not rendered
   } else {
     user.fpass = false;
     return (

@@ -16,7 +16,7 @@ const ReplyDialog = ({
     <dialog
       id="replyDialog"
       style={{
-        position: "absolute",
+        position: "fixed",
         color: "var(--text-color)",
         backgroundColor: "var(--chapter-list-background)",
         top: `${Math.abs(coordinates.top) + 20}px`,

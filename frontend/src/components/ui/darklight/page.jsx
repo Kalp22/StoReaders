@@ -4,12 +4,22 @@ import styles from "./page.module.css";
 import { MdOutlineLightMode } from "react-icons/md";
 import { MdOutlineDarkMode } from "react-icons/md";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { ThemeContext } from "@/app/context/ThemeContext";
 
 export default function DarkLight() {
   const { theme, toggleTheme } = useContext(ThemeContext);
+
+  // Add useEffect to set the initial class based on the theme
+  useEffect(() => {
+    const toggle = document.querySelector(`.${styles.toggle}`);
+    if (theme) {
+      toggle.classList.remove(styles.toggle_alt);
+    } else {
+      toggle.classList.add(styles.toggle_alt);
+    }
+  }, [theme]);
 
   const toggleButton = () => {
     const toggle = document.querySelector(`.${styles.toggle}`);

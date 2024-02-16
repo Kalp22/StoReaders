@@ -2,7 +2,13 @@ import styles from "./dashboardLeft.module.css";
 
 import { FaUser } from "react-icons/fa";
 
-export default function DashboardLeft({ readStories, readChapters, username, email}) {
+export default function DashboardLeft({
+  readStories,
+  readChapters,
+  username,
+  email,
+}) {
+  console.log("readStory", readStories, "readChapter", readChapters);
   return (
     <>
       <div className={styles.icon_wrapper}>

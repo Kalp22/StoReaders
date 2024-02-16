@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import { IoCloseOutline } from "react-icons/io5";
+
 export default function DashboardRight() {
   const router = useRouter();
   const [latestStoryName, setLatestStoryName] = useState("");
@@ -70,7 +72,12 @@ export default function DashboardRight() {
       </div>
       <dialog id="dialog" className={styles.ask_dialog}>
         <div className={styles.ask_dialog_box}>
-          <p>Are you sure you want to delete your account?</p>
+          <IoCloseOutline
+            className={styles.close}
+            size={32}
+            onClick={() => document.getElementById("dialog").close()}
+          />
+          <p>Are you sure you want to Delete your account?</p>
           <div className={styles.ask_dialog_buttons}>
             <button
               onClick={() => {

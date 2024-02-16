@@ -9,6 +9,10 @@
   gap: 1rem;
 }
 
+.comment_wrapper:hover {
+  background: var(--card-background-hover);
+}
+
 .comment_head {
   display: flex;
   flex-direction: row;

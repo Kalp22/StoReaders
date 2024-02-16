@@ -179,7 +179,7 @@
 .comment_form textarea,
 .reply_form textarea {
   width: 100%;
-  height: 5em;
+  height: fit-content;
   color: var(--text-color);
   background: var(--chapter-list-background);
   padding: 10px 3em 10px 10px;

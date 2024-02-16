@@ -12,8 +12,8 @@ export default async function Stories({ description, swiper }) {
   const data = await res.json();
 
   if (swiper) {
-    return <SwiperComponent data={data} />;
+    return <SwiperComponent data={data && data} />;
   } else {
-    return <StoriesComponent description={description} data={data} />;
+    return <StoriesComponent description={description} data={data && data} />;
   }
 }

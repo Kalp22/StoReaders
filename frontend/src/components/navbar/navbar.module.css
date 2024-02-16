@@ -10,7 +10,7 @@
 }
 
 .navbar_cover {
-  font-size: large;
+  font-size: 19px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

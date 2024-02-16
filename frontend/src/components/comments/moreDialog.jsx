@@ -6,7 +6,7 @@ const MoreDialog = ({ moreCoordinates, copyText, canDelete, handleDelete }) => {
     <dialog
       id="moreDialog"
       style={{
-        position: "absolute",
+        position: "fixed",
         color: "var(--text-color)",
         backgroundColor: "var(--chapter-list-background)",
         top: `${Math.abs(moreCoordinates.top) + 20}px`,
