@@ -18,7 +18,6 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    console.log(window.innerWidth);
     const handleResize = () => {
       if (window.innerWidth > 800) {
         setMenuOpen(false);

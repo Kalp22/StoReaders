@@ -47,17 +47,22 @@ router.post("/getUserReviews", async (req, res) => {
 
 router.put("/add", async (req, res) => {
   try {
-    //Credentials from user taken
+    // Credentials from user taken
     const { userId, storyId, storyName, content } = req.body;
 
     const user = await User.findById(userId).exec();
 
-    if (user.reviews.includes({ storyId: storyId })) {
+    // Check if the user has already reviewed the story
+    const hasReviewed = user.reviews.find(
+      (review) => review.storyId === storyId
+    );
+
+    if (hasReviewed) {
       return res
         .status(400)
-        .json({ message: "You have already Reviewed this story" });
+        .json({ message: "You have already reviewed this story" });
     } else {
-      //Create new review
+      // Create new review
       const newReview = new Review({
         storyId,
         storyName,
@@ -66,15 +71,15 @@ router.put("/add", async (req, res) => {
         reviewContent: content,
       });
 
-      //Save review
+      // Save review
       await newReview.save();
 
-      //Add review to user reviews Array
+      // Add review to user reviews array
       await User.findByIdAndUpdate(userId, {
         $push: { reviews: { storyId: storyId, reviewId: newReview._id } },
       }).exec();
 
-      //Add review to story reviews Array
+      // Add review to story reviews array
       await Story.findByIdAndUpdate(storyId, {
         $push: { reviewId: newReview._id },
       }).exec();

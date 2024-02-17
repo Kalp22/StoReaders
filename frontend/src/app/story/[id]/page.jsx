@@ -37,7 +37,6 @@ export default function StoryOverview({ params: { id } }) {
     };
   }, [localStorage]); // Include localStorage in the dependency array
 
-  console.log(theme);
   const router = useRouter();
   const storyName = id.replace(/-/g, " ");
   const [story, setStory] = useState({

@@ -68,6 +68,11 @@ export default function Reviews({ storyId, story_name, reviewId }) {
 
       const data = await res.json();
       if (data.message !== "Review added") {
+        if (data.message === "You have already reviewed this story") {
+          toast.warning(data.message);
+          setReview("");
+          return;
+        }
         toast.error(data.message);
         return;
       }
@@ -194,7 +199,13 @@ export default function Reviews({ storyId, story_name, reviewId }) {
                   </div>
                 </header>
                 <div className={styles.content}>
-                  <p>{rev.reviewContent}</p>
+                  {rev.reviewContent.split("\n").map((para, i) => {
+                    return (
+                      <p key={i} className={styles.paragraph}>
+                        {para}
+                      </p>
+                    );
+                  })}
                 </div>
               </div>
             );

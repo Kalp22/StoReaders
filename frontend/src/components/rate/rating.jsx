@@ -10,7 +10,6 @@ export default function Rating({ storyId }) {
 
   useEffect(() => {
     const fetchRatings = () => {
-      console.log(storyId);
       if (localStorage.getItem("user") == null) return;
 
       const user = JSON.parse(localStorage.getItem("user"));
