@@ -2,5 +2,18 @@
     background: var(--genre-background);
     padding: 5px 10px;
     border-radius: 5px;
-    border: 1px solid var(--card-hover-border);
+    border: 1px solid var(--card-hover-border);;
+    white-space: nowrap;
+}
+
+@media (max-width: 800px){
+    .genre{
+        padding: 3px 5px;
+    }
+}
+
+@media (max-width: 600px){
+    .genre{
+        padding: 2px 3px;
+    }
 }

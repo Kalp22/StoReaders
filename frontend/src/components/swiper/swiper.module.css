@@ -6,6 +6,8 @@
   min-width: 0;
 }
 
-.container_image {
-  margin: 0px 3em;
+@media (max-width: 800px) {
+  .swiper_wrapper {
+    width: 100%;
+  }
 }

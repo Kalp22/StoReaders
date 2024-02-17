@@ -19,7 +19,7 @@ export default function SwipCard({ story, image }) {
         <div className={styles.genre_wrapper}>
           {story &&
             story.genre.map((genre, i) => {
-              return <Genre genre={genre} key={i} />;
+              return i < 3 ? <Genre genre={genre} key={i} /> : "";
             })}
         </div>
         <div className={styles.main_description}>{story.description}</div>

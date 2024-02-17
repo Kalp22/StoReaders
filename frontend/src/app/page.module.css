@@ -32,3 +32,42 @@
   color: white;
   margin-bottom: 2.5rem;
 }
+
+@media (max-width: 1000px) {
+  .landing_wrapper {
+    margin: 4em 0px 3rem 0px;
+  }
+  .title {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+  }
+  .subtitle {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .title {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .subtitle {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .landing_wrapper {
+    margin: 3em 0px 2rem 0px;
+  }
+  .title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  .subtitle {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+}

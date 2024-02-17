@@ -30,3 +30,37 @@
   font-weight: 500;
   margin-left: 150px;
 }
+
+@media (max-width: 800px) {
+  .latest_chapter_wrapper {
+    height: 85px;
+  }
+  .latest_chapter_cover {
+    padding: 15px 40px;
+  }
+  .chapter_name {
+    font-size: 1.2rem;
+    margin-left: 100px;
+  }
+  .latest_text {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .latest_chapter_wrapper {
+    height: 75px;
+  }
+  .latest_chapter_cover {
+    padding: 15px 20px;
+  }
+  .chapter_name {
+    font-size: 1rem;
+    margin-left: 50px;
+  }
+  .latest_text {
+    font-size: 1.1rem;
+  }
+}
+
+

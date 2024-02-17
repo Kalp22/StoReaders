@@ -44,11 +44,15 @@
 }
 
 .genres_wrapper {
-  font-size: large;
   display: flex;
-  justify-content: flex-end;
-  width: 30%;
+  flex-wrap: wrap;
+  justify-content: flex-end; /* Start from the right */
+  font-size: large;
   gap: 1rem;
+}
+
+.genres_wrapper > * {
+  flex: 0 0 calc(33.333% - 3rem); /* Maximum three elements per row with a gap */
 }
 
 .story_description {
@@ -79,4 +83,101 @@
     width: 100%;
   }
   transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 1000px) {
+  .card_wrapper {
+    width: 95%;
+  }
+  .genres_wrapper {
+    width: 40%;
+  }
+}
+
+@media (max-width: 800px) {
+  .card_wrapper {
+    padding: 20px;
+    margin-bottom: 1.5em;
+    width: 100%;
+  }
+  .card_wrapper:hover {
+    margin-bottom: 2rem;
+    box-shadow: 10px 30px 15px 0px rgba(0, 0, 0, 0.2);
+    .story_name {
+      font-size: 2.5rem;
+    }
+  }
+  .head_wrapper {
+    margin-bottom: 2rem;
+  }
+  .genres_wrapper {
+    font-size: medium;
+    width: 50%;
+    gap: 0.5rem;
+  }
+  .genres_wrapper > * {
+    flex: 0 0 calc(50% - 3rem);
+  }
+  .story_name {
+    font-size: 2.3rem;
+  }
+  .story_name_alt {
+    font-size: 2.5rem;
+  }
+  .story_description {
+    font-size: medium;
+  }
+}
+
+@media (max-width: 600px) {
+  .card_wrapper {
+    margin-bottom: 1em;
+    padding: 20px 20px 20px 10px;
+  }
+  .story_name {
+    font-size: 2.1rem;
+  }
+  .story_name_alt {
+    font-size: 2.3rem;
+  }
+  .card_wrapper:hover {
+    margin-bottom: 1.5rem;
+    box-shadow: 10px 20px 15px 0px rgba(0, 0, 0, 0.2);
+    .story_name {
+      font-size: 2.3rem;
+    }
+  }
+  .head_wrapper {
+    margin-bottom: 1.5rem;
+  }
+  .genres_wrapper,
+  .story_description {
+    font-size: small;
+  }
+}
+
+@media (max-width: 500px) {
+  .story_name {
+    font-size: 1.7rem;
+  }
+  .story_name_alt {
+    font-size: 1.8rem;
+  }
+  .card_wrapper {
+    padding: 20px 10px 20px 10px;
+  }
+  .card_wrapper:hover {
+    margin-bottom: 1.2rem;
+    box-shadow: 10px 15px 15px 0px rgba(0, 0, 0, 0.2);
+    .story_name {
+      font-size: 1.9rem;
+    }
+  }
+  .head_wrapper {
+    margin-bottom: 1rem;
+  }
+  .genres_wrapper,
+  .story_description {
+    font-size: x-small;
+  }
 }

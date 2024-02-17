@@ -1,9 +1,27 @@
-.story_wrapper{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0rem;
-    padding: 7em 0px;
-    border-radius: 20px;
+.story_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0rem;
+  padding: 7em 0px;
+  border-radius: 20px;
+}
+
+@media (max-width: 800px) {
+  .story_wrapper {
+    padding: 5em 0px;
+  }
+}
+
+@media (max-width: 600px) {
+  .story_wrapper {
+    padding: 4em 0px;
+  }
+}
+
+@media (max-width: 500px) {
+  .story_wrapper {
+    padding: 3.5em 0px;
+  }
 }

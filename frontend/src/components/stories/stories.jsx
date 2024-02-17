@@ -3,7 +3,6 @@ import styles from "./stories.module.css";
 import StoryCard from "../cards/story/storyCard";
 
 export default function StoriesComponent({ description, data }) {
-
   const descript = description;
 
   return (
