@@ -35,7 +35,7 @@ export default function StoryOverview({ params: { id } }) {
     return () => {
       window.removeEventListener("storage", handleStorageChange);
     };
-  }, [localStorage]); // Include localStorage in the dependency array
+  }, []); // Empty dependency array means this effect runs once on mount
 
   const router = useRouter();
   const storyName = id.replace(/-/g, " ");
