@@ -3,13 +3,14 @@ import styles from "./latestChapter.module.css";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+require("dotenv").config();
 
 export default function LatestStory() {
   const router = useRouter();
   const [latestStoryName, setLatestStoryName] = useState("");
   useEffect(() => {
     try {
-      fetch(`${process.env.API_URL}stories/getLatest`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}stories/getLatest`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

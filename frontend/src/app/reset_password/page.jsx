@@ -4,6 +4,7 @@ import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Toaster, toast } from "sonner";
+require("dotenv").config();
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -54,16 +55,19 @@ export default function ResetPasswordPage() {
         return;
       }
 
-      const res = await fetch(`${process.env.API_URL}user/resetpassword`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          password: form.password,
-          id: user.id,
-        }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}user/resetpassword`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            password: form.password,
+            id: user.id,
+          }),
+        }
+      );
 
       const data = await res.json();
 

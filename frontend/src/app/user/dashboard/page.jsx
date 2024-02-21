@@ -8,6 +8,7 @@ import DashboardRight from "@/components/dashboardRight/dashboardRight";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Toaster } from "sonner";
+require("dotenv").config();
 
 export default function UserDashboard() {
   const router = useRouter();
@@ -46,7 +47,7 @@ export default function UserDashboard() {
       router.push("/");
       return;
     }
-      fetch(`${process.env.API_URL}user/get`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}user/get`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

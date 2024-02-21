@@ -3,13 +3,14 @@ import { useState, useEffect } from "react";
 import styles from "./chapters.module.css";
 
 import Chapter from "../cards/chapter/chapter";
+require("dotenv").config();
 
 export default function Chapters({ id, story_name }) {
   const [chapters, setChapters] = useState([]);
 
   useEffect(() => {
     try {
-      fetch(`${process.env.API_URL}chapters/getAll`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}chapters/getAll`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

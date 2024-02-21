@@ -53,7 +53,7 @@ export default function Comments({ chapterId, commentIds }) {
       setTimeout(() => {
         setTimeoutState(true);
       }, 15000);
-      fetch(`${process.env.API_URL}comments/getAll`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}comments/getAll`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -78,7 +78,7 @@ export default function Comments({ chapterId, commentIds }) {
 
   const getReplies = async (commId, index) => {
     try {
-      const res = await fetch(`${process.env.API_URL}comments/reply/getAll`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}comments/reply/getAll`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -123,7 +123,7 @@ export default function Comments({ chapterId, commentIds }) {
         return;
       }
 
-      const res = await fetch(`${process.env.API_URL}comments/add`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}comments/add`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -175,7 +175,7 @@ export default function Comments({ chapterId, commentIds }) {
         return;
       }
 
-      const res = await fetch(`${process.env.API_URL}comments/reply/add`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}comments/reply/add`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -217,7 +217,7 @@ export default function Comments({ chapterId, commentIds }) {
       }
 
       if (deleteId.isComment) {
-        const res = await fetch(`${process.env.API_URL}comments/delete`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}comments/delete`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -249,7 +249,7 @@ export default function Comments({ chapterId, commentIds }) {
         const dialog = document.querySelector("#moreDialog");
         dialog.close();
       } else {
-        const res = await fetch(`${process.env.API_URL}comments/reply/delete`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}comments/reply/delete`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -281,6 +281,7 @@ export default function Comments({ chapterId, commentIds }) {
   };
 
   const checkCanDelete = () => {
+    console.log(commentator, JSON.parse(user).username);
     if (!JSON.parse(user) || JSON.parse(user).username != commentator) {
       setCanDelete(false);
     } else {

@@ -15,6 +15,7 @@ import Chapters from "@/components/chapters/chapters";
 import Reviews from "@/components/reviews/reviews";
 
 import { FaStar } from "react-icons/fa";
+require("dotenv").config();
 
 export default function StoryOverview({ params: { id } }) {
   const [theme, setTheme] = useState(true);
@@ -70,7 +71,7 @@ export default function StoryOverview({ params: { id } }) {
 
   //fetching story data
   useEffect(() => {
-    fetch(`${process.env.API_URL}stories/get`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}stories/get`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

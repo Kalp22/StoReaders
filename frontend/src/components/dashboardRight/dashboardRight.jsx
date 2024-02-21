@@ -5,13 +5,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { IoCloseOutline } from "react-icons/io5";
+require("dotenv").config();
 
 export default function DashboardRight() {
   const router = useRouter();
   const [latestStoryName, setLatestStoryName] = useState("");
   useEffect(() => {
     try {
-      fetch(`${process.env.API_URL}stories/getLatest`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}stories/getLatest`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

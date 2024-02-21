@@ -4,6 +4,7 @@ import { toast } from "sonner";
 
 import { FaStar } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";
+require("dotenv").config();
 
 export default function Rating({ storyId }) {
   const [ratings, setRatings] = useState(0);
@@ -50,7 +51,7 @@ export default function Rating({ storyId }) {
         });
       }
 
-      const res = await fetch(`${process.env.API_URL}ratings`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}ratings`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -7,6 +7,7 @@ import Comments from "@/components/comments/comments";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Toaster } from "sonner";
+require("dotenv").config();
 
 export default function chapterRead({ params: { id, chapterName } }) {
   const router = useRouter();
@@ -59,7 +60,7 @@ export default function chapterRead({ params: { id, chapterName } }) {
     // Check if window is defined to ensure it's executed on the client side
     if (typeof window !== "undefined") {
       try {
-        fetch(`${process.env.API_URL}chapters/getOne`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}chapters/getOne`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

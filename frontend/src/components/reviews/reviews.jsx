@@ -6,6 +6,7 @@ import { MdSend } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 import { toast } from "sonner";
+require("dotenv").config();
 
 export default function Reviews({ storyId, story_name, reviewId }) {
   const user = localStorage.getItem("user");
@@ -17,7 +18,7 @@ export default function Reviews({ storyId, story_name, reviewId }) {
   useEffect(() => {
     const getReviews = async () => {
       try {
-        const res = await fetch(`${process.env.API_URL}reviews/getAll`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}reviews/getAll`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -53,7 +54,7 @@ export default function Reviews({ storyId, story_name, reviewId }) {
         toast.warning("Please write a review");
         return;
       }
-      const res = await fetch(`${process.env.API_URL}reviews/add`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}reviews/add`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -105,7 +106,7 @@ export default function Reviews({ storyId, story_name, reviewId }) {
         return;
       }
 
-      const res = await fetch(`${process.env.API_URL}reviews/delete`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}reviews/delete`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

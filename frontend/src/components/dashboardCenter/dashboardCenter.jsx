@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 import StoryAlternate from "../cards/storyAlternate/storyAlternate";
 import DashboardReviews from "../cards/dashboardReviews/dashboardReviews";
+require("dotenv").config();
 
 export default function DashboardCenter({ readStories, reviews }) {
   const storyIds = readStories.map((story) => story.storyId);
@@ -19,7 +20,7 @@ export default function DashboardCenter({ readStories, reviews }) {
 
   useEffect(() => {
     try {
-      fetch(`${process.env.API_URL}stories/getReadStories`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}stories/getReadStories`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +41,7 @@ export default function DashboardCenter({ readStories, reviews }) {
 
   useEffect(() => {
     try {
-      fetch(`${process.env.API_URL}reviews/getUserReviews`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}reviews/getUserReviews`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

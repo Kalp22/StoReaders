@@ -104,19 +104,29 @@ export default function Navbar() {
       <div className={`${styles.menu_dialog} ${menuOpen ? styles.open : ""}`}>
         <div>
           <div>
-            <Link href="/" style={{width: "100%"}}>HOME</Link>
+            <Link href="/" style={{ width: "100%" }}>
+              HOME
+            </Link>
           </div>
           <div>
-            <Link href="/about" style={{width: "100%"}}>ABOUT</Link>
+            <Link href="/about" style={{ width: "100%" }}>
+              ABOUT
+            </Link>
           </div>
           <div>
-            <Link href="/stories" style={{width: "100%"}}>READ</Link>
+            <Link href="/stories" style={{ width: "100%" }}>
+              READ
+            </Link>
           </div>
         </div>
         <div>
           {user ? (
             <div>
-              <Link href="/user/dashboard" style={{width: "100%"}} className={styles.useralt}>
+              <Link
+                href="/user/dashboard"
+                style={{ width: "100%" }}
+                className={styles.useralt}
+              >
                 <FaUser className={styles.user_image} />
                 <p>{JSON.parse(user).username}</p>
               </Link>
@@ -124,10 +134,14 @@ export default function Navbar() {
           ) : (
             <>
               <div>
-                <Link href="/login" style={{width: "100%"}}>LOG IN</Link>
+                <Link href="/login" style={{ width: "100%" }}>
+                  LOG IN
+                </Link>
               </div>
               <div>
-                <Link href="/signup" style={{width: "100%"}}>SIGN UP</Link>
+                <Link href="/signup" style={{ width: "100%" }}>
+                  SIGN UP
+                </Link>
               </div>
             </>
           )}

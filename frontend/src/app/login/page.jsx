@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Toaster, toast } from "sonner";
+require("dotenv").config();
 
 export default function Login() {
   const router = useRouter();
@@ -42,7 +43,7 @@ export default function Login() {
         return;
       }
 
-      const res = await fetch(`${process.env.API_URL}user/login`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}user/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
