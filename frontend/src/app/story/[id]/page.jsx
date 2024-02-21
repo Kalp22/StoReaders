@@ -8,7 +8,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Toaster } from "sonner";
 
-import Navbar from "@/components/navbar/navbar";
 import Genre from "@/components/genre/genre";
 import Rating from "@/components/rate/rating";
 import Chapters from "@/components/chapters/chapters";
@@ -102,7 +101,6 @@ export default function StoryOverview({ params: { id } }) {
 
   return (
     <>
-      <Navbar />
       <div className={styles.all_overview_wrapper}>
         <div className={styles.left_overview_wrapper}>
           <Image

@@ -9,8 +9,7 @@ export default async function Stories({ description, swiper }) {
       "Content-Type": "application/json",
     },
   });
-  console.log(process.env.API_URL);
-
+  
   const data = await res.json();
 
   return (

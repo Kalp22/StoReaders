@@ -1,9 +1,15 @@
 import styles from "./page.module.css";
 
+import dynamic from "next/dynamic";
+
 import Navbar from "@/components/navbar/navbar";
 import LatestStory from "@/components/latestChapter/latestChapter";
 import About from "@/components/about/about";
-import Stories from "@/components/fetch/stories";
+import StoriesLoad from "@/components/loading/storiesLoad";
+const Stories = dynamic(() => import("@/components/fetch/stories"), {
+  ssr: false,
+  loading: () => <StoriesLoad />,
+});
 
 export default function Home() {
   const description = false;

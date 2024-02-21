@@ -1,0 +1,31 @@
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate_pulse {
+  animation: pulse 1.5s infinite;
+}
+
+.stories_load_item {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  background: var(--card-background);
+  border: solid 1px var(--background-color);
+  padding: 5.8rem 6rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+}
+
+.swip_load {
+  width: 90%;
+  height: 600px;
+  background: var(--card-background);
+  animation: pulse 1.5s infinite;
+}

@@ -27,15 +27,23 @@ export default function LatestStory() {
 
   return (
     <div className={styles.latest_chapter_wrapper}>
-      <div
-        className={styles.latest_chapter_cover}
-        onClick={() =>
-          router.push(`/story/${latestStoryName.replace(/\s/g, "-")}`)
-        }
-      >
-        <div className={styles.latest_text}>Latest Story :</div>
-        <div className={styles.chapter_name}>{latestStoryName}</div>
-      </div>
+      {latestStoryName == "" ? (
+        <div className={styles.latest_chapter_cover}>
+          <div className={styles.latest_text}>Latest Story :</div>
+          <div className={styles.chapter_name}>Loading...</div>
+        </div>
+      ) : (
+        <div
+          className={styles.latest_chapter_cover}
+          onClick={() =>
+            router.push(`/story/${latestStoryName.replace(/\s/g, "-")}`)
+          }
+        >
+          <div className={styles.latest_text}>Latest Story :</div>
+
+          <div className={styles.chapter_name}>{latestStoryName}</div>
+        </div>
+      )}
     </div>
   );
 }

@@ -47,20 +47,20 @@ export default function UserDashboard() {
       router.push("/");
       return;
     }
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}user/get`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-        body: JSON.stringify({
-          username: user.username,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setUserDetails(data.user);
-    });
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}user/get`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify({
+        username: user.username,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUserDetails(data.user);
+      });
   }, []);
 
   return (

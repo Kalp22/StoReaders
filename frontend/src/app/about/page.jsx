@@ -1,12 +1,9 @@
-import Navbar from "@/components/navbar/navbar";
-
 import mainStyles from "../page.module.css";
 import styles from "./page.module.css";
 
 export default function About() {
   return (
     <>
-      <Navbar />
       <div className={mainStyles.empty_div_below_navbar}></div>
       <div className={styles.about_wrapper}>
         <div className={styles.about_text_wrapper}>

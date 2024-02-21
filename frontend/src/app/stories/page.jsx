@@ -1,15 +1,16 @@
-// "use client";
+import dynamic from "next/dynamic";
 import styles from "./page.module.css";
-
-import Navbar from "@/components/navbar/navbar";
-import Stories from "@/components/fetch/stories";
+import AllStoriesLoad from "@/components/loading/allStoriesLoad";
+const Stories = dynamic(() => import("@/components/fetch/stories"), {
+  ssr: false,
+  loading: () => <AllStoriesLoad />,
+});
 
 export default function StoryPage() {
   const description = true;
 
   return (
     <>
-      <Navbar />
       <div className={styles.story_wrapper}>
         <Stories description={description} swiper={true} />
         <Stories description={description} swiper={false} />

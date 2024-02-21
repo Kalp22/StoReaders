@@ -1,9 +1,7 @@
-import styles from "./stories.module.css";
+import styles from "@/components/stories/stories.module.css";
+import styles2 from "./storiesLoad.module.css";
 
-import StoryCard from "../cards/story/storyCard";
-
-export default function StoriesComponent({ description, data }) {
-  const descript = description;
+export default function StoriesLoad() {
   return (
     <div className={styles.stories_wrapper}>
       <div>
@@ -14,10 +12,12 @@ export default function StoriesComponent({ description, data }) {
         <div className={styles.stories_line}></div>
       </div>
       <div className={styles.stories_cards_wrapper}>
-        {data &&
-          data.story.map((story, i) => (
-            <StoryCard descript={descript} story={story} key={i} />
-          ))}
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div
+            key={i}
+            className={`${styles2.stories_load_item} ${styles2.animate_pulse}`}
+          ></div>
+        ))}
       </div>
     </div>
   );
