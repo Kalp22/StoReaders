@@ -7,10 +7,11 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { Toaster } from "sonner";
-import Genre from "@/components/genre/genre";
-import Rating from "@/components/rate/rating";
+import Navbar from "@/components/navbar/navbar";
 import Chapters from "@/components/chapters/chapters";
 import Reviews from "@/components/reviews/reviews";
+import Rating from "@/components/rate/rating";
+import Genre from "@/components/genre/genre";
 
 import StoryLoad from "@/components/loading/storyLoad";
 
@@ -110,6 +111,7 @@ export default function StoryOverview({ params: { id } }) {
 
   return (
     <>
+      <Navbar />
       {loading ? (
         <StoryLoad />
       ) : (
