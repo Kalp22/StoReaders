@@ -22,5 +22,10 @@
   min-height: fit-content;
   max-height: 600px;
   overflow-y: scroll;
+  scrollbar-width: none;
   padding-right: 1rem;
+}
+
+.chapters_list::-webkit-scrollbar {
+  width: 0;
 }

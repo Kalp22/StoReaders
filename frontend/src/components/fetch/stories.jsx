@@ -2,16 +2,7 @@ import SwiperComponent from "@/components/swiper/swiper";
 import StoriesComponent from "@/components/stories/stories";
 require("dotenv").config();
 
-export default async function Stories({ description, swiper }) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}stories/getAll`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  
-  const data = await res.json();
-
+export default function Stories({ description, swiper, data }) {
   return (
     <>
       {swiper ? (

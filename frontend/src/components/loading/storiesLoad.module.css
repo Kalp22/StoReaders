@@ -8,6 +8,16 @@
   }
 }
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6.5em;
+  width: 100%;
+  z-index: 100;
+}
+
 .animate_pulse {
   animation: pulse 1.5s infinite;
 }

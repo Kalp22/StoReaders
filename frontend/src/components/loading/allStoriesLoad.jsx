@@ -1,11 +1,11 @@
 import StoriesLoad from "@/components/loading/storiesLoad";
-import styles from "./storiesLoad.module.css"
+import styles from "./storiesLoad.module.css";
 
 export default function AllStoriesLoad() {
-    return (
-        <>
-        <div className={styles.swip_load}></div>
-    <StoriesLoad />
-        </>
-    )
+  return (
+    <div className={styles.wrapper}>
+      <div className={styles.swip_load}></div>
+      <StoriesLoad />
+    </div>
+  );
 }

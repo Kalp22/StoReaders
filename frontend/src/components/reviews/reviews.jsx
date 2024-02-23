@@ -18,15 +18,18 @@ export default function Reviews({ storyId, story_name, reviewId }) {
   useEffect(() => {
     const getReviews = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}reviews/getAll`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            storyName: story_name,
-          }),
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}reviews/getAll`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              storyName: story_name,
+            }),
+          }
+        );
 
         const data = await res.json();
         if (data.message) {
@@ -106,17 +109,20 @@ export default function Reviews({ storyId, story_name, reviewId }) {
         return;
       }
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}reviews/delete`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: JSON.parse(user).id,
-          storyId: storyId,
-          reviewId: reviewDeleteId,
-        }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}reviews/delete`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: JSON.parse(user).id,
+            storyId: storyId,
+            reviewId: reviewDeleteId,
+          }),
+        }
+      );
 
       const data = await res.json();
 

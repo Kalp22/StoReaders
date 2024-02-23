@@ -1,18 +1,20 @@
 import styles from "./page.module.css";
 
-import dynamic from "next/dynamic";
-
 import Navbar from "@/components/navbar/navbar";
 import LatestStory from "@/components/latestChapter/latestChapter";
 import About from "@/components/about/about";
-import StoriesLoad from "@/components/loading/storiesLoad";
-const Stories = dynamic(() => import("@/components/fetch/stories"), {
-  ssr: false,
-  loading: () => <StoriesLoad />,
-});
+import Stories from "@/components/fetch/stories";
 
-export default function Home() {
+export default async function Home() {
   const description = false;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}stories/getAll`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
 
   return (
     <main className={styles.main}>
@@ -24,7 +26,7 @@ export default function Home() {
         </div>
       </div>
       <LatestStory />
-      <Stories description={description} />
+      <Stories description={description} data={data} />
       <About />
     </main>
   );
