@@ -9,9 +9,10 @@ import { IoCloseOutline } from "react-icons/io5";
 
 import DarkLight from "../ui/darklight/page";
 
-export default function Navbar() {
+export default function Navbar({ landing }) {
   const [user, setUser] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolling, setScrolling] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -24,11 +25,21 @@ export default function Navbar() {
       }
     };
 
-    window.addEventListener("resize", handleResize);
+    const handleScroll = landing
+      ? () => {
+          setScrolling(window.scrollY > window.innerHeight - 90);
+        }
+      : () => {
+          setScrolling(true);
+        };
 
-    // Cleanup the event listener on component unmount
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup the event listeners on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []); // No need to include window.innerWidth in the dependency array
 
@@ -38,7 +49,11 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className={styles.navbar_wrapper}>
+    <nav
+      className={`${styles.navbar_wrapper} ${
+        scrolling ? styles.scrolling : ""
+      }`}
+    >
       <div className={styles.navbar_cover}>
         <div className={styles.navbar_left_cover}>
           <div>
@@ -100,7 +115,9 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-      <div className={styles.navbar_line}></div>
+      <div
+        className={`${scrolling ? styles.navbar_line : styles.no_line}`}
+      ></div>
       <div className={`${styles.menu_dialog} ${menuOpen ? styles.open : ""}`}>
         <div>
           <div>

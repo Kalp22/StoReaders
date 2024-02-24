@@ -1,45 +1,94 @@
 .list {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    list-style: none;
-    font-size: 1.2rem;
-    font-weight: 300;
-    color: var(foreground-color);
-    gap: 1rem;
-    padding: 0.5rem 2.5rem 0.5rem 1rem;
-    background: var(--chapter-list-background);
-    border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  font-size: 1.2rem;
+  color: var(foreground-color);
+  gap: 1rem;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  background: var(--chapter-list-background);
+  border-radius: 5px;
+}
+
+.chapter_label {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  width: 75%;
+}
+
+.chapter_label div:nth-child(1) {
+  font-weight: 700;
+}
+
+.chapter_label div:nth-child(2) {
+  font-weight: 300;
+}
+
+.read_button {
+  background: var(--card-hover-border);
+  border-radius: 5px;
+  padding: 0.4rem 0.7rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.read_button:hover {
+  background: var(--read-button);
+  color: #2b2229;
+}
+
+@media (max-width: 900px) {
+  .list {
+    padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+    font-size: 1rem;
   }
-  
   .chapter_label {
-    display: flex;
-    flex-direction: row;
-    gap: 1.5rem;
-    width: 75%;
+    gap: 1rem;
   }
-  
   .chapter_label div:nth-child(1) {
-    font-weight: 700;
+    font-weight: 600;
   }
-  
-  .chapter_label div:nth-child(2) {
-    font-weight: 300;
-  }
-  
   .read_button {
-    background: var(--card-hover-border);
-    border-radius: 5px;
-    padding: 0.4rem 0.7rem;
-    font-size: 1.2rem;
+    padding: 0.3rem 0.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .list {
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    font-size: 0.9rem;
+  }
+  .chapter_label {
+    gap: 0.5rem;
+  }
+  .chapter_label div:nth-child(1) {
     font-weight: 500;
-    cursor: pointer;
-    transition: all 0.1s ease;
   }
-  
-  .read_button:hover {
-    background: var(--read-button);
-    color: #2b2229;
+  .read_button {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.9rem;
   }
-  
+}
+
+@media (max-width: 550px) {
+  .list {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  .chapter_label {
+    gap: 0.5rem;
+  }
+  .chapter_label div:nth-child(1) {
+    font-weight: 400;
+  }
+  .read_button {
+    padding: 0.2rem 0.3rem;
+    font-size: 0.8rem;
+  }
+}

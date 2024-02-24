@@ -158,6 +158,21 @@ export default function StoryOverview({ params: { id } }) {
                     {story.storyBasic.status ? "Ongoing" : "Completed"}
                   </div>
                 </div>
+                <div
+                  className={`${styles.parameter_value_wrapper} ${styles.optional}`}
+                >
+                  <div className={styles.parameters}>Genre</div>
+                  <div className={styles.values}>
+                    {story.genre.map((genre, i) => {
+                      return (
+                        <span key={i}>
+                          {genre}
+                          {i < story.genre.length - 1 ? ", " : ""}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
                 <div className={styles.parameter_value_wrapper}>
                   <div className={styles.parameters}>Views</div>
                   <div className={styles.values}>{story.views}</div>
@@ -179,12 +194,6 @@ export default function StoryOverview({ params: { id } }) {
           <div
             ref={chaptersRef}
             id="chapters"
-            style={{
-              backgroundImage: backgroundImage,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
             className={styles.chapters_overview_wrapper}
           >
             {chaptersInView && story && story._id && (

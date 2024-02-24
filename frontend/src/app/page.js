@@ -39,7 +39,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <Navbar />
+      <Navbar landing={true} />
       {loading ? (
         <div className={styles.loading}>
           <SpinnerLoad />

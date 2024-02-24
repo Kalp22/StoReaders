@@ -1,5 +1,4 @@
 .navbar_wrapper {
-  background-color: var(--background-color);
   display: flex;
   flex-direction: column;
   height: 5em;
@@ -7,6 +6,10 @@
   top: 0;
   width: 100%;
   z-index: 100;
+}
+
+.scrolling {
+  background-color: var(--background-color);
 }
 
 .navbar_cover {
@@ -47,6 +50,11 @@
   background-color: var(--line-color);
   align-self: center;
 }
+
+.no_line {
+  height: 1px;
+}
+
 .partitioner {
   height: 40%;
   width: 1px;
@@ -217,6 +225,9 @@
     margin-right: 15px;
     width: 30%;
   }
+  .menu_dialog {
+    width: 11em;
+  }
 }
 
 @media (max-width: 600px) {
@@ -237,7 +248,8 @@
     width: 8px;
   }
   .menu_dialog {
-    top: 3.5em;
+    font-size: 14px;
+    width: 10em;
   }
   .navbar_right_cover {
     gap: 10px;
