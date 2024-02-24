@@ -1,32 +1,55 @@
+"use client";
+
 import styles from "./page.module.css";
 
+import { useState, useEffect } from "react";
+
 import Navbar from "@/components/navbar/navbar";
+import Landing from "@/components/landing/landing";
 import LatestStory from "@/components/latestChapter/latestChapter";
 import About from "@/components/about/about";
 import Stories from "@/components/fetch/stories";
 
-export default async function Home() {
-  const description = false;
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}stories/getAll`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+import SpinnerLoad from "@/components/loading/spinnerLoad";
+import StoriesLoad from "@/components/loading/storiesLoad";
 
-  const data = await res.json();
+import { FaBook } from "react-icons/fa6";
+
+export default function Home() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStories = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}stories/getAll`
+        );
+        const data = await res.json();
+        setData(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStories();
+  }, []);
 
   return (
     <main className={styles.main}>
       <Navbar />
-      <div className={styles.landing_wrapper}>
-        <div className={styles.landing_cover}>
-          <div className={styles.title}>StoReaders</div>
-          <div className={styles.subtitle}>A place to read stories</div>
+      {loading ? (
+        <div className={styles.loading}>
+          <SpinnerLoad />
+          <FaBook size={30} className={styles.book} />
         </div>
-      </div>
+      ) : (
+        <Landing />
+      )}
       <LatestStory />
-      <Stories description={description} data={data} />
+      {loading ? <StoriesLoad /> : <Stories description={false} data={data} />}
       <About />
     </main>
   );

@@ -11,6 +11,8 @@ import ReplyDialog from "./replyDialog";
 import MoreDialog from "./moreDialog";
 import CommentForm from "./commentForm";
 
+import CommentsLoad from "../loading/commentsLoad";
+
 export default function Comments({ chapterId, commentIds }) {
   const [user, setUser] = useState({});
 
@@ -40,53 +42,62 @@ export default function Comments({ chapterId, commentIds }) {
   const [commentator, setCommentator] = useState("");
   const [content, setContent] = useState("");
   const [commentReplies, setCommentReplies] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("user")));
   }, []);
 
   useEffect(() => {
-    try {
-      if (!commentsToggle) return;
-      if (!timeout) return;
-      setTimeoutState(false);
-      setTimeout(() => {
-        setTimeoutState(true);
-      }, 15000);
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}comments/getAll`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          chapterId: chapterId,
-          commentIds: commentIds,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (!data.status) {
-            toast.error(data.message);
-            return;
+    const fetchComments = async () => {
+      try {
+        if (!commentsToggle) return;
+        if (!timeout) return;
+        setTimeoutState(false);
+        setTimeout(() => {
+          setTimeoutState(true);
+        }, 15000);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}comments/getAll`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              chapterId: chapterId,
+              commentIds: commentIds,
+            }),
           }
-          setComments(data.comments);
-        });
-    } catch (e) {
-      console.log(e);
-    }
+        );
+        const data = await res.json();
+        if (!data.status) {
+          toast.error(data.message);
+          return;
+        }
+        setLoading(false);
+        setComments(data.comments);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchComments();
   }, [commentsToggle]);
 
   const getReplies = async (commId, index) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}comments/reply/getAll`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          commentId: commId,
-        }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}comments/reply/getAll`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            commentId: commId,
+          }),
+        }
+      );
 
       const data = await res.json();
 
@@ -123,18 +134,21 @@ export default function Comments({ chapterId, commentIds }) {
         return;
       }
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}comments/add`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(user).token}`,
-        },
-        body: JSON.stringify({
-          userId: JSON.parse(user).id,
-          chapterId: chapterId,
-          content: comment,
-        }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}comments/add`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: JSON.stringify({
+            userId: user.id,
+            chapterId: chapterId,
+            content: comment,
+          }),
+        }
+      );
 
       const data = await res.json();
 
@@ -175,18 +189,21 @@ export default function Comments({ chapterId, commentIds }) {
         return;
       }
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}comments/reply/add`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(user).token}`,
-        },
-        body: JSON.stringify({
-          userId: JSON.parse(user).id,
-          commentId: commentId,
-          content: reply,
-        }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}comments/reply/add`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: JSON.stringify({
+            userId: user.id,
+            commentId: commentId,
+            content: reply,
+          }),
+        }
+      );
 
       const data = await res.json();
 
@@ -217,18 +234,21 @@ export default function Comments({ chapterId, commentIds }) {
       }
 
       if (deleteId.isComment) {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}comments/delete`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${JSON.parse(user).token}`,
-          },
-          body: JSON.stringify({
-            userId: JSON.parse(user).id,
-            chapterId: chapterId,
-            commentId: deleteId.id,
-          }),
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}comments/delete`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${user.token}`,
+            },
+            body: JSON.stringify({
+              userId: user.id,
+              chapterId: chapterId,
+              commentId: deleteId.id,
+            }),
+          }
+        );
 
         const data = await res.json();
 
@@ -249,18 +269,21 @@ export default function Comments({ chapterId, commentIds }) {
         const dialog = document.querySelector("#moreDialog");
         dialog.close();
       } else {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}comments/reply/delete`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${JSON.parse(user).token}`,
-          },
-          body: JSON.stringify({
-            userId: JSON.parse(user).id,
-            commentId: deleteId.commentId,
-            replyId: deleteId.id,
-          }),
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}comments/reply/delete`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${user.token}`,
+            },
+            body: JSON.stringify({
+              userId: user.id,
+              commentId: deleteId.commentId,
+              replyId: deleteId.id,
+            }),
+          }
+        );
 
         const data = await res.json();
 
@@ -281,8 +304,8 @@ export default function Comments({ chapterId, commentIds }) {
   };
 
   const checkCanDelete = () => {
-    console.log(commentator, JSON.parse(user).username);
-    if (!JSON.parse(user) || JSON.parse(user).username != commentator) {
+    console.log(commentator, user.username);
+    if (!user || user.username != commentator) {
       setCanDelete(false);
     } else {
       setCanDelete(true);
@@ -324,20 +347,24 @@ export default function Comments({ chapterId, commentIds }) {
           <div className={styles.comments_title}>Comments</div>
           <div className={styles.line}></div>
         </div>
-        <CommentsDisplay
-          comments={comments}
-          commentReplies={commentReplies}
-          coordinates={setCoordinates}
-          moreCoordinates={setMoreCoordinates}
-          commentId={setCommentId}
-          deleteId={setDeleteId}
-          canDelete={setCanDelete}
-          commentator={setCommentator}
-          content={setContent}
-          getReplies={getReplies}
-          checkCanDelete={checkCanDelete}
-          copyText={copyText}
-        />
+        {loading ? (
+          <CommentsLoad />
+        ) : (
+          <CommentsDisplay
+            comments={comments}
+            commentReplies={commentReplies}
+            coordinates={setCoordinates}
+            moreCoordinates={setMoreCoordinates}
+            commentId={setCommentId}
+            deleteId={setDeleteId}
+            canDelete={setCanDelete}
+            commentator={setCommentator}
+            content={setContent}
+            getReplies={getReplies}
+            checkCanDelete={checkCanDelete}
+            copyText={copyText}
+          />
+        )}
         <div className={styles.add_comment}>
           <div className={styles.line}></div>
           <CommentForm

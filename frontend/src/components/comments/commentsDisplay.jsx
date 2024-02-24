@@ -33,7 +33,14 @@ const CommentsDisplay = ({
               <div className={styles.comment_text}>
                 <div className={styles.commentator}>{comment.commentator}</div>
                 <div className={styles.comment_content}>
-                  {comment.commentContent}
+                  {comment.commentContent.split("\n").map((text, i) => {
+                    return (
+                      <p key={i}>
+                        {text}
+                        <br />
+                      </p>
+                    );
+                  })}
                 </div>
                 <div className={styles.comment_actions}>
                   <MdOutlineReply
