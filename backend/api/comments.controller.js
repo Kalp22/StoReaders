@@ -18,10 +18,24 @@ const Reply = require("../models/commentReply.model");
 
 router.post("/getAll", async (req, res) => {
   try {
-    const { chapterId } = req.body;
-    const comments = await Comment.find({ chapterId: chapterId }).exec();
+    const { chapterId, pageNumber } = req.body;
+    const pageSize = 10; // number of comments per page
+    const skip = (pageNumber - 1) * pageSize; // number of documents to skip
+    console.log("pageNumber", pageNumber);
+    const totalComments = await Comment.countDocuments({
+      chapterId: chapterId,
+    });
+    const totalPages = Math.ceil(totalComments / pageSize);
 
-    res.status(200).json({ status: true, comments });
+    const comments = await Comment.find({ chapterId: chapterId })
+      .sort({ dateAdded: 1 })
+      .skip(skip)
+      .limit(pageSize)
+      .exec();
+
+    const isLastPage = pageNumber >= totalPages;
+    console.log("isLastPage", isLastPage);
+    res.status(200).json({ status: true, comments, isLastPage });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: e.message });
@@ -35,7 +49,9 @@ router.post("/getAll", async (req, res) => {
 router.post("/reply/getAll", async (req, res) => {
   try {
     const { commentId } = req.body;
-    const replies = await Reply.find({ commentId: commentId }).exec();
+    const replies = await Reply.find({ commentId: commentId })
+      .sort({ dateAdded: 1 })
+      .exec();
 
     res.status(200).json({ status: true, replies });
   } catch (e) {
