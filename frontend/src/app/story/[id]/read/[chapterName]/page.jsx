@@ -64,7 +64,6 @@ export default function chapterRead({ params: { id, chapterName } }) {
       // Check if window is defined to ensure it's executed on the client side
       if (typeof window !== "undefined") {
         try {
-          new Promise((resolve) => setTimeout(resolve, 5000));
           const res = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}chapters/getOne`,
             {

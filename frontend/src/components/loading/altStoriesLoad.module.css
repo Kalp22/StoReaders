@@ -1,0 +1,17 @@
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.wrapper {
+  display: flex;
+  margin-top: 5em;
+  padding: 7em 9em;
+  height: 40em;
+}
+

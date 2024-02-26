@@ -252,6 +252,12 @@
   .read_now {
     font-size: 1em;
   }
+  .reviews_wrapper {
+    width: 90%;
+    gap: 1.5em;
+    margin: 1.5em auto 0 auto;
+    padding: 3em 6em;
+  }
 }
 
 @media (max-width: 900px) {
@@ -305,6 +311,12 @@
   }
   .optional {
     width: 300px;
+  }
+  .reviews_wrapper {
+    width: 100%;
+    gap: 1em;
+    margin: 1em auto 0 auto;
+    padding: 1em 4em;
   }
 }
 
@@ -363,5 +375,9 @@
   .story_image {
     height: 300px;
     width: 200px;
+  }
+  .reviews_wrapper {
+    gap: 0.3em;
+    padding: 1em 3em;
   }
 }

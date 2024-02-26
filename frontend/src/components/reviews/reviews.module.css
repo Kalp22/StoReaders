@@ -18,6 +18,8 @@
   font-size: 1rem;
   font-weight: 500;
   color: var(--text-color-opposite);
+  border: 1px solid var(--story-overview-background);
+  outline: none;
   cursor: pointer;
 }
 
@@ -74,7 +76,7 @@
   display: flex;
   flex-direction: column;
   margin: 0.5rem 0;
-  padding: 1rem 1rem;
+  padding: 1rem;
   background: var(--review-background);
   border-radius: 5px;
   width: 100%;
@@ -115,6 +117,7 @@
 .date {
   font-size: 0.9rem;
   color: var(--text-color3);
+  opacity: 0.7;
 }
 
 .dots {
@@ -134,4 +137,119 @@
 
 .delete:hover {
   background-color: var(--option-hover);
+}
+
+@media (max-width: 900px) {
+  .title {
+    font-size: 1.5rem;
+  }
+  .button {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+  }
+  .review_form textarea {
+    height: 6em;
+    font-size: small;
+  }
+  .review_form button {
+    gap: 0.3rem;
+    padding: 0.3rem;
+    font-size: 0.9rem;
+  }
+  .send_button {
+    height: 20px;
+    width: 20px;
+  }
+  .reviews_cover {
+    margin: 2rem 0;
+    gap: 1.5rem;
+  }
+  .review_card {
+    margin: 0;
+    gap: 0.7rem;
+  }
+  .user_icon,
+  .dots {
+    width: 1.5em;
+    height: 1.5em;
+  }
+  .date {
+    font-size: 0.7rem;
+  }
+  .content {
+    padding: 3px 12px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 700px) {
+  .title {
+    font-size: 1.2rem;
+  }
+  .button {
+    padding: 3px 8px;
+    font-size: 0.8rem;
+  }
+  .review_form textarea {
+    height: 5em;
+    font-size: smaller;
+  }
+  .review_form button {
+    gap: 0.2rem;
+    padding: 0.2rem;
+    font-size: 0.8rem;
+  }
+  .send_button {
+    height: 18px;
+    width: 18px;
+  }
+  .reviews_cover {
+    margin: 1rem 0;
+    gap: 1rem;
+  }
+  .review_card {
+    padding: 0.7rem;
+    gap: 0.5rem;
+  }
+  .user_icon,
+  .dots {
+    width: 1em;
+    height: 1em;
+  }
+  .user_name {
+    font-size: 0.8rem;
+  }
+  .date {
+    font-size: 0.5rem;
+  }
+  .content {
+    padding: 0 5px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 1rem;
+  }
+  .button {
+    padding: 2px 6px;
+    font-size: 0.7rem;
+  }
+  .review_form textarea {
+    height: 3em;
+  }
+  .review_form button {
+    gap: 0.1rem;
+    padding: 0.1rem;
+    font-size: 0.7rem;
+  }
+  .send_button {
+    height: 15px;
+    width: 15px;
+  }
+  .content {
+    padding: 0 3px;
+    font-size: 11px;
+  }
 }

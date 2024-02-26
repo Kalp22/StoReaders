@@ -204,7 +204,7 @@ export default function StoryOverview({ params: { id } }) {
               <Chapters id={story._id} story_name={storyName} />
             )}
           </div>
-          <div ref={reviewsRef} className={styles.reviews_wrapper}>
+          <div ref={reviewsRef} id="reviews" className={styles.reviews_wrapper}>
             {reviewsInView && (
               <Reviews
                 storyId={story._id}

@@ -4,9 +4,9 @@ import Link from "next/link";
 
 export default function DashboardReviews({ storyName, reviewDate, review }) {
   const storyId = storyName && storyName.replace(/\s/g, "-");
-  
+
   return (
-    <Link href={`/story/${storyId}`} className={styles.comment_wrapper}>
+    <Link href={`/story/${storyId}#reviews`} className={styles.comment_wrapper}>
       <div className={styles.comment_head}>
         <span>{storyName}</span>
         <div className={styles.comment_chapter}>

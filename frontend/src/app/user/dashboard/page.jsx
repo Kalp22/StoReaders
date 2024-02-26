@@ -4,6 +4,9 @@ import styles from "./page.module.css";
 import DashboardLeft from "@/components/dashboardLeft/dashboardLeft";
 import DashboardCenter from "@/components/dashboardCenter/dashboardCenter";
 import DashboardRight from "@/components/dashboardRight/dashboardRight";
+import SpinnerLoad from "@/components/loading/spinnerLoad";
+
+import { FaBook } from "react-icons/fa6";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -19,6 +22,7 @@ export default function UserDashboard() {
     reviews: [{ storyId: "" }],
   });
   const [theme, setTheme] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -47,45 +51,55 @@ export default function UserDashboard() {
       router.push("/");
       return;
     }
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}user/get`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-      body: JSON.stringify({
-        username: user.username,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUserDetails(data.user);
+    const fetchUser = async () => {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}user/get`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({
+          username: user.username,
+        }),
       });
+
+      const data = await res.json();
+      setLoading(false);
+      setUserDetails(data.user);
+    };
+    fetchUser();
   }, []);
 
   return (
     <>
-      <div className={styles.dashboard_cover}>
-        <div className={styles.dashboard_left}>
-          <DashboardLeft
-            readStories={userDetails.readStories}
-            readChapters={userDetails.readChapters}
-            email={userDetails.email}
-            username={userDetails.username}
-          />
+      {loading ? (
+        <div className={styles.loading}>
+          <SpinnerLoad />
+          <FaBook size={80} className={styles.book} />
         </div>
-        <div className={styles.dashboard_center}>
-          {userDetails.readStories && userDetails.reviews && (
-            <DashboardCenter
+      ) : (
+        <div className={styles.dashboard_cover}>
+          <div className={styles.dashboard_left}>
+            <DashboardLeft
               readStories={userDetails.readStories}
-              reviews={userDetails.reviews}
+              readChapters={userDetails.readChapters}
+              email={userDetails.email}
+              username={userDetails.username}
             />
-          )}
+          </div>
+          <div className={styles.dashboard_center}>
+            {userDetails.readStories && userDetails.reviews && (
+              <DashboardCenter
+                readStories={userDetails.readStories}
+                reviews={userDetails.reviews}
+              />
+            )}
+          </div>
+          <div className={styles.dashboard_right}>
+            <DashboardRight />
+          </div>
         </div>
-        <div className={styles.dashboard_right}>
-          <DashboardRight />
-        </div>
-      </div>
+      )}
       <Toaster theme={theme ? "dark" : "light"} position="bottom-left" />
     </>
   );
