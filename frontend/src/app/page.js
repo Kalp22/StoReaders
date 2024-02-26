@@ -43,7 +43,7 @@ export default function Home() {
       {loading ? (
         <div className={styles.loading}>
           <SpinnerLoad />
-          <FaBook size={30} className={styles.book} />
+          <FaBook size={80} className={styles.book} />
         </div>
       ) : (
         <Landing />

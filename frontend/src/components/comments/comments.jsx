@@ -1,6 +1,6 @@
 import styles from "./comments.module.css";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { toast } from "sonner";
 
 import { FaComments } from "react-icons/fa";
@@ -14,19 +14,11 @@ import CommentForm from "./commentForm";
 import CommentsLoad from "../loading/commentsLoad";
 
 export default function Comments({ chapterId, commentIds }) {
+  const commentsDisplayRef = useRef(null);
   const [user, setUser] = useState({});
 
   const [commentsToggle, setCommentsToggle] = useState(false);
-  const [timeout, setTimeoutState] = useState(true);
-  const [comments, setComments] = useState([
-    {
-      _id: "",
-      commentator: "",
-      commentContent: "",
-      replies: [],
-      showReplies: false,
-    },
-  ]);
+  const [comments, setComments] = useState([]);
 
   const [comment, setComment] = useState("");
   const [reply, setReply] = useState("");
@@ -42,47 +34,86 @@ export default function Comments({ chapterId, commentIds }) {
   const [commentator, setCommentator] = useState("");
   const [content, setContent] = useState("");
   const [commentReplies, setCommentReplies] = useState({});
+  const [isLastPage, setIsLastPage] = useState(false); // Check if the last page of comments has been reached
   const [loading, setLoading] = useState(true);
+
+  const [page, setPage] = useState(1); // Initial page number for comments
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("user")));
   }, []);
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        if (!commentsToggle) return;
-        if (!timeout) return;
-        setTimeoutState(false);
-        setTimeout(() => {
-          setTimeoutState(true);
-        }, 15000);
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}comments/getAll`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              chapterId: chapterId,
-              commentIds: commentIds,
-            }),
-          }
-        );
-        const data = await res.json();
-        if (!data.status) {
-          toast.error(data.message);
-          return;
+  const fetchComments = async () => {
+    try {
+      if (isLastPage) return;
+      console.log("fetching comments");
+      console.log(page);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}comments/getAll`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            chapterId: chapterId,
+            commentIds: commentIds,
+            pageNumber: page,
+          }),
         }
-        setLoading(false);
-        setComments(data.comments);
-      } catch (e) {
-        console.log(e);
+      );
+
+      const data = await res.json();
+
+      if (!data.status) {
+        toast.error(data.message);
+        return;
       }
-    };
-    fetchComments();
-  }, [commentsToggle]);
+
+      setComments((prevComments) => [...prevComments, ...data.comments]);
+      setIsLastPage(data.isLastPage);
+
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // Delay the execution of fetchComments until after the component is mounted
+  const delayFetchComments = () => {
+    setTimeout(() => {
+      fetchComments();
+    }, 0);
+  };
+
+  useEffect(() => {
+    if (commentsToggle) {
+      delayFetchComments();
+    }
+  }, [commentsToggle, page]);
+
+  const handleScroll = () => {
+    const commentsDisplay = commentsDisplayRef.current;
+
+    commentsDisplay &&
+    commentsDisplay.scrollHeight - commentsDisplay.scrollTop <=
+      commentsDisplay.clientHeight + 10 &&
+    !isLastPage
+      ? // User is near the bottom, fetch more comments
+        setPage((prevPage) => prevPage + 1)
+      : null;
+  };
+
+  useEffect(() => {
+    const commentsDisplay = commentsDisplayRef.current;
+    if (commentsDisplay) {
+      commentsDisplay.addEventListener("scroll", handleScroll);
+
+      return () => {
+        commentsDisplay.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, [commentsDisplayRef, handleScroll]);
 
   const getReplies = async (commId, index) => {
     try {
@@ -105,6 +136,7 @@ export default function Comments({ chapterId, commentIds }) {
         toast.error(data.message);
         return;
       }
+
       const updatedComments = [...comments];
       updatedComments[index].replies = data.replies;
       updatedComments[index].showReplies = !updatedComments[index].showReplies;
@@ -157,16 +189,7 @@ export default function Comments({ chapterId, commentIds }) {
         return;
       }
 
-      setComments([
-        ...comments,
-        {
-          _id: data.updatedComment._id,
-          commentator: data.updatedComment.commentator,
-          commentContent: data.updatedComment.commentContent,
-          replies: [],
-          showReplies: false,
-        },
-      ]);
+      setComments([...comments, data.updatedComment]);
 
       toast.success("Comment added");
       setComment("");
@@ -184,8 +207,8 @@ export default function Comments({ chapterId, commentIds }) {
         return;
       }
 
-      if (!reply) {
-        toast.warning("Please enter the reply");
+      if (!reply || !commentId) {
+        toast.warning("Invalid reply or comment ID");
         return;
       }
 
@@ -199,7 +222,7 @@ export default function Comments({ chapterId, commentIds }) {
           },
           body: JSON.stringify({
             userId: user.id,
-            commentId: commentId,
+            commentId: commentId, // Make sure commentId is set
             content: reply,
           }),
         }
@@ -216,6 +239,26 @@ export default function Comments({ chapterId, commentIds }) {
 
       toast.success("Reply added");
       setReply("");
+      console.log(data.updatedReply);
+      // Update commentReplies
+      setCommentReplies((prevReplies) => ({
+        ...prevReplies,
+        [commentId]: [...(prevReplies[commentId] || []), data.updatedReply],
+      }));
+
+      const updatedComments = comments.map((c) =>
+        c._id === commentId
+          ? {
+              ...c,
+              replies: [...c.replies, data.updatedReply],
+              replyId: [...c.replyId, data.updatedReply._id],
+              showReplies: true,
+            }
+          : c
+      );
+      console.log(updatedComments == comments);
+      console.log(updatedComments);
+      setComments(updatedComments);
 
       const dialog = document.querySelector("dialog");
       dialog.close();
@@ -260,11 +303,20 @@ export default function Comments({ chapterId, commentIds }) {
         }
 
         const updatedComments = comments.filter(
-          (comment) => comment._id != deleteId.id
+          (comment) => comment._id != data.commentId
         );
 
         toast.success(data.message);
         setComments(updatedComments);
+
+        // Remove the deleted comment's replies from commentReplies
+        setCommentReplies((prevReplies) => {
+          const newReplies = { ...prevReplies };
+          delete newReplies[deleteId.id];
+          return newReplies;
+        });
+        console.log(updatedComments == comments);
+        console.log(updatedComments);
 
         const dialog = document.querySelector("#moreDialog");
         dialog.close();
@@ -287,7 +339,7 @@ export default function Comments({ chapterId, commentIds }) {
 
         const data = await res.json();
 
-        if (data.message != "Reply deleted") {
+        if (data.message !== "Reply deleted") {
           toast.error(data.message);
           const dialog = document.querySelector("#moreDialog");
           dialog.close();
@@ -295,6 +347,27 @@ export default function Comments({ chapterId, commentIds }) {
         }
 
         toast.success(data.message);
+
+        // Remove the deleted reply from commentReplies
+        setCommentReplies((prevReplies) => ({
+          ...prevReplies,
+          [deleteId.commentId]: prevReplies[deleteId.commentId].filter(
+            (r) => r._id !== deleteId.id
+          ),
+        }));
+
+        const updatedComments = comments.map((c) =>
+          c._id === deleteId.commentId
+            ? {
+                ...c,
+                replies: c.replies.filter((r) => r._id !== deleteId.id),
+                replyId: c.replyId.filter((id) => id !== deleteId.id),
+              }
+            : c
+        );
+
+        setComments(updatedComments);
+
         const dialog = document.querySelector("#moreDialog");
         dialog.close();
       }
@@ -304,7 +377,6 @@ export default function Comments({ chapterId, commentIds }) {
   };
 
   const checkCanDelete = () => {
-    console.log(commentator, user.username);
     if (!user || user.username != commentator) {
       setCanDelete(false);
     } else {
@@ -351,6 +423,7 @@ export default function Comments({ chapterId, commentIds }) {
           <CommentsLoad />
         ) : (
           <CommentsDisplay
+            ref={commentsDisplayRef}
             comments={comments}
             commentReplies={commentReplies}
             coordinates={setCoordinates}
@@ -363,6 +436,7 @@ export default function Comments({ chapterId, commentIds }) {
             getReplies={getReplies}
             checkCanDelete={checkCanDelete}
             copyText={copyText}
+            isLastPage={isLastPage}
           />
         )}
         <div className={styles.add_comment}>

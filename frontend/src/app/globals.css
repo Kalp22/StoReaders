@@ -36,6 +36,7 @@
   --arrow-background: #dedede;
   --comment-button-color: #382e35;
   --nothing-color: #5e5e5e;
+  --main-background: #0000007a;
 }
 
 .dark {
@@ -76,7 +77,7 @@
   --arrow-background: #212121;
   --comment-button-color: #c6b9c2;
   --nothing-color: #a0a0a0;
-  --button-color: hsl(315, 1%, 25%);
+  --main-background: #0000005f;
 }
 
 * {

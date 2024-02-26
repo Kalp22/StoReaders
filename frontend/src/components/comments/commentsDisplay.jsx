@@ -2,6 +2,8 @@ import React, { forwardRef } from "react";
 
 import styles from "./comments.module.css";
 
+import SpinnerLoad from "../loading/spinnerLoad";
+
 import { FaUserCircle } from "react-icons/fa";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { MdOutlineReply } from "react-icons/md";
@@ -22,6 +24,7 @@ const CommentsDisplay = forwardRef(
       getReplies,
       checkCanDelete,
       copyText,
+      isLastPage,
     },
     ref
   ) => {
@@ -173,6 +176,7 @@ const CommentsDisplay = forwardRef(
               )}
             </div>
           ))}
+        {!isLastPage ? <SpinnerLoad comments={true} /> : ""}
       </div>
     );
   }

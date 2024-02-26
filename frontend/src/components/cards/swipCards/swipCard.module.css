@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   backdrop-filter: blur(7px);
-  background-color: #0000005f;
+  background-color: var(--main-background);
   transition: all 0.3s ease-in-out;
 }
 

@@ -2,6 +2,7 @@
 import styles from "./page.module.css";
 
 import React, { useEffect, useState } from "react";
+
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -12,9 +13,9 @@ import Chapters from "@/components/chapters/chapters";
 import Reviews from "@/components/reviews/reviews";
 import Rating from "@/components/rate/rating";
 import Genre from "@/components/genre/genre";
+import SpinnerLoad from "@/components/loading/spinnerLoad";
 
-import StoryLoad from "@/components/loading/storyLoad";
-
+import { FaBook } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
 
 import { useInView } from "react-intersection-observer";
@@ -113,7 +114,10 @@ export default function StoryOverview({ params: { id } }) {
     <>
       <Navbar />
       {loading ? (
-        <StoryLoad />
+        <div className={styles.loading}>
+          <SpinnerLoad />
+          <FaBook size={80} className={styles.book} />
+        </div>
       ) : (
         <>
           <div className={styles.all_overview_wrapper}>

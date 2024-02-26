@@ -101,7 +101,7 @@ export default function chapterRead({ params: { id, chapterName } }) {
       {loading ? (
         <div className={styles.loading}>
           <SpinnerLoad />
-          <FaBook size={30} className={styles.book} />
+          <FaBook size={80} className={styles.book} />
         </div>
       ) : (
         <>

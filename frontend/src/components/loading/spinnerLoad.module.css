@@ -7,19 +7,38 @@
   }
 }
 
-.spinner_container {
+.spinner_container,
+.spinner_container2 {
   display: flex;
+  width: 100%;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  width: 100%;
+}
+
+.spinner_container {
+  height: 100dvh;
+}
+
+.spinner_container2 {
+  height: 100%;
+}
+
+.spinner,
+.spinner2 {
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
 .spinner {
-  width: 60px;
-  height: 60px;
+  border: 7px solid var(--background-color);
+  border-top: 7px solid var(--card-background);
+  width: 110px;
+  height: 110px;
+}
+
+.spinner2 {
   border: 5px solid var(--background-color);
   border-top: 5px solid var(--card-background);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+  width: 30px;
+  height: 30px;
 }
