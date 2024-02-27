@@ -15,26 +15,42 @@ const getTimeDifference = (dateAdded) => {
   const commentDate = new Date(dateAdded);
   const timeDifference = currentDate - commentDate;
 
-  // Calculate days
-  const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  // Calculate seconds, minutes, and hours
+  const secondsDifference = Math.floor(timeDifference / 1000);
+  const minutesDifference = Math.floor(secondsDifference / 60);
+  const hoursDifference = Math.floor(minutesDifference / 60);
 
-  if (daysDifference === 0) {
+  if (hoursDifference < 1) {
+    // Comment added within the last hour
+    return `${minutesDifference}m`;
+  } else if (hoursDifference <= 6) {
+    // Comment added within the last 6 hours
+    return `${hoursDifference}h`;
+  } else if (hoursDifference < 24) {
     // Comment added today
     return "Today";
-  } else if (daysDifference === 1) {
-    // Comment added yesterday
-    return "1D";
-  } else if (daysDifference < 30) {
-    // Comment added within the last month
-    return `${daysDifference}D`;
   } else {
-    // Comment added more than a month ago
-    const monthsDifference = Math.floor(daysDifference / 30);
-    if (monthsDifference > 12) return `${monthsDifference}Months`;
-    else {
-      // Comment added more than a year ago, display the date itself
-      const options = { year: "numeric", month: "long", day: "numeric" };
-      return commentDate.toLocaleDateString(undefined, options);
+    // Calculate days
+    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+    if (daysDifference === 1) {
+      // Comment added yesterday
+      return "1D";
+    } else if (daysDifference < 30) {
+      // Comment added within the last month
+      return `${daysDifference}D`;
+    } else {
+      // Calculate months
+      const monthsDifference = Math.floor(daysDifference / 30);
+
+      if (monthsDifference < 12) {
+        // Comment added within the last year
+        return `${monthsDifference}Month`;
+      } else {
+        // Comment added more than a year ago, display the date itself
+        const options = { year: "numeric", month: "long", day: "numeric" };
+        return commentDate.toLocaleDateString(undefined, options);
+      }
     }
   }
 };

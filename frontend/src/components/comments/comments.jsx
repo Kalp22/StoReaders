@@ -34,6 +34,7 @@ export default function Comments({ chapterId, commentIds }) {
   const [commentator, setCommentator] = useState("");
   const [content, setContent] = useState("");
   const [commentReplies, setCommentReplies] = useState({});
+  const [moreSkip, setMoreSkip] = useState(0); // Skip value for fetching more comments
   const [isLastPage, setIsLastPage] = useState(false); // Check if the last page of comments has been reached
   const [loading, setLoading] = useState(true);
 
@@ -57,6 +58,7 @@ export default function Comments({ chapterId, commentIds }) {
             chapterId: chapterId,
             commentIds: commentIds,
             pageNumber: page,
+            moreSkip: moreSkip,
           }),
         }
       );
@@ -188,6 +190,7 @@ export default function Comments({ chapterId, commentIds }) {
       }
 
       setComments([data.updatedComment, ...comments]);
+      setMoreSkip((prevSkip) => prevSkip + 1);
 
       toast.success("Comment added");
       setComment("");

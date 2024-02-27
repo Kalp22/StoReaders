@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
+// Middleware
+const auth = require("../middleware/authServer.middleware");
+
 // User model
 const Users = require("../models/user.model");
 // Story model
@@ -10,7 +13,7 @@ const Stories = require("../models/storyDetail.model");
  * @route   PUT api/ratings
  */
 
-router.put("/", async (req, res) => {
+router.put("/", auth, async (req, res) => {
   try {
     // Credentials from request body
     const { userId, storyId, rating } = req.body;

@@ -28,7 +28,7 @@ router.post("/getAll", async (req, res) => {
  *@route GET /api/reviews/getUserReviews
  */
 
-router.post("/getUserReviews", async (req, res) => {
+router.post("/getUserReviews", auth, async (req, res) => {
   try {
     const { reviewIds } = req.body;
     if (reviewIds.length === 0)
@@ -45,7 +45,7 @@ router.post("/getUserReviews", async (req, res) => {
  *@route PUT /api/reviews/add
  */
 
-router.put("/add", async (req, res) => {
+router.put("/add", auth, async (req, res) => {
   try {
     // Credentials from user taken
     const { userId, storyId, storyName, content } = req.body;
@@ -98,7 +98,7 @@ router.put("/add", async (req, res) => {
  *@route DELETE /api/reviews/delete
  */
 
-router.delete("/delete", async (req, res) => {
+router.delete("/delete", auth, async (req, res) => {
   try {
     //Credentials from user taken
     const { userId, storyId, reviewId } = req.body;

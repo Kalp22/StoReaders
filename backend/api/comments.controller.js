@@ -18,9 +18,9 @@ const Reply = require("../models/commentReply.model");
 
 router.post("/getAll", async (req, res) => {
   try {
-    const { chapterId, pageNumber } = req.body;
+    const { chapterId, pageNumber, moreSkip } = req.body;
     const pageSize = 10; // number of comments per page
-    const skip = (pageNumber - 1) * pageSize; // number of documents to skip
+    const skip = (pageNumber - 1) * pageSize + moreSkip; // number of documents to skip
     console.log("pageNumber", pageNumber);
     const totalComments = await Comment.countDocuments({
       chapterId: chapterId,
@@ -64,7 +64,7 @@ router.post("/reply/getAll", async (req, res) => {
  *@route PUT /api/comments/add
  */
 
-router.put("/add", async (req, res) => {
+router.put("/add", auth, async (req, res) => {
   try {
     //Credentials from user taken
     const { userId, chapterId, content } = req.body;
@@ -104,7 +104,7 @@ router.put("/add", async (req, res) => {
  *@route PUT /api/comments/reply/add
  */
 
-router.put("/reply/add", async (req, res) => {
+router.put("/reply/add", auth, async (req, res) => {
   try {
     const { userId, commentId, content } = req.body;
 
