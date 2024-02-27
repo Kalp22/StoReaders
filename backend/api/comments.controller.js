@@ -28,7 +28,7 @@ router.post("/getAll", async (req, res) => {
     const totalPages = Math.ceil(totalComments / pageSize);
 
     const comments = await Comment.find({ chapterId: chapterId })
-      .sort({ dateAdded: 1 })
+      .sort({ dateAdded: -1 })
       .skip(skip)
       .limit(pageSize)
       .exec();

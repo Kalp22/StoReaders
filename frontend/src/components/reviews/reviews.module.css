@@ -116,7 +116,7 @@
 
 .date {
   font-size: 0.9rem;
-  color: var(--text-color3);
+  color: var(--comment-button-color);
   opacity: 0.7;
 }
 

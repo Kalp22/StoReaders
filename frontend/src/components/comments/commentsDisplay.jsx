@@ -9,6 +9,36 @@ import { HiDotsHorizontal } from "react-icons/hi";
 import { MdOutlineReply } from "react-icons/md";
 import { FaCaretDown } from "react-icons/fa";
 
+// Function to calculate time difference and return formatted string
+const getTimeDifference = (dateAdded) => {
+  const currentDate = new Date();
+  const commentDate = new Date(dateAdded);
+  const timeDifference = currentDate - commentDate;
+
+  // Calculate days
+  const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+  if (daysDifference === 0) {
+    // Comment added today
+    return "Today";
+  } else if (daysDifference === 1) {
+    // Comment added yesterday
+    return "1D";
+  } else if (daysDifference < 30) {
+    // Comment added within the last month
+    return `${daysDifference}D`;
+  } else {
+    // Comment added more than a month ago
+    const monthsDifference = Math.floor(daysDifference / 30);
+    if (monthsDifference > 12) return `${monthsDifference}Months`;
+    else {
+      // Comment added more than a year ago, display the date itself
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      return commentDate.toLocaleDateString(undefined, options);
+    }
+  }
+};
+
 const CommentsDisplay = forwardRef(
   (
     {
@@ -39,7 +69,8 @@ const CommentsDisplay = forwardRef(
                 </div>
                 <div className={styles.comment_text}>
                   <div className={styles.commentator}>
-                    {comment.commentator}
+                    <div>{comment.commentator}</div>
+                    <div>{getTimeDifference(comment.dateAdded)}</div>
                   </div>
                   <div className={styles.comment_content}>
                     {comment.commentContent.split("\n").map((text, i) => {
@@ -115,7 +146,8 @@ const CommentsDisplay = forwardRef(
                       </div>
                       <div className={styles.comment_text}>
                         <div className={styles.commentator}>
-                          {reply.commentator}
+                          <div>{reply.commentator}</div>
+                          <div>{getTimeDifference(reply.dateAdded)}</div>
                         </div>
                         <div className={styles.comment_content}>
                           {reply.commentContent.split("\n").map((text, i) => (

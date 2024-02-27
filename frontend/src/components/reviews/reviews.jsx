@@ -94,6 +94,9 @@ export default function Reviews({ storyId, story_name, reviewId }) {
       ]);
       toast.success(data.message);
 
+      const form = document.getElementById("form");
+      form.classList.toggle(styles.show);
+
       setReview("");
     } catch (err) {
       console.error(err.message);

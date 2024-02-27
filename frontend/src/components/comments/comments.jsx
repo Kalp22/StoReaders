@@ -46,8 +46,6 @@ export default function Comments({ chapterId, commentIds }) {
   const fetchComments = async () => {
     try {
       if (isLastPage) return;
-      console.log("fetching comments");
-      console.log(page);
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}comments/getAll`,
         {
@@ -189,7 +187,7 @@ export default function Comments({ chapterId, commentIds }) {
         return;
       }
 
-      setComments([...comments, data.updatedComment]);
+      setComments([data.updatedComment, ...comments]);
 
       toast.success("Comment added");
       setComment("");
@@ -222,7 +220,7 @@ export default function Comments({ chapterId, commentIds }) {
           },
           body: JSON.stringify({
             userId: user.id,
-            commentId: commentId, // Make sure commentId is set
+            commentId: commentId,
             content: reply,
           }),
         }
@@ -239,25 +237,29 @@ export default function Comments({ chapterId, commentIds }) {
 
       toast.success("Reply added");
       setReply("");
-      console.log(data.updatedReply);
+
       // Update commentReplies
       setCommentReplies((prevReplies) => ({
         ...prevReplies,
         [commentId]: [...(prevReplies[commentId] || []), data.updatedReply],
       }));
 
+      // Update comments and set showReplies to true for all comments with replies
       const updatedComments = comments.map((c) =>
         c._id === commentId
           ? {
               ...c,
-              replies: [...c.replies, data.updatedReply],
-              replyId: [...c.replyId, data.updatedReply._id],
+              replies: c.replies.length
+                ? [...c.replies, data.updatedReply]
+                : [data.updatedReply],
+              replyId: c.replyId.length
+                ? [...c.replyId, data.updatedReply._id]
+                : [data.updatedReply._id],
               showReplies: true,
             }
           : c
       );
-      console.log(updatedComments == comments);
-      console.log(updatedComments);
+
       setComments(updatedComments);
 
       const dialog = document.querySelector("dialog");
@@ -315,8 +317,6 @@ export default function Comments({ chapterId, commentIds }) {
           delete newReplies[deleteId.id];
           return newReplies;
         });
-        console.log(updatedComments == comments);
-        console.log(updatedComments);
 
         const dialog = document.querySelector("#moreDialog");
         dialog.close();

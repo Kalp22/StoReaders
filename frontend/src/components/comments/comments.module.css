@@ -115,11 +115,24 @@
 .comment_text {
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 0.5em;
 }
 
 .commentator {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.commentator div:nth-child(1) {
   font-weight: bold;
+}
+
+.commentator div:nth-child(2) {
+  font-size: 0.7rem;
+  color: var(--comment-button-color);
 }
 
 .comment_actions {
