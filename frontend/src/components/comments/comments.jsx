@@ -34,7 +34,7 @@ export default function Comments({ chapterId, commentIds }) {
   const [commentator, setCommentator] = useState("");
   const [content, setContent] = useState("");
   const [commentReplies, setCommentReplies] = useState({});
-  const [moreSkip, setMoreSkip] = useState(0); // Skip value for fetching more comments
+  const [moreSkip, setMoreSkip] = useState(0); // Skip value for fetching more comments when a comment is added or deleted
   const [isLastPage, setIsLastPage] = useState(false); // Check if the last page of comments has been reached
   const [loading, setLoading] = useState(true);
 
@@ -320,6 +320,8 @@ export default function Comments({ chapterId, commentIds }) {
           delete newReplies[deleteId.id];
           return newReplies;
         });
+
+        setMoreSkip((prevSkip) => prevSkip - 1);
 
         const dialog = document.querySelector("#moreDialog");
         dialog.close();

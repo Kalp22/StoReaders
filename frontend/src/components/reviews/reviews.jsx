@@ -21,10 +21,10 @@ const getTimeDifference = (dateAdded) => {
 
   if (hoursDifference < 1) {
     // added within the last hour
-    return `${minutesDifference}m`;
+    return `${minutesDifference} min`;
   } else if (hoursDifference <= 6) {
     // added within the last 6 hours
-    return `${hoursDifference}h`;
+    return `${hoursDifference} hour${hoursDifference > 1 ? "s" : ""}`;
   } else if (hoursDifference < 24) {
     // added today
     return "Today";
@@ -34,17 +34,17 @@ const getTimeDifference = (dateAdded) => {
 
     if (daysDifference === 1) {
       // added yesterday
-      return "1D";
+      return "1 Day";
     } else if (daysDifference < 30) {
       // added within the last month
-      return `${daysDifference}D`;
+      return `${daysDifference} Days`;
     } else {
       // Calculate months
       const monthsDifference = Math.floor(daysDifference / 30);
 
       if (monthsDifference < 12) {
         // added within the last year
-        return `${monthsDifference}Month`;
+        return `${monthsDifference} Month${monthsDifference > 1 ? "s" : ""}`;
       } else {
         // added more than a year ago, display the date itself
         const options = { year: "numeric", month: "long", day: "numeric" };

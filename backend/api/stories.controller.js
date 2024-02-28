@@ -159,7 +159,7 @@ router.get("/getLatest", async (req, res) => {
  *@route GET /api/stories/getReadStories
  */
 
-router.post("/getReadStories", async (req, res) => {
+router.post("/getReadStories", auth, async (req, res) => {
   try {
     const { storyIds } = req.body;
     const stories = await StoryDetail.find({ _id: { $in: storyIds } }).exec();

@@ -53,6 +53,7 @@ export default function StoryOverview({ params: { id } }) {
   const [images, setImages] = useState([]);
   const [backgroundImage, setBackgroundImage] = useState("url()");
   const [descToggle, setDescToggle] = useState(true);
+  const [showMore, setShowMore] = useState(false);
 
   // Extracting and filtering image URLs from Google Drive
   const imageURLS = images.map((image) => {
@@ -93,6 +94,14 @@ export default function StoryOverview({ params: { id } }) {
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    const description = document.getElementById("description");
+    console.log(description);
+    description && description.scrollHeight > description.clientHeight
+      ? setShowMore(true)
+      : setShowMore(false);
+  }, [story, window.innerWidth]);
 
   // Toggle description "read more" and "read less"
   function descriptionToggle() {
@@ -143,15 +152,19 @@ export default function StoryOverview({ params: { id } }) {
                     <div className={styles.read_now}>Read Now</div>
                   </Link>
                 </div>
-                <p className={styles.description}>{story.storyDescription}</p>
-                <div>
-                  <span
-                    className={styles.more_button}
-                    onClick={() => descriptionToggle()}
-                  >
-                    {descToggle ? "+ Read More" : "- Read Less"}
-                  </span>
-                </div>
+                <p id="description" className={styles.description}>
+                  {story.storyDescription}
+                </p>
+                {showMore ? (
+                  <div>
+                    <span
+                      className={styles.more_button}
+                      onClick={() => descriptionToggle()}
+                    >
+                      {descToggle ? "+ Read More" : "- Read Less"}
+                    </span>
+                  </div>
+                ) : null}
               </div>
             </div>
             <div className={styles.right_overview_wrapper}>

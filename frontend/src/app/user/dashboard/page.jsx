@@ -23,6 +23,7 @@ export default function UserDashboard() {
   });
   const [theme, setTheme] = useState(true);
   const [loading, setLoading] = useState(true);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -46,7 +47,6 @@ export default function UserDashboard() {
   }, []); // Empty dependency array as it runs once on mount
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
     if (!user) {
       router.push("/");
       return;
@@ -92,6 +92,7 @@ export default function UserDashboard() {
               <DashboardCenter
                 readStories={userDetails.readStories}
                 reviews={userDetails.reviews}
+                user={user}
               />
             )}
           </div>

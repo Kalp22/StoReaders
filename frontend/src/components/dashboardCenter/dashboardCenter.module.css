@@ -16,6 +16,10 @@
   font-size: 1.7rem;
 }
 
+.stories_cover2 {
+  margin-bottom: 4em;
+}
+
 .stories_cover {
   width: inherit;
   display: grid;
