@@ -10,18 +10,26 @@ require("dotenv").config();
 export default function DashboardRight() {
   const router = useRouter();
   const [latestStoryName, setLatestStoryName] = useState("");
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     try {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}stories/getLatest`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setLatestStoryName(data.storyName);
-        });
+      const getLatestStory = async () => {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}stories/getLatest`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await res.json();
+
+        setLatestStoryName(data.storyName);
+        setLoading(false);
+      };
+      getLatestStory();
     } catch (error) {
       console.log(error);
     }
@@ -39,8 +47,14 @@ export default function DashboardRight() {
           href={`/story/${latestStoryName.replace(/\s/g, "-")}`}
           className={styles.latest_chapter}
         >
-          <p>Latest Story</p>
-          <p>{latestStoryName}</p>
+          {loading ? (
+            <span>Loading...</span>
+          ) : (
+            <>
+              <p>Latest Story</p>
+              <p>{latestStoryName}</p>
+            </>
+          )}
         </Link>
         <div className={styles.line}></div>
         <div className={styles.options_cover}>

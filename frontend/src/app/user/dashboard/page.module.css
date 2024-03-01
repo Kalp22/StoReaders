@@ -32,6 +32,30 @@
   padding: 0px 3%;
 }
 
+.top_right {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.toggler,
+.toggler2 {
+  display: flex;
+}
+.toggler {
+  flex-direction: column-reverse;
+}
+.toggler2 {
+  flex-direction: column;
+}
+
+.menu {
+  display: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+}
+
 .home_button {
   font-size: 30px;
 }
@@ -81,4 +105,92 @@
 .book {
   position: absolute;
   animation: pulse 2s infinite;
+}
+
+@media (max-width: 1200px) {
+  .dashboard_right {
+    position: fixed;
+    right: 0;
+    top: 7dvh;
+    height: 93dvh;
+    width: 20em;
+    flex: none;
+    z-index: 100;
+    background: var(--background-color3);
+    transition: all 0.3s ease-out;
+  }
+  .dash_open {
+    transform: translateX(0);
+  }
+  .dash_close {
+    transform: translateX(20em);
+  }
+
+  .open {
+    display: flex;
+    opacity: 1;
+    height: 45px;
+    width: 45px;
+    transition: all 0.3s ease-in;
+  }
+  .close {
+    display: flex;
+    opacity: 0;
+    height: 0;
+    width: 45px;
+    transform: translateY(3em);
+    transition: all 0.3s ease-in;
+  }
+  .dashboard_left {
+    flex: 0 0 30%;
+    padding: 2em 0;
+  }
+  .dashboard_center {
+    flex: 0 0 70%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .dashboard_left {
+    flex: 0 0 25%;
+  }
+  .dashboard_center {
+    flex: 0 0 75%;
+  }
+  .home_button {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 800px) {
+  .dashboard_top {
+    position: fixed;
+    top: 0;
+    background-color: var(--background-color);
+    z-index: 100;
+  }
+  .dashboard_cover {
+    flex-direction: column;
+  }
+  .dashboard_left {
+    height: fit-content;
+    flex: none;
+    margin-top: 3em;
+    padding: 2em 0;
+    align-items: stretch;
+    background: none;
+  }
+  .dashboard_center {
+    flex: none;
+  }
+  .home_button {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .open {
+    height: 35px;
+    width: 35px;
+  }
 }

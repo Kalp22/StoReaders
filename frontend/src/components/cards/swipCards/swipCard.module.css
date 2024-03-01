@@ -1,3 +1,14 @@
+@keyframes image-hover {
+  0% {
+    transform: translateX(0) translateZ(0) rotateY(0);
+    transform-origin: center left;
+  }
+  100% {
+    transform: skewY(2deg) translateZ(150px) rotateY(-20deg);
+    transform-origin: center left;
+  }
+}
+
 .main_story_wrapper {
   padding: 0em 4em;
   height: 600px;
@@ -10,12 +21,12 @@
 
 .main_story_wrapper:hover {
   .main_story_image {
-    border-radius: 10px;
-    box-shadow: 0 0 20px 10px #00000060;
-    transform: rotate(6deg) scale(1.1);
-    transition: all 0.3s ease-in-out;
+    box-shadow: 20px 0 5px 10px var(--image-hover);
+    animation: image-hover 0.3s ease-out both;
+    transition: all 0.5s ease-out;
   }
 }
+
 .main_story_left {
   display: flex;
   align-items: flex-start;
@@ -75,7 +86,7 @@
 .main_story_image {
   width: 450px;
   height: 500px;
-  box-shadow: 0 0 10px 5px #00000040;
+  border-radius: 15px 5px 5px 15px;
   transition: all 0.3s ease-in-out;
 }
 

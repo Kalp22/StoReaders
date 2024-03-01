@@ -1,15 +1,20 @@
 "use client";
 import styles from "./page.module.css";
 
+import DarkLight from "@/components/ui/darklight/page";
 import DashboardLeft from "@/components/dashboardLeft/dashboardLeft";
 import DashboardCenter from "@/components/dashboardCenter/dashboardCenter";
 import DashboardRight from "@/components/dashboardRight/dashboardRight";
 import SpinnerLoad from "@/components/loading/spinnerLoad";
 
 import { FaBook } from "react-icons/fa6";
+import { IoIosMenu } from "react-icons/io";
+import { IoCloseOutline } from "react-icons/io5";
 
 import { useState, useEffect } from "react";
+
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Toaster } from "sonner";
 require("dotenv").config();
 
@@ -22,8 +27,8 @@ export default function UserDashboard() {
     reviews: [{ storyId: "" }],
   });
   const [theme, setTheme] = useState(true);
+  const [rightOpen, setRightOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -45,6 +50,8 @@ export default function UserDashboard() {
       };
     }
   }, []); // Empty dependency array as it runs once on mount
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     if (!user) {
@@ -70,8 +77,48 @@ export default function UserDashboard() {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 800) {
+        setRightOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const toggleRight = () => {
+    setRightOpen(!rightOpen);
+  };
+
   return (
     <>
+      <div className={styles.dashboard_top}>
+        <div className={styles.home_button}>
+          <Link href="/">HOME </Link>
+        </div>
+        <div className={styles.top_right}>
+          <DarkLight />
+          <div className={`${rightOpen ? styles.toggler : styles.toggler2}`}>
+            <IoIosMenu
+              onClick={toggleRight}
+              className={`${styles.menu} ${
+                rightOpen ? styles.close : styles.open
+              }`}
+            />
+            <IoCloseOutline
+              onClick={toggleRight}
+              className={`${styles.menu} ${
+                rightOpen ? styles.open : styles.close
+              }`}
+            />
+          </div>
+        </div>
+      </div>
       {loading ? (
         <div className={styles.loading}>
           <SpinnerLoad />
@@ -96,7 +143,11 @@ export default function UserDashboard() {
               />
             )}
           </div>
-          <div className={styles.dashboard_right}>
+          <div
+            className={`${styles.dashboard_right} ${
+              rightOpen ? styles.dash_open : styles.dash_close
+            }`}
+          >
             <DashboardRight />
           </div>
         </div>

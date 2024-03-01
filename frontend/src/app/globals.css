@@ -37,6 +37,7 @@
   --comment-button-color: #382e35;
   --nothing-color: #5e5e5e;
   --main-background: #0000007a;
+  --image-hover: #00000020;
 }
 
 .dark {
@@ -78,6 +79,7 @@
   --comment-button-color: #c6b9c2;
   --nothing-color: #a0a0a0;
   --main-background: #0000005f;
+  --image-hover: #000000c0;
 }
 
 * {

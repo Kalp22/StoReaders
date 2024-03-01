@@ -85,48 +85,50 @@ export default function ResetPasswordPage() {
   };
 
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("user")));
+    if (
+      localStorage.getItem("user") &&
+      JSON.parse(localStorage.getItem("user")).fpass
+    ) {
+      setUser(JSON.parse(localStorage.getItem("user")));
+      user.fpass = false;
+    } else {
+      router.push("/");
+    }
   }, []);
 
-  if (!user || user.fpass === false) {
-    router.push("/");
-    return null; // Add a return statement to handle the case where the component is not rendered
-  } else {
-    user.fpass = false;
-    return (
-      <div className={styles.wrapper}>
-        <div className={styles.cover}>
-          <h1>Reset Password</h1>
-          <form>
-            <label>
-              <div>NEW PASSWORD</div>
-              <input
-                type="password"
-                name="password"
-                required
-                onChange={(e) => {
-                  setForm({ ...form, password: e.target.value });
-                }}
-                value={form.password}
-              />
-            </label>
-            <label>
-              <div>CONFIRM PASSWORD</div>
-              <input
-                type="password"
-                name="password"
-                required
-                onChange={(e) => {
-                  setForm({ ...form, confirmPassword: e.target.value });
-                }}
-                value={form.confirmPassword}
-              />
-            </label>
-            <input type="submit" value="Reset" onClick={handleSubmit} />
-          </form>
-        </div>
-        <Toaster theme={theme ? "dark" : "light"} position="bottom-left" />
+  return (
+    <div className={styles.wrapper}>
+      <div className={styles.cover}>
+        <h1>Reset Password</h1>
+        <form>
+          <label>
+            <div>NEW PASSWORD</div>
+            <input
+              type="password"
+              name="password"
+              required
+              onChange={(e) => {
+                setForm({ ...form, password: e.target.value });
+              }}
+              value={form.password}
+            />
+          </label>
+          <label>
+            <div>CONFIRM PASSWORD</div>
+            <input
+              type="password"
+              name="password"
+              required
+              onChange={(e) => {
+                setForm({ ...form, confirmPassword: e.target.value });
+              }}
+              value={form.confirmPassword}
+            />
+          </label>
+          <input type="submit" value="Reset" onClick={handleSubmit} />
+        </form>
       </div>
-    );
-  }
+      <Toaster theme={theme ? "dark" : "light"} position="bottom-left" />
+    </div>
+  );
 }

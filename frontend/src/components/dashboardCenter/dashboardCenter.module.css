@@ -37,3 +37,19 @@
   font-size: 1.5rem;
   color: var(--nothing-color);
 }
+
+@media (max-width: 1500px) {
+  .stories_cover {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .dashboard_center {
+    height: fit-content;
+    overflow: visible;
+  }
+  .stories_cover {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
