@@ -5,8 +5,8 @@ import Link from "next/link";
 // Function to calculate time difference and return formatted string
 const getTimeDifference = (dateAdded) => {
   const currentDate = new Date();
-  const commentDate = new Date(dateAdded);
-  const timeDifference = currentDate - commentDate;
+  const reviewDate = new Date(dateAdded);
+  const timeDifference = currentDate - reviewDate;
 
   // Calculate seconds, minutes, and hours
   const secondsDifference = Math.floor(timeDifference / 1000);
@@ -42,7 +42,7 @@ const getTimeDifference = (dateAdded) => {
       } else {
         // added more than a year ago, display the date itself
         const options = { year: "numeric", month: "long", day: "numeric" };
-        return commentDate.toLocaleDateString(undefined, options);
+        return reviewDate.toLocaleDateString(undefined, options);
       }
     }
   }
@@ -52,16 +52,16 @@ export default function DashboardReviews({ storyName, reviewDate, review }) {
   const storyId = storyName && storyName.replace(/\s/g, "-");
 
   return (
-    <Link href={`/story/${storyId}#reviews`} className={styles.comment_wrapper}>
-      <div className={styles.comment_head}>
+    <Link href={`/story/${storyId}#reviews`} className={styles.review_wrapper}>
+      <div className={styles.review_head}>
         <span>{storyName}</span>
-        <div className={styles.comment_chapter}>
-          <div className={styles.comment_chapter_title}>
+        <div className={styles.review_chapter}>
+          <div className={styles.review_date}>
             {getTimeDifference(reviewDate)}
           </div>
         </div>
       </div>
-      <div className={styles.comment_details}>{review}</div>
+      <p className={styles.review_details}>{review}</p>
     </Link>
   );
 }

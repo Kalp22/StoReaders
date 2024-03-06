@@ -48,3 +48,65 @@
 .all_values {
   font-weight: 600;
 }
+
+@media (max-width: 1200px) {
+  .story_name {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .story_name {
+    font-size: 1.3rem;
+  }
+
+  .story_wrapper {
+    padding: 1.5em;
+  }
+  .all_titles,
+  .all_values {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .story_wrapper {
+    padding: 1em;
+  }
+
+  .name_wrap {
+    gap: 0.5em;
+  }
+
+  .story_name {
+    font-size: 1.2rem;
+  }
+
+  .story_details {
+    gap: 1em;
+  }
+  .all_titles,
+  .all_values {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .story_name {
+    font-size: 1rem;
+  }
+  .all_titles,
+  .all_values {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .story_name {
+    font-size: 0.9rem;
+  }
+  .all_titles,
+  .all_values {
+    font-size: 0.6rem;
+  }
+}

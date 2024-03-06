@@ -157,6 +157,9 @@
   .dashboard_center {
     flex: 0 0 75%;
   }
+  .dashboard_right {
+    width: 15em;
+  }
   .home_button {
     font-size: 25px;
   }
@@ -165,6 +168,7 @@
 @media (max-width: 800px) {
   .dashboard_top {
     position: fixed;
+    height: 50px;
     top: 0;
     background-color: var(--background-color);
     z-index: 100;
@@ -183,14 +187,35 @@
   .dashboard_center {
     flex: none;
   }
+  .dashboard_right {
+    width: 13em;
+  }
   .home_button {
     font-size: 20px;
   }
 }
 
 @media (max-width: 600px) {
+  .dashboard_top {
+    height: 35px;
+  }
   .open {
     height: 35px;
     width: 35px;
+  }
+  .close {
+    width: 35px;
+  }
+  .home_button {
+    font-size: 15px;
+  }
+  .dashboard_right {
+    width: 11em;
+  }
+}
+
+@media (max-width: 500px) {
+  .dashboard_right {
+    width: 10em;
   }
 }
