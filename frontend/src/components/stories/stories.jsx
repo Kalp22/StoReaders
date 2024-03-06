@@ -15,9 +15,11 @@ export default function StoriesComponent({ description, data }) {
       </div>
       <div className={styles.stories_cards_wrapper}>
         {data &&
-          data.story.map((story, i) => (
-            <StoryCard descript={descript} story={story} key={i} />
-          ))}
+          data.story.map((story, i) =>
+            !description && i > 1 ? null : (
+              <StoryCard descript={descript} story={story} key={i} />
+            )
+          )}
       </div>
     </div>
   );

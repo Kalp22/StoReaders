@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 import Navbar from "@/components/navbar/navbar";
 import Landing from "@/components/landing/landing";
 import LatestStory from "@/components/latestChapter/latestChapter";
-import About from "@/components/about/about";
 import Stories from "@/components/fetch/stories";
 
 import SpinnerLoad from "@/components/loading/spinnerLoad";
@@ -50,7 +49,6 @@ export default function Home() {
       )}
       <LatestStory />
       {loading ? <StoriesLoad /> : <Stories description={false} data={data} />}
-      <About />
     </main>
   );
 }
