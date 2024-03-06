@@ -19,6 +19,17 @@ router.post("/register", async (req, res) => {
     //Credentials from user taken
     const { username, email, password } = req.body;
 
+    if (!(username || email || password))
+      return res
+        .status(400)
+        .json({ status: false, msg: "All fields not provided" });
+
+    if (username === "deleted" || email === "deleted" || password === "deleted")
+      return res
+        .status(400)
+        .json({ status: false, msg: "Invalid credentials" });
+        
+    email = email.toLowerCase();
     //Checking if username or email already exists
     if (await User.findOne({ username, email }))
       return res
@@ -69,10 +80,11 @@ router.post("/login", async (req, res) => {
         .status(400)
         .json({ status: false, msg: "All fields not provided" });
 
+    email = email.toLowerCase();
     //Finding and storing collection with "username"
     const user = await User.findOne({ email });
 
-    if (!user)
+    if (!user || user.username === "deleted")
       return res.status(400).json({ status: false, msg: "No User found" });
 
     //Comparing password
@@ -110,7 +122,7 @@ router.post("/get", auth, async (req, res) => {
   try {
     const { username } = req.body;
     const user = await User.findOne({ username: username });
-    if (!user) {
+    if (!user || user.username === "deleted") {
       return res.status(404).json({ status: false, message: "User not found" });
     }
     user.password = undefined;
@@ -139,9 +151,19 @@ router.delete("/delete", auth, async (req, res) => {
         .json({ status: false, msg: "All fields not provided" });
 
     //Finding and deleting collection with "_id"
-    const user = await User.findByIdAndDelete(_id);
-
-    if (!user)
+    if (
+      await User.findByIdAndUpdate(_id, {
+        username: "deleted",
+        email: "deleted",
+        password: "deleted",
+        readStories: [],
+        readChapters: [],
+        comments: [],
+        replies: [],
+        reviews: [],
+        ratings: [],
+      })
+    )
       return res.status(400).json({ status: false, msg: "No User found" });
 
     res.status(200).json({ status: true, msg: "User deleted successfully" });

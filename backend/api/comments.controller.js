@@ -21,7 +21,6 @@ router.post("/getAll", async (req, res) => {
     const { chapterId, pageNumber, moreSkip } = req.body;
     const pageSize = 10; // number of comments per page
     const skip = (pageNumber - 1) * pageSize + moreSkip; // number of documents to skip
-    console.log("pageNumber", pageNumber);
     const totalComments = await Comment.countDocuments({
       chapterId: chapterId,
     });
@@ -34,7 +33,6 @@ router.post("/getAll", async (req, res) => {
       .exec();
 
     const isLastPage = pageNumber >= totalPages;
-    console.log("isLastPage", isLastPage);
     res.status(200).json({ status: true, comments, isLastPage });
   } catch (e) {
     console.log(e);

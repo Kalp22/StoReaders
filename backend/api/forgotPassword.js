@@ -2,10 +2,8 @@ const express = require("express");
 const router = express.Router();
 //for .env file
 require("dotenv").config();
-//for password hashing and token generation
+//for password hashing
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const auth = require("../middleware/authServer.middleware");
 //for database connection
 const mongoose = require("mongoose");
 //for sending otp
@@ -24,6 +22,11 @@ mongoose.connect(`${process.env.DB_ADD}${db}?retryWrites=true&w=majority`);
 router.put("/sendotp", async (req, res) => {
   try {
     const { email } = req.body;
+
+    if (email === "deleted")
+      return res
+        .status(400)
+        .json({ status: false, msg: "Invalid credentials" });
 
     if (!email)
       res.status(400).json({ status: false, msg: "Email not provided" });
@@ -120,6 +123,11 @@ router.put("/checkotp", async (req, res) => {
 router.put("/resetpassword", async (req, res) => {
   try {
     const { password, id } = req.body;
+
+    if (id === "deleted" || password === "deleted")
+      return res
+        .status(400)
+        .json({ status: false, msg: "Invalid credentials" });
 
     if (!password)
       res.status(400).json({ status: false, msg: "Password not provided" });
