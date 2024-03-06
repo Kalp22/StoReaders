@@ -131,6 +131,23 @@
   color: var(--text-color);
 }
 
+.ask_dialog span {
+  text-align: center;
+  color: var(--nothing-color);
+}
+
+.ask_dialog input {
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  outline: none;
+  border: none;
+  color: var(--text-color);
+  background-color: var(--chapter-list-background);
+  transition: all 0.15s ease-in;
+}
+
 .ask_dialog_buttons {
   display: flex;
   justify-content: space-around;
@@ -203,6 +220,9 @@
   .ask_dialog_box p {
     font-size: 1.3rem;
   }
+  .ask_dialog span {
+    font-size: 0.9rem;
+  }
   .ask_dialog_buttons button {
     padding: 0.5em 1.2em;
     font-size: 1rem;
@@ -239,6 +259,9 @@
   }
   .ask_dialog_box p {
     font-size: 1.1rem;
+  }
+  .ask_dialog span {
+    font-size: 0.8rem;
   }
   .ask_dialog_buttons button {
     padding: 0.3em 1em;
@@ -288,6 +311,9 @@
   .ask_dialog_box p {
     font-size: 1rem;
   }
+  .ask_dialog span {
+    font-size: 0.7rem;
+  }
   .ask_dialog_buttons button {
     font-size: 0.8rem;
   }
@@ -328,5 +354,8 @@
   }
   .ask_dialog_box p {
     font-size: 0.9rem;
+  }
+  .ask_dialog span {
+    font-size: 0.6rem;
   }
 }

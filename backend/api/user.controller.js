@@ -28,7 +28,7 @@ router.post("/register", async (req, res) => {
       return res
         .status(400)
         .json({ status: false, msg: "Invalid credentials" });
-        
+
     const mail = email.toLowerCase();
     //Checking if username or email already exists
     if (await User.findOne({ username, email: mail }))
@@ -150,6 +150,10 @@ router.delete("/delete", auth, async (req, res) => {
         .status(400)
         .json({ status: false, msg: "All fields not provided" });
 
+    if (!(await User.findOne({ _id: _id }))) {
+      return res.status(400).json({ status: false, msg: "No User found" });
+    }
+
     //Finding and deleting collection with "_id"
     if (
       await User.findByIdAndUpdate(_id, {
@@ -164,9 +168,9 @@ router.delete("/delete", auth, async (req, res) => {
         ratings: [],
       })
     )
-      return res.status(400).json({ status: false, msg: "No User found" });
-
-    res.status(200).json({ status: true, msg: "User deleted successfully" });
+      return res
+        .status(200)
+        .json({ status: true, msg: "User deleted successfully" });
   } catch (e) {
     console.log(e);
     res.status(500).json({ msg: e.message });
