@@ -410,9 +410,9 @@ export default function Comments({ chapterId, commentIds }) {
         onClick={toggleComments}
       >
         {commentsToggle ? (
-          <IoCloseOutline size={30} />
+          <IoCloseOutline size={30} className={styles.btn} />
         ) : (
-          <FaComments size={35} />
+          <FaComments size={35} className={styles.btn2} />
         )}
       </div>
       <div
@@ -420,7 +420,10 @@ export default function Comments({ chapterId, commentIds }) {
           commentsToggle ? styles.comments_container : styles.no_display
         }
       >
-        <div className={styles.comments_header}>
+        <div
+          className={styles.comments_header}
+          onClick={window.innerWidth < 800 ? toggleComments : null}
+        >
           <div className={styles.comments_title}>Comments</div>
           <div className={styles.line}></div>
         </div>

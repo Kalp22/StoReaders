@@ -57,7 +57,7 @@
   display: flex;
   flex-direction: column;
   align-self: stretch;
-  gap: 1.5em;
+  gap: 1em;
   font-size: 1.2rem;
   margin: 5em 0;
 }
@@ -72,4 +72,82 @@
 .book {
   position: absolute;
   animation: pulse 2s infinite;
+}
+
+@media (max-width: 1200px) {
+  .read_wrapper {
+    padding: 3em 5em;
+  }
+  .darklight {
+    top: 1.5em;
+    right: 1.5em;
+  }
+}
+
+@media (max-width: 800px) {
+  .read_wrapper {
+    padding: 2em 3em;
+  }
+  .darklight {
+    top: 1em;
+    right: 1em;
+  }
+  .story_name {
+    font-size: 1.5rem;
+  }
+  .chapter_info {
+    font-size: 1.2rem;
+  }
+  .content {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .read_wrapper {
+    padding: 1em 2em;
+  }
+  .darklight {
+    top: 0.5em;
+    right: 0.5em;
+  }
+  .story_name {
+    font-size: 1.2rem;
+  }
+  .chapter_info {
+    font-size: 1rem;
+  }
+  .content {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .read_wrapper {
+    padding: 0.5em 1em;
+  }
+  .story_name {
+    font-size: 1rem;
+  }
+  .chapter_info {
+    font-size: 0.8rem;
+  }
+  .content {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .read_wrapper {
+    padding: 0.5em 0.5em;
+  }
+  .story_name {
+    font-size: 0.8rem;
+  }
+  .chapter_info {
+    font-size: 0.7rem;
+  }
+  .content {
+    font-size: 0.6rem;
+  }
 }

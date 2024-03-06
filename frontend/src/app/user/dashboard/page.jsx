@@ -51,7 +51,10 @@ export default function UserDashboard() {
     }
   }, []); // Empty dependency array as it runs once on mount
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : null;
 
   useEffect(() => {
     if (!user) {

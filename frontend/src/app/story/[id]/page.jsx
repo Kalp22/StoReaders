@@ -97,11 +97,13 @@ export default function StoryOverview({ params: { id } }) {
 
   useEffect(() => {
     const description = document.getElementById("description");
-    console.log(description);
-    description && description.scrollHeight > description.clientHeight
-      ? setShowMore(true)
-      : setShowMore(false);
-  }, [story, window.innerWidth]);
+
+    if (description && typeof window !== "undefined") {
+      description.scrollHeight > description.clientHeight
+        ? setShowMore(true)
+        : setShowMore(false);
+    }
+  }, [story, typeof window !== "undefined"]);
 
   // Toggle description "read more" and "read less"
   function descriptionToggle() {

@@ -15,15 +15,10 @@ const ReplyDialog = ({
   return (
     <dialog
       id="replyDialog"
+      className={styles.reply_dialog}
       style={{
-        position: "fixed",
-        color: "var(--text-color)",
-        backgroundColor: "var(--chapter-list-background)",
         top: `${Math.abs(coordinates.top) + 20}px`,
         left: `${Math.abs(coordinates.left) + 20}px`,
-        width: "410px",
-        border: "1px solid var(--line-color)",
-        borderRadius: "10px",
       }}
     >
       <form className={styles.reply_form}>
