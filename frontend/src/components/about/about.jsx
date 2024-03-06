@@ -1,17 +1,33 @@
+import Link from "next/link";
 import styles from "./about.module.css";
 
 export default function About() {
   return (
     <div className={styles.about_wrapper}>
-      <div>
-        <div>
-          <div className={styles.about_text}>About</div>
-          <div className={styles.about_arrow}></div>
-        </div>
-        <div className={styles.about_line}></div>
+      <h2 className={styles.about_text}>About</h2>
+      <div className={styles.about_line}></div>
+      <div className={styles.about_content}>
+        <p>Welcome to stoReaders - a place for captivating stories!</p>
+        <p>Explore and enjoy a variety of stories on our platform.</p>
       </div>
       <div className={styles.about_content}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae officiis dicta, fugiat, eveniet itaque rerum ipsum dolores voluptatum placeat totam culpa sed iusto exercitationem deserunt quisquam, architecto vel odit earum sit. Eligendi repellat delectus nisi facere, fugit temporibus laudantium labore, consequatur deleniti assumenda officiis expedita modi enim quas debitis est minus? At quibusdam deserunt neque dolorum voluptas mollitia rem exercitationem hic nemo autem velit iste explicabo consectetur rerum pariatur quasi repudiandae minus amet laborum sunt beatae suscipit natus, vero consequatur. Aliquam itaque deleniti temporibus consequatur facilis enim modi vel, veniam quasi libero dignissimos aperiam eum ipsum natus ullam nihil quas similique quaerat non repudiandae dolorum, officia saepe nisi minus. Quidem voluptatibus rem nesciunt ipsum facilis error reiciendis incidunt eos harum placeat, repellat sint minus, deleniti architecto obcaecati eius ipsa est alias velit, assumenda vitae iure fugiat. Repellendus laborum minus aliquam, eaque quam tenetur adipisci minima cum natus distinctio beatae ullam unde, debitis iusto labore id culpa soluta in repellat. Consequatur quam, molestiae unde accusantium voluptates voluptate voluptas est praesentium illo natus nam tempore nulla alias atque tempora doloremque repellendus suscipit consequuntur ipsam sit quis. Enim itaque libero qui iste possimus architecto laboriosam tempore nulla, perspiciatis fugit atque rem temporibus soluta?
+        <h3>Tech Stack</h3>
+        <ul>
+          <li>Frontend: Built with Next.js</li>
+          <li>Backend: Powered by Node.js and Express</li>
+          <li>Database: MongoDB</li>
+          <li>Icons: React Icons</li>
+          <li>Deployment: Hosted on Vercel</li>
+        </ul>
+      </div>
+      <div className={styles.about_content}>
+        <h3>Source</h3>
+        <Link
+          href="https://github.com/Kalp22/stoReaders"
+          className={styles.link}
+        >
+          Github Source
+        </Link>
       </div>
     </div>
   );
