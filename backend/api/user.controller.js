@@ -29,15 +29,15 @@ router.post("/register", async (req, res) => {
         .status(400)
         .json({ status: false, msg: "Invalid credentials" });
         
-    email = email.toLowerCase();
+    const mail = email.toLowerCase();
     //Checking if username or email already exists
-    if (await User.findOne({ username, email }))
+    if (await User.findOne({ username, email: mail }))
       return res
         .status(400)
         .json({ status: false, msg: "Username or Email already exists" });
 
     //Creating new user
-    const newUser = new User({ username, email, password });
+    const newUser = new User({ username, email: mail, password });
 
     //Hashing password
     const saltRounds = await bcrypt.genSalt(10);
@@ -80,9 +80,9 @@ router.post("/login", async (req, res) => {
         .status(400)
         .json({ status: false, msg: "All fields not provided" });
 
-    email = email.toLowerCase();
+    const mail = email.toLowerCase();
     //Finding and storing collection with "username"
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: mail });
 
     if (!user || user.username === "deleted")
       return res.status(400).json({ status: false, msg: "No User found" });

@@ -201,7 +201,7 @@ export default function StoryOverview({ params: { id } }) {
                   <div className={styles.values}>
                     {story.noOfRatings == 0
                       ? "Not Rated Yet"
-                      : story.ratings / story.noOfRatings}
+                      : (story.ratings / story.noOfRatings).toFixed(2)}
                   </div>
                 </div>
               </div>

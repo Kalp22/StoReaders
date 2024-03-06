@@ -31,8 +31,10 @@ router.put("/sendotp", async (req, res) => {
     if (!email)
       res.status(400).json({ status: false, msg: "Email not provided" });
 
+    const mail = email.toLowerCase();
+
     //Finding and storing collection with "username"
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: mail });
 
     if (!user) res.status(400).json({ status: false, msg: "No User found" });
 
@@ -97,8 +99,18 @@ router.put("/checkotp", async (req, res) => {
 
     if (!otp) res.status(400).json({ status: false, msg: "OTP not provided" });
 
+    if (!email)
+      res.status(400).json({ status: false, msg: "Email not provided" });
+
+    if(email === "deleted")
+      return res
+        .status(400)
+        .json({ status: false, msg: "Invalid credentials" });
+
+    const mail = email.toLowerCase();
+
     //Finding and storing collection with "username"
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email: mail });
 
     if (!user) res.status(400).json({ status: false, msg: "No User found" });
 
