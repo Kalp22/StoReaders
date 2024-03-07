@@ -1,6 +1,18 @@
 import styles from "./dashboardReviews.module.css";
 
+import { Nunito } from "next/font/google";
+import { Roboto } from "next/font/google";
+
 import Link from "next/link";
+
+const nunito = Nunito({
+  weight: ["300", "400", "600", "700"],
+  subsets: ["latin"],
+});
+const roboto = Roboto({
+  weight: ["100", "300", "400", "500", "700"],
+  subsets: ["latin"],
+});
 
 // Function to calculate time difference and return formatted string
 const getTimeDifference = (dateAdded) => {
@@ -54,14 +66,14 @@ export default function DashboardReviews({ storyName, reviewDate, review }) {
   return (
     <Link href={`/story/${storyId}#reviews`} className={styles.review_wrapper}>
       <div className={styles.review_head}>
-        <span>{storyName}</span>
+        <span className={nunito.className}>{storyName}</span>
         <div className={styles.review_chapter}>
           <div className={styles.review_date}>
             {getTimeDifference(reviewDate)}
           </div>
         </div>
       </div>
-      <p className={styles.review_details}>{review}</p>
+      <p className={`${styles.review_details} ${roboto.className}`}>{review}</p>
     </Link>
   );
 }

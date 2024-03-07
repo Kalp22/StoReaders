@@ -1,8 +1,20 @@
 import styles from "./storyCard.module.css";
 
+import { Nunito } from "next/font/google";
+import { Open_Sans } from "next/font/google";
+
 import Genre from "../../genre/genre";
 
 import Link from "next/link";
+
+const nunito = Nunito({
+  weight: ["variable"],
+  subsets: ["latin"],
+});
+const open_sans = Open_Sans({
+  weight: ["variable"],
+  subsets: ["latin"],
+});
 
 export default function StoryCard({ descript, story }) {
   const storyRoute = story.storyName.replace(/\s/g, "-");
@@ -11,7 +23,9 @@ export default function StoryCard({ descript, story }) {
     <Link href={`/story/${storyRoute}`} className={styles.card_wrapper}>
       <div className={styles.head_wrapper}>
         <div className={styles.name_wrapper}>
-          <div className={styles.story_name}>{story.storyName}</div>
+          <p className={`${styles.story_name} ${nunito.className}`}>
+            {story.storyName}
+          </p>
           <div className={styles.name_underline}></div>
         </div>
         <div className={styles.genres_wrapper}>
@@ -24,7 +38,9 @@ export default function StoryCard({ descript, story }) {
       {!descript ? (
         ""
       ) : (
-        <div className={styles.story_description}>{story.description}</div>
+        <div className={`${styles.story_description} ${open_sans.className}`}>
+          {story.description}
+        </div>
       )}
     </Link>
   );

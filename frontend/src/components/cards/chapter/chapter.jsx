@@ -1,6 +1,13 @@
+import styles from "./chapter.module.css";
+
+import { Quicksand } from "next/font/google";
+
 import Link from "next/link";
 
-import styles from "./chapter.module.css";
+const quicksand = Quicksand({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+});
 
 export default function Chapter({ chapter, story_name }) {
   const storyName = story_name.replace(/\s/g, "-");
@@ -8,8 +15,8 @@ export default function Chapter({ chapter, story_name }) {
   return (
     <li className={styles.list}>
       <div className={styles.chapter_label}>
-        <div>Chapter {chapter.chapterNumber}</div>
-        <div>{chapter.chapterName}</div>
+        <span>Chapter {chapter.chapterNumber}</span>
+        <span className={quicksand.className}>{chapter.chapterName}</span>
       </div>
       <Link
         className={styles.read_button}

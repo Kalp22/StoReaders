@@ -1,5 +1,7 @@
 import styles from "./reviews.module.css";
 
+import { Roboto } from "next/font/google";
+
 import { useState, useEffect } from "react";
 
 import { MdSend } from "react-icons/md";
@@ -7,6 +9,11 @@ import { FaUserCircle } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 import { toast } from "sonner";
 require("dotenv").config();
+
+const roboto = Roboto({
+  weight: ["100", "300", "400", "500", "700"],
+  subsets: ["latin"],
+});
 
 // Function to calculate time difference and return formatted string
 const getTimeDifference = (dateAdded) => {
@@ -254,7 +261,7 @@ export default function Reviews({ storyId, story_name, reviewId }) {
                       )}
                   </div>
                 </header>
-                <div className={styles.content}>
+                <div className={`${styles.content} ${roboto.className}`}>
                   {rev.reviewContent.split("\n").map((para, i) => {
                     return (
                       <p key={i} className={styles.paragraph}>

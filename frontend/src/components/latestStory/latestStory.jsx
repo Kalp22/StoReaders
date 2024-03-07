@@ -1,9 +1,17 @@
 "use client";
-import styles from "./latestChapter.module.css";
+import styles from "./latestStory.module.css";
+
+import { Nunito } from "next/font/google";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 require("dotenv").config();
+
+const nunito = Nunito({
+  display: "swap",
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
 
 export default function LatestStory() {
   const router = useRouter();
@@ -27,7 +35,7 @@ export default function LatestStory() {
 
   return (
     <div className={styles.latest_chapter_wrapper}>
-      {latestStoryName == "" ? (
+      {!latestStoryName ? (
         <div className={styles.latest_chapter_cover}>
           <div className={styles.latest_text}>Latest Story :</div>
           <div className={styles.chapter_name}>Loading...</div>
@@ -41,7 +49,9 @@ export default function LatestStory() {
         >
           <div className={styles.latest_text}>Latest Story :</div>
 
-          <div className={styles.chapter_name}>{latestStoryName}</div>
+          <div className={`${styles.chapter_name} ${nunito.className}`}>
+            {latestStoryName}
+          </div>
         </div>
       )}
     </div>

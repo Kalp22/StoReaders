@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 import Navbar from "@/components/navbar/navbar";
 import Landing from "@/components/landing/landing";
-import LatestStory from "@/components/latestChapter/latestChapter";
+import LatestStory from "@/components/latestStory/latestStory";
 import Stories from "@/components/fetch/stories";
 
 import SpinnerLoad from "@/components/loading/spinnerLoad";

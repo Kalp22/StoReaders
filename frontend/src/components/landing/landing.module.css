@@ -27,6 +27,7 @@
 
 .subtitle {
   font-size: 2rem;
+  font-weight: 300;
   color: var(--foreground-color);
   margin-bottom: 2.5rem;
 }

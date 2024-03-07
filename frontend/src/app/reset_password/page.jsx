@@ -1,10 +1,24 @@
 "use client";
 import styles from "./page.module.css";
 
+import { Raleway } from "next/font/google";
+import { Quicksand } from "next/font/google";
+
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Toaster, toast } from "sonner";
 require("dotenv").config();
+
+const raleway = Raleway({
+  display: "swap",
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
+const quicksand = Quicksand({
+  display: "swap",
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -99,10 +113,10 @@ export default function ResetPasswordPage() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.cover}>
-        <h1>Reset Password</h1>
+        <h1 className={raleway.className}>Reset Password</h1>
         <form>
           <label>
-            <div>NEW PASSWORD</div>
+            <div className={quicksand.className}>NEW PASSWORD</div>
             <input
               type="password"
               name="password"
@@ -114,7 +128,7 @@ export default function ResetPasswordPage() {
             />
           </label>
           <label>
-            <div>CONFIRM PASSWORD</div>
+            <div className={quicksand.className}>CONFIRM PASSWORD</div>
             <input
               type="password"
               name="password"

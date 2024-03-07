@@ -1,6 +1,13 @@
 import styles from "./page.module.css";
 
+import { Montserrat } from "next/font/google";
+
 import Link from "next/link";
+
+const montserrat = Montserrat({
+  weight: ["500"],
+  subsets: ["latin"],
+});
 
 const AboutPage = () => {
   return (
@@ -9,7 +16,9 @@ const AboutPage = () => {
         <h1>About</h1>
 
         <section>
-          <h2>Welcome to stoReaders!</h2>
+          <h2>
+            Welcome to <span className={montserrat.className}>StoReaders</span>!
+          </h2>
           <p>
             Creating a space for readers to immerse themselves in captivating
             narratives.
@@ -19,8 +28,9 @@ const AboutPage = () => {
         <section>
           <h2>Mission</h2>
           <p>
-            At stoReaders, mission is simple: to provide an enjoyable and
-            user-friendly platform for reading and sharing stories.
+            At <span className={montserrat.className}>StoReaders</span>, mission
+            is simple: to provide an enjoyable and user-friendly platform for
+            reading and sharing stories.
           </p>
         </section>
 

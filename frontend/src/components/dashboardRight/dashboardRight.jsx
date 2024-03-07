@@ -1,5 +1,7 @@
 import styles from "./dashboardRight.module.css";
 
+import { Nunito } from "next/font/google";
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -7,6 +9,11 @@ import { toast } from "sonner";
 
 import { IoCloseOutline } from "react-icons/io5";
 require("dotenv").config();
+
+const nunito = Nunito({
+  weight: ["300", "400", "600", "700"],
+  subsets: ["latin"],
+});
 
 export default function DashboardRight() {
   const router = useRouter();
@@ -95,7 +102,7 @@ export default function DashboardRight() {
           ) : (
             <>
               <p>Latest Story</p>
-              <p>{latestStoryName}</p>
+              <p className={nunito.className}>{latestStoryName}</p>
             </>
           )}
         </Link>
@@ -132,24 +139,26 @@ export default function DashboardRight() {
         <div className={styles.ask_dialog_box}>
           <IoCloseOutline
             className={styles.close}
-            size={32}
+            size={35}
             onClick={() => document.getElementById("dialog").close()}
           />
           <p>Are you sure you want to Delete your account?</p>
-          <div>
+          <div className={styles.input_section}>
             <p>Enter your Email to confirm</p>
             <input
               type="text"
               className={styles.input}
-              placeholder="Enter your Email To confirm"
+              placeholder="example@mail.com"
               onChange={(e) => setEmail(e.target.value)}
               required
               value={email}
             />
           </div>
-          <span>(Double Click to Delete)</span>
           <div className={styles.ask_dialog_buttons}>
-            <button onDoubleClick={deleteAccount}>Yes</button>
+            <div className={styles.yes}>
+              <button onDoubleClick={deleteAccount}>Yes</button>
+              <span>(Double Click)</span>
+            </div>
             <button
               onClick={() => {
                 document.getElementById("dialog").close();

@@ -1,13 +1,27 @@
 "use client";
-import { useState, useEffect } from "react";
 import styles from "./navbar.module.css";
 
+import { Quicksand } from "next/font/google";
+import { Merriweather } from "next/font/google";
+
+import { useState, useEffect } from "react";
+
 import Link from "next/link";
+
 import { FaUser } from "react-icons/fa";
 import { IoIosMenu } from "react-icons/io";
 import { IoCloseOutline } from "react-icons/io5";
 
 import DarkLight from "../ui/darklight/page";
+
+const quicksand = Quicksand({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+});
+const merriweather = Merriweather({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
 
 export default function Navbar({ landing }) {
   const [user, setUser] = useState("");
@@ -55,7 +69,7 @@ export default function Navbar({ landing }) {
       }`}
     >
       <div className={styles.navbar_cover}>
-        <div className={styles.navbar_left_cover}>
+        <div className={`${styles.navbar_left_cover} ${quicksand.className}`}>
           <div>
             <Link href="/">HOME</Link>
           </div>
@@ -76,7 +90,9 @@ export default function Navbar({ landing }) {
             <>
               <Link href="/user/dashboard" className={styles.user}>
                 <FaUser className={styles.userImg} />
-                <p>{JSON.parse(user).username}</p>
+                <p className={merriweather.className}>
+                  {JSON.parse(user).username}
+                </p>
               </Link>
               <div>
                 <IoIosMenu
@@ -95,10 +111,10 @@ export default function Navbar({ landing }) {
             </>
           ) : (
             <>
-              <div>
+              <div className={quicksand.className}>
                 <Link href="/login">LOG IN</Link>
               </div>
-              <div>
+              <div className={quicksand.className}>
                 <Link href="/signup">SIGN UP</Link>
               </div>
             </>
@@ -119,7 +135,7 @@ export default function Navbar({ landing }) {
         className={`${scrolling ? styles.navbar_line : styles.no_line}`}
       ></div>
       <div className={`${styles.menu_dialog} ${menuOpen ? styles.open : ""}`}>
-        <div>
+        <div className={quicksand.className}>
           <div>
             <Link href="/" style={{ width: "100%" }}>
               HOME
@@ -145,17 +161,19 @@ export default function Navbar({ landing }) {
                 className={styles.useralt}
               >
                 <FaUser className={styles.user_image} />
-                <p>{JSON.parse(user).username}</p>
+                <p className={merriweather.className}>
+                  {JSON.parse(user).username}
+                </p>
               </Link>
             </div>
           ) : (
             <>
-              <div>
+              <div className={quicksand.className}>
                 <Link href="/login" style={{ width: "100%" }}>
                   LOG IN
                 </Link>
               </div>
-              <div>
+              <div className={quicksand.className}>
                 <Link href="/signup" style={{ width: "100%" }}>
                   SIGN UP
                 </Link>

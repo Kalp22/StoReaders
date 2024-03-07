@@ -1,6 +1,13 @@
 import styles from "./dashboardLeft.module.css";
 
+import { Merriweather } from "next/font/google";
+
 import { FaUser } from "react-icons/fa";
+
+const merriweather = Merriweather({
+  weight: ["300", "400", "700"],
+  subsets: ["latin"],
+});
 
 export default function DashboardLeft({
   readStories,
@@ -17,8 +24,12 @@ export default function DashboardLeft({
           </div>
         </div>
         <div className={styles.basic_info_cover}>
-          <div className={styles.user_name}>{username}</div>
-          <div className={styles.user_email}>{email}</div>
+          <div className={`${styles.user_name} ${merriweather.className}`}>
+            {username}
+          </div>
+          <div className={`${styles.user_email} ${merriweather.className}`}>
+            {email}
+          </div>
         </div>
       </div>
       <div className={styles.user_stats}>

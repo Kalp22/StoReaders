@@ -1,9 +1,25 @@
 "use client";
 import styles from "./page.module.css";
 
+import { Raleway } from "next/font/google";
+import { Quicksand } from "next/font/google";
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+
 import { Toaster, toast } from "sonner";
+require("dotenv").config();
+
+const raleway = Raleway({
+  display: "swap",
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
+const quicksand = Quicksand({
+  display: "swap",
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
@@ -125,10 +141,12 @@ export default function ForgotPasswordPage() {
     <div className={styles.forgot_pass_wrapper}>
       <div className={styles.forgot_pass_cover}>
         <div className={styles.show} id="mailGetter">
-          <h1 className={styles.name}>Forgot Password</h1>
+          <h1 className={`${styles.name} ${raleway.className}`}>
+            Forgot Password
+          </h1>
           <form className={styles.form}>
             <label>
-              <div>EMAIL ADDRESS</div>
+              <div className={quicksand.className}>EMAIL ADDRESS</div>
               <input
                 type="email"
                 name="email"
@@ -142,10 +160,10 @@ export default function ForgotPasswordPage() {
         </div>
 
         <div className={styles.hide} id="otpGetter">
-          <h1 className={styles.name}>Enter OTP</h1>
+          <h1 className={`${styles.name} ${raleway.className}`}>Enter OTP</h1>
           <form className={styles.form}>
             <label>
-              <div>Enter OTP</div>
+              <div className={quicksand.className}>Enter OTP</div>
               <input
                 type="number"
                 name="OTP"

@@ -10,6 +10,7 @@
 .spinner_container,
 .spinner_container2 {
   display: flex;
+  position: absolute;
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -41,4 +42,28 @@
   border-top: 5px solid var(--card-background);
   width: 30px;
   height: 30px;
+}
+
+@media (max-width: 800px) {
+  .spinner {
+    width: 100px;
+    height: 100px;
+  }
+  .spinner2 {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (max-width: 600px) {
+  .spinner {
+    width: 80px;
+    height: 80px;
+    border-width: 7px;
+  }
+  .spinner2 {
+    width: 20px;
+    height: 20px;
+    border-width: 4px;
+  }
 }

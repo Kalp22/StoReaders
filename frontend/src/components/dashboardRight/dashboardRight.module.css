@@ -95,10 +95,10 @@
 
 .ask_dialog {
   position: fixed;
-  top: 35dvh;
+  top: 20dvh;
   left: 50%;
   transform: translateX(-50%);
-  height: 250px;
+  height: 450px;
   padding: 1em 2.5em;
   background: var(--genre-background);
   outline: none;
@@ -131,12 +131,27 @@
   color: var(--text-color);
 }
 
-.ask_dialog span {
+.yes span {
   text-align: center;
   color: var(--nothing-color);
+  font-size: small;
 }
 
-.ask_dialog input {
+.input_section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+.input_section p {
+  font-weight: 400;
+  font-size: 1.3rem;
+}
+
+.input_section input {
+  width: 75%;
+  text-align: center;
   padding: 0.5em 1em;
   border-radius: 5px;
   font-size: 1.2rem;
@@ -153,8 +168,16 @@
   justify-content: space-around;
 }
 
+.yes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .ask_dialog_buttons button {
   padding: 0.5em 1.5em;
+  width: max-content;
+  height: fit-content;
   border-radius: 5px;
   font-size: 1.2rem;
   font-weight: 500;
@@ -183,6 +206,12 @@
   .ask_dialog_box p {
     font-size: 1.5rem;
   }
+  .input_section p {
+    font-size: 1.1rem;
+  }
+  .input_section input {
+    font-size: 1.1rem;
+  }
   .ask_dialog_buttons button {
     font-size: 1.1rem;
   }
@@ -209,9 +238,9 @@
     padding: 15px;
   }
   .ask_dialog {
-    top: 30dvh;
+    top: 20dvh;
     padding: 0.7em 2em;
-    height: 230px;
+    height: 350px;
   }
   .close {
     height: 30px;
@@ -219,6 +248,12 @@
   }
   .ask_dialog_box p {
     font-size: 1.3rem;
+  }
+  .input_section p {
+    font-size: 1rem;
+  }
+  .input_section input {
+    font-size: 1rem;
   }
   .ask_dialog span {
     font-size: 0.9rem;
@@ -247,9 +282,9 @@
     font-size: 1rem;
   }
   .ask_dialog {
-    top: 25dvh;
+    top: 20dvh;
     padding: 0.5em 1.5em;
-    height: 200px;
+    height: 300px;
   }
   .close {
     top: 7px;
@@ -259,6 +294,12 @@
   }
   .ask_dialog_box p {
     font-size: 1.1rem;
+  }
+  .input_section p {
+    font-size: 0.9rem;
+  }
+  .input_section input {
+    font-size: 0.9rem;
   }
   .ask_dialog span {
     font-size: 0.8rem;
@@ -314,6 +355,12 @@
   .ask_dialog span {
     font-size: 0.7rem;
   }
+  .input_section p {
+    font-size: 0.9rem;
+  }
+  .input_section input {
+    font-size: 0.8rem;
+  }
   .ask_dialog_buttons button {
     font-size: 0.8rem;
   }
@@ -351,9 +398,16 @@
   .ask_dialog {
     top: 15dvh;
     padding: 0.3em 0.8em;
+    height: 250px;
   }
   .ask_dialog_box p {
     font-size: 0.9rem;
+  }
+  .input_section p {
+    font-size: 0.7rem;
+  }
+  .input_section input {
+    font-size: 0.7rem;
   }
   .ask_dialog span {
     font-size: 0.6rem;

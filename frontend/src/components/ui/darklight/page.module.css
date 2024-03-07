@@ -44,3 +44,23 @@
     transform: translateX(140%);
   }
 }
+
+@media (max-width: 500px) {
+  .toggle_button {
+    margin-top: 2px;
+    width: 50px;
+  }
+  .svg {
+    margin: 3px 2px 0px 2px;
+    height: 17px;
+    width: 20px;
+  }
+  .toggle {
+    transform: translateX(3%);
+    height: 20px;
+    width: 20px;
+  }
+  .toggle_alt {
+    transform: translateX(120%);
+  }
+}

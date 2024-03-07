@@ -1,27 +1,38 @@
 "use client";
 import styles from "./page.module.css";
 
+import { Nunito } from "next/font/google";
+import { Open_Sans } from "next/font/google";
+
 import React, { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
+import "react-intersection-observer";
 
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+import { FaBook } from "react-icons/fa6";
+import { FaStar } from "react-icons/fa";
+
 import { Toaster } from "sonner";
+
 import Navbar from "@/components/navbar/navbar";
 import Chapters from "@/components/chapters/chapters";
 import Reviews from "@/components/reviews/reviews";
 import Rating from "@/components/rate/rating";
 import Genre from "@/components/genre/genre";
 import SpinnerLoad from "@/components/loading/spinnerLoad";
-
-import { FaBook } from "react-icons/fa6";
-import { FaStar } from "react-icons/fa";
-
-import { useInView } from "react-intersection-observer";
-import "react-intersection-observer";
-
 require("dotenv").config();
+
+const nunito = Nunito({
+  weight: ["variable"],
+  subsets: ["latin"],
+});
+const open_sans = Open_Sans({
+  weight: ["variable"],
+  subsets: ["latin"],
+});
 
 export default function StoryOverview({ params: { id } }) {
   const [theme, setTheme] = useState(true);
@@ -73,26 +84,28 @@ export default function StoryOverview({ params: { id } }) {
 
   // Fetching story data
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}stories/get`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        storyName: storyName,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (!data.status) {
-          alert("Story not found");
-          router.push("/stories");
-          return;
-        }
-        setStory(data.story);
-        setImages(data.dataURI);
-        setLoading(false);
+    const fetchStory = async () => {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}stories/get`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          storyName: storyName,
+        }),
       });
+      const data = await res.json();
+
+      if (!data.status) {
+        alert("Story not found");
+        router.push("/stories");
+        return;
+      }
+      setStory(data.story);
+      setImages(data.dataURI);
+      setLoading(false);
+    };
+    fetchStory();
   }, []);
 
   useEffect(() => {
@@ -142,7 +155,9 @@ export default function StoryOverview({ params: { id } }) {
                 className={styles.story_image}
               />
               <div className={styles.info_wrapper}>
-                <h1>{story.storyBasic.storyName}</h1>
+                <h1 className={nunito.className}>
+                  {story.storyBasic.storyName}
+                </h1>
                 <div className={styles.genre_wrapper}>
                   {story &&
                     story.genre.map((genre, i) => {
@@ -154,7 +169,10 @@ export default function StoryOverview({ params: { id } }) {
                     <div className={styles.read_now}>Read Now</div>
                   </Link>
                 </div>
-                <p id="description" className={styles.description}>
+                <p
+                  id="description"
+                  className={`${styles.description} ${open_sans.className}`}
+                >
                   {story.storyDescription}
                 </p>
                 {showMore ? (

@@ -1,6 +1,10 @@
 "use client";
 import styles from "./page.module.css";
 
+import { Nunito } from "next/font/google";
+import { Baskervville } from "next/font/google";
+import { Quicksand } from "next/font/google";
+
 import Comments from "@/components/comments/comments";
 import SpinnerLoad from "@/components/loading/spinnerLoad";
 
@@ -10,6 +14,16 @@ import { useRouter } from "next/navigation";
 import { Toaster } from "sonner";
 import { FaBook } from "react-icons/fa6";
 require("dotenv").config();
+
+const nunito = Nunito({
+  weight: ["300", "400", "600", "700"],
+  subsets: ["latin"],
+});
+const baskervville = Baskervville({ weight: ["400"], subsets: ["latin"] });
+const quicksand = Quicksand({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+});
 
 export default function chapterRead({ params: { id, chapterName } }) {
   const router = useRouter();
@@ -105,15 +119,17 @@ export default function chapterRead({ params: { id, chapterName } }) {
       ) : (
         <>
           <div className={styles.read_wrapper}>
-            <div className={styles.story_name}>{chapter.storyName}</div>
+            <p className={`${styles.story_name} ${nunito.className}`}>
+              {chapter.storyName}
+            </p>
             <div className={styles.chapter_info}>
-              <div>
+              <span>
                 Chapter Number {chapter.chapterNumber && chapter.chapterNumber}{" "}
                 :
-              </div>
-              <div>{chapter_name}</div>
+              </span>
+              <span className={quicksand.className}>{chapter_name}</span>
             </div>
-            <div className={styles.content}>
+            <div className={`${styles.content} ${baskervville.className}`}>
               {chapter.chapterContent &&
                 chapter.chapterContent.split("\n").map((para, i) => {
                   return (
@@ -121,7 +137,32 @@ export default function chapterRead({ params: { id, chapterName } }) {
                       {para}
                     </p>
                   );
-                })}
+                })}{" "}
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem
+              impedit sequi dolore repudiandae atque temporibus eligendi iusto
+              possimus? Unde animi beatae ea tempore eaque aliquid commodi
+              incidunt natus expedita odio iste a eligendi error veritatis
+              temporibus cumque perspiciatis libero ut, adipisci, ad itaque
+              alias consequuntur nam? Esse facilis consequuntur quas nemo
+              perferendis sapiente excepturi placeat ipsum eveniet tenetur
+              similique a eos odio quia, id numquam. Asperiores quos amet
+              tempore esse optio ab. Fugit veritatis voluptate voluptatibus?
+              Corporis porro deserunt possimus impedit, totam optio minus
+              exercitationem voluptatibus? Cum reprehenderit, consequuntur at
+              sapiente cupiditate perspiciatis odio inventore doloremque
+              temporibus, suscipit magnam optio ut, quos assumenda magni? Quo
+              aliquam dignissimos dolor autem incidunt aperiam veniam neque,
+              quos adipisci quibusdam, repudiandae nostrum suscipit at fugiat?
+              Eligendi eum consequatur, recusandae provident quod ducimus
+              maiores molestias obcaecati eveniet quas earum totam ab? Ullam
+              temporibus perspiciatis amet rem labore mollitia, accusantium
+              tenetur soluta laborum consectetur voluptas quisquam quod
+              distinctio sit? Commodi molestiae beatae autem eveniet fugit
+              porro, fuga dicta asperiores est repellendus sint nisi possimus
+              neque rem odit soluta vitae! Vero suscipit enim ipsa repellendus
+              magni. Aut repellat maiores cupiditate distinctio ducimus
+              excepturi consequuntur natus omnis reprehenderit quis. Asperiores,
+              pariatur. Error nulla quisquam tenetur eum? Illo, asperiores?
             </div>
           </div>
           <Comments chapterId={chapter._id} commentIds={chapter.commentId} />

@@ -2,12 +2,19 @@ import React, { forwardRef } from "react";
 
 import styles from "./comments.module.css";
 
+import { Roboto } from "next/font/google";
+
 import SpinnerLoad from "../loading/spinnerLoad";
 
 import { FaUserCircle } from "react-icons/fa";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { MdOutlineReply } from "react-icons/md";
 import { FaCaretDown } from "react-icons/fa";
+
+const roboto = Roboto({
+  weight: ["100", "300", "400", "500", "700"],
+  subsets: ["latin"],
+});
 
 // Function to calculate time difference and return formatted string
 const getTimeDifference = (dateAdded) => {
@@ -88,7 +95,9 @@ const CommentsDisplay = forwardRef(
                     <div>{comment.commentator}</div>
                     <div>{getTimeDifference(comment.dateAdded)}</div>
                   </div>
-                  <div className={styles.comment_content}>
+                  <div
+                    className={`${styles.comment_content} ${roboto.className}`}
+                  >
                     {comment.commentContent.split("\n").map((text, i) => {
                       return (
                         <p key={i}>
@@ -165,7 +174,9 @@ const CommentsDisplay = forwardRef(
                           <div>{reply.commentator}</div>
                           <div>{getTimeDifference(reply.dateAdded)}</div>
                         </div>
-                        <div className={styles.comment_content}>
+                        <div
+                          className={`${styles.comment_content} ${roboto.className}`}
+                        >
                           {reply.commentContent.split("\n").map((text, i) => (
                             <p key={i}>
                               {text}

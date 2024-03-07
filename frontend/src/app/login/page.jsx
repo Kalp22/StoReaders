@@ -1,11 +1,25 @@
 "use client";
 import styles from "./page.module.css";
 
+import { Raleway } from "next/font/google";
+import { Quicksand } from "next/font/google";
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Toaster, toast } from "sonner";
 require("dotenv").config();
+
+const raleway = Raleway({
+  display: "swap",
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
+const quicksand = Quicksand({
+  display: "swap",
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
 
 export default function Login() {
   const router = useRouter();
@@ -86,10 +100,10 @@ export default function Login() {
   return (
     <div className={styles.login_wrapper}>
       <div className={styles.login_cover}>
-        <h1>Log In</h1>
+        <h1 className={raleway.className}>Log In</h1>
         <form>
           <label>
-            <div>EMAIL ADDRESS</div>
+            <div className={quicksand.className}>EMAIL ADDRESS</div>
             <input
               type="email"
               name="email"
@@ -101,7 +115,7 @@ export default function Login() {
             />
           </label>
           <label>
-            <div>PASSWORD</div>
+            <div className={quicksand.className}>PASSWORD</div>
             <input
               type="password"
               name="password"
