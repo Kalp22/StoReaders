@@ -23,20 +23,30 @@ router.put("/sendotp", async (req, res) => {
   try {
     const { email } = req.body;
 
-    if (email === "deleted")
-      return res
-        .status(400)
-        .json({ status: false, msg: "Invalid credentials" });
-
-    if (!email)
+    if (!email) {
       res.status(400).json({ status: false, msg: "Email not provided" });
+      return;
+    }
+
+    if (email === "deleted") {
+      res.status(400).json({ status: false, msg: "Invalid credentials" });
+      return;
+    }
+
+    if (email.includes(" ") || !(email.includes("@") && email.includes("."))) {
+      res.status(400).json({ status: false, msg: "Invalid Email" });
+      return;
+    }
 
     const mail = email.toLowerCase();
 
     //Finding and storing collection with "username"
     const user = await User.findOne({ email: mail });
 
-    if (!user) res.status(400).json({ status: false, msg: "No User found" });
+    if (!user) {
+      res.status(400).json({ status: false, msg: "No User found" });
+      return;
+    }
 
     //Generating otp
     const otp = Math.floor(Math.random() * 1000000);
@@ -97,28 +107,38 @@ router.put("/checkotp", async (req, res) => {
   try {
     const { otp, email } = req.body;
 
-    if (!otp) res.status(400).json({ status: false, msg: "OTP not provided" });
+    if (!otp) {
+      res.status(400).json({ status: false, msg: "OTP not provided" });
+      return;
+    }
 
-    if (!email)
+    if (!email) {
       res.status(400).json({ status: false, msg: "Email not provided" });
+      return;
+    }
 
-    if(email === "deleted")
-      return res
-        .status(400)
-        .json({ status: false, msg: "Invalid credentials" });
+    if (email === "deleted") {
+      res.status(400).json({ status: false, msg: "Invalid credentials" });
+      return;
+    }
 
     const mail = email.toLowerCase();
 
     //Finding and storing collection with "username"
     const user = await User.findOne({ email: mail });
 
-    if (!user) res.status(400).json({ status: false, msg: "No User found" });
+    if (!user) {
+      res.status(400).json({ status: false, msg: "No User found" });
+      return;
+    }
 
     //Checking otp
-    if (otp == user.otp) {
+    if (otp === user.otp) {
       user.otp = null;
       await user.save();
-      res.status(200).json({ status: true, id: user._id, msg: "OTP verified" });
+      res
+        .status(200)
+        .json({ status: true, id: user._id, msg: "OTP verified successfully" });
     } else {
       res.status(400).json({ status: false, msg: "OTP not verified" });
     }
@@ -136,18 +156,23 @@ router.put("/resetpassword", async (req, res) => {
   try {
     const { password, id } = req.body;
 
-    if (id === "deleted" || password === "deleted")
-      return res
-        .status(400)
-        .json({ status: false, msg: "Invalid credentials" });
+    if (id === "deleted" || password === "deleted") {
+      res.status(400).json({ status: false, msg: "Invalid credentials" });
+      return;
+    }
 
-    if (!password)
+    if (!password) {
       res.status(400).json({ status: false, msg: "Password not provided" });
+      return;
+    }
 
     //Finding and storing collection with "username"
     const user = await User.findById(id);
 
-    if (!user) res.status(400).json({ status: false, msg: "No User found" });
+    if (!user) {
+      res.status(400).json({ status: false, msg: "No User found" });
+      return;
+    }
 
     //Hashing password
     const saltRounds = await bcrypt.genSalt(10);

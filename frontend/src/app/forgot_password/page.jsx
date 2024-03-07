@@ -29,6 +29,7 @@ export default function ForgotPasswordPage() {
   const [form1, setForm1] = useState({ email: "" });
   const [form2, setForm2] = useState({ otp: "" });
   const [theme, setTheme] = useState(true);
+  const [timer, setTimer] = useState(120);
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -64,6 +65,34 @@ export default function ForgotPasswordPage() {
     }
   }, [isConfirmed]);
 
+  useEffect(() => {
+    let interval;
+    if (isConfirmed) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer === 0) {
+            clearInterval(interval);
+            return 0;
+          }
+          return prevTimer - 1;
+        });
+      }, 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [isConfirmed]);
+
+  useEffect(() => {
+    if (timer === 0) {
+      // Timer is up, redirect to the home page or handle as needed
+      toast.error("Time's up! Please try again");
+      const interval = setInterval(() => {
+        clearInterval(interval);
+        router.push("/");
+      }, 2000);
+    }
+  }, [timer]);
+
   async function emailSubmit(e) {
     try {
       e.preventDefault();
@@ -73,20 +102,33 @@ export default function ForgotPasswordPage() {
         return;
       }
 
-      const res = await fetch(`${process.env.API_URL}user/sendotp`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: form1.email,
-        }),
-      });
+      if (!(form1.email.includes("@") && form1.email.includes("."))) {
+        toast.warning("Please enter a valid email address");
+        return;
+      }
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}user/sendotp`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: form1.email,
+          }),
+        }
+      );
 
       const data = await res.json();
 
       if (localStorage.getItem("user")) {
         localStorage.removeItem("user");
+      }
+
+      if (!data.status) {
+        toast.error(data.msg);
+        return;
       }
 
       if (data.status) {
@@ -106,7 +148,7 @@ export default function ForgotPasswordPage() {
       return;
     }
 
-    const res = await fetch(`${process.env.API_URL}user/checkotp`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}user/checkotp`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -124,6 +166,11 @@ export default function ForgotPasswordPage() {
     }
 
     setForm2({ otp: "" });
+
+    if (!data.status) {
+      toast.error(data.msg);
+      return;
+    }
 
     if (data.status) {
       toast.success("OTP verified successfully");
@@ -165,6 +212,7 @@ export default function ForgotPasswordPage() {
             <label>
               <div className={quicksand.className}>Enter OTP</div>
               <input
+                className={styles.otp_input}
                 type="number"
                 name="OTP"
                 required
@@ -173,6 +221,9 @@ export default function ForgotPasswordPage() {
               />
             </label>
             <input type="submit" value="Check" onClick={otpSubmit} />
+            {isConfirmed && (
+              <p className={styles.timer}>{`Enter OTP in ${timer} seconds`}</p>
+            )}
           </form>
         </div>
       </div>

@@ -15,15 +15,15 @@
   background-color: var(--card-background);
 }
 
-.get_mail{
+.get_mail {
   display: flex;
 }
 
-.hide{
+.hide {
   display: none;
 }
 
-.get_otp{
+.get_otp {
   display: flex;
 }
 
@@ -71,4 +71,19 @@
 
 .form input[type="submit"]:hover {
   background-color: var(--toggle-color-hover);
+}
+
+.otp_input::-webkit-inner-spin-button,
+.otp_input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--nothing-color);
 }
