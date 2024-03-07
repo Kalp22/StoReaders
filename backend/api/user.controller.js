@@ -30,8 +30,12 @@ router.post("/register", async (req, res) => {
         .json({ status: false, msg: "Invalid credentials" });
 
     const mail = email.toLowerCase();
+
     //Checking if username or email already exists
-    if (await User.findOne({ username, email: mail }))
+    if (
+      (await User.findOne({ email: mail })) ||
+      (await User.findOne({ username }))
+    )
       return res
         .status(400)
         .json({ status: false, msg: "Username or Email already exists" });
