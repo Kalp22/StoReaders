@@ -17,6 +17,9 @@
 }
 
 .stories_cover2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 4em;
 }
 
@@ -26,6 +29,12 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 1em;
   margin-bottom: 4em;
+}
+
+.reviews_cover{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .nothing {

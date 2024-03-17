@@ -110,7 +110,7 @@ export default function DashboardCenter({ readStories, reviews, user }) {
       </div>
       <div className={styles.component}>
         <div className={styles.titles}>Your Reviews</div>
-        <div>
+        <div className={`${reviewsLoading ? styles.reviews_cover : ""}`}>
           {reviewsLoading ? (
             <SpinnerLoad comments={true} />
           ) : (

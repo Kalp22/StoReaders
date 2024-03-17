@@ -10,19 +10,23 @@ export default function Chapters({ id, story_name }) {
 
   useEffect(() => {
     try {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}chapters/getAll`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          storyId: id,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setChapters(data.chapters);
-        });
+      async function fetchData() {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}chapters/getAll`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              storyId: id,
+            }),
+          }
+        );
+        const data = await res.json();
+        setChapters(data.chapters);
+      }
+      fetchData();
     } catch (err) {
       console.log(err);
     }
