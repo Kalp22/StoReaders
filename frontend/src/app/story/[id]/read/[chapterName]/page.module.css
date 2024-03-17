@@ -116,14 +116,8 @@
     top: 0.5em;
     right: 0.5em;
   }
-  .story_name {
-    font-size: 1.2rem;
-  }
-  .chapter_info {
-    font-size: 1rem;
-  }
   .content {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
   .book {
     width: 50px;
@@ -135,28 +129,10 @@
   .read_wrapper {
     padding: 0.5em 1em;
   }
-  .story_name {
-    font-size: 1rem;
-  }
-  .chapter_info {
-    font-size: 0.8rem;
-  }
-  .content {
-    font-size: 0.9rem;
-  }
 }
 
 @media (max-width: 400px) {
   .read_wrapper {
     padding: 0.5em 0.5em;
-  }
-  .story_name {
-    font-size: 0.8rem;
-  }
-  .chapter_info {
-    font-size: 0.7rem;
-  }
-  .content {
-    font-size: 0.7rem;
   }
 }

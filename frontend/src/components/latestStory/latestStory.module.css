@@ -52,6 +52,7 @@
     height: 75px;
   }
   .latest_chapter_cover {
+    min-width: 50%;
     padding: 15px 20px;
   }
   .chapter_name {

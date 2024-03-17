@@ -137,32 +137,7 @@ export default function chapterRead({ params: { id, chapterName } }) {
                       {para}
                     </p>
                   );
-                })}{" "}
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem
-              impedit sequi dolore repudiandae atque temporibus eligendi iusto
-              possimus? Unde animi beatae ea tempore eaque aliquid commodi
-              incidunt natus expedita odio iste a eligendi error veritatis
-              temporibus cumque perspiciatis libero ut, adipisci, ad itaque
-              alias consequuntur nam? Esse facilis consequuntur quas nemo
-              perferendis sapiente excepturi placeat ipsum eveniet tenetur
-              similique a eos odio quia, id numquam. Asperiores quos amet
-              tempore esse optio ab. Fugit veritatis voluptate voluptatibus?
-              Corporis porro deserunt possimus impedit, totam optio minus
-              exercitationem voluptatibus? Cum reprehenderit, consequuntur at
-              sapiente cupiditate perspiciatis odio inventore doloremque
-              temporibus, suscipit magnam optio ut, quos assumenda magni? Quo
-              aliquam dignissimos dolor autem incidunt aperiam veniam neque,
-              quos adipisci quibusdam, repudiandae nostrum suscipit at fugiat?
-              Eligendi eum consequatur, recusandae provident quod ducimus
-              maiores molestias obcaecati eveniet quas earum totam ab? Ullam
-              temporibus perspiciatis amet rem labore mollitia, accusantium
-              tenetur soluta laborum consectetur voluptas quisquam quod
-              distinctio sit? Commodi molestiae beatae autem eveniet fugit
-              porro, fuga dicta asperiores est repellendus sint nisi possimus
-              neque rem odit soluta vitae! Vero suscipit enim ipsa repellendus
-              magni. Aut repellat maiores cupiditate distinctio ducimus
-              excepturi consequuntur natus omnis reprehenderit quis. Asperiores,
-              pariatur. Error nulla quisquam tenetur eum? Illo, asperiores?
+                })}
             </div>
           </div>
           <Comments chapterId={chapter._id} commentIds={chapter.commentId} />

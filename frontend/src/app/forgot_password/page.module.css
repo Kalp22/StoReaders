@@ -87,3 +87,62 @@
   align-items: center;
   color: var(--nothing-color);
 }
+
+@media (max-width: 768px) {
+  .forgot_pass_cover {
+    width: 80%;
+    padding: 30px;
+  }
+
+  .name {
+    font-size: 1.8rem;
+    margin-bottom: 1.5em;
+  }
+
+  .form label div {
+    font-size: 0.7em;
+  }
+
+  .form input[type="submit"] {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .forgot_pass_cover {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .name {
+    font-size: 1.6rem;
+    margin-bottom: 1em;
+  }
+
+  .form label div {
+    font-size: 0.6em;
+  }
+
+  .form input[type="submit"] {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  .forgot_pass_cover {
+    width: 85%;
+  }
+
+  .name {
+    font-size: 1.4rem;
+    margin-bottom: 0.5em;
+  }
+
+  .form label div {
+    font-size: 0.5em;
+  }
+
+  .form input[type="submit"] {
+    font-size: 12px;
+  }
+}

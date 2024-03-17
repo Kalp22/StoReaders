@@ -235,7 +235,13 @@ const CommentsDisplay = forwardRef(
               )}
             </div>
           ))}
-        {!isLastPage ? <SpinnerLoad comments={true} /> : ""}
+        {!isLastPage ? (
+          <div className={styles.spin_cover}>
+            <SpinnerLoad comments={true} />
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     );
   }

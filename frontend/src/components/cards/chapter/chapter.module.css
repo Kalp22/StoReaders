@@ -54,6 +54,8 @@
     font-weight: 600;
   }
   .read_button {
+    background: var(--read-button);
+    color: #2b2229;
     padding: 0.3rem 0.5rem;
     font-size: 1rem;
   }
@@ -78,7 +80,7 @@
 
 @media (max-width: 550px) {
   .list {
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    padding: 0.5rem;
     font-size: 0.8rem;
   }
   .chapter_label {
@@ -86,9 +88,5 @@
   }
   .chapter_label div:nth-child(1) {
     font-weight: 400;
-  }
-  .read_button {
-    padding: 0.2rem 0.3rem;
-    font-size: 0.8rem;
   }
 }

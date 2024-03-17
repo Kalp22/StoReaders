@@ -83,9 +83,8 @@
   scrollbar-width: thin;
   scrollbar-color: var(--line-color) var(--chapter-list-background);
   scroll-behavior: smooth;
-  height: 80%;
+  height: 70dvh;
   padding: 1em;
-  scroll-behavior: smooth;
 }
 
 .comment {
@@ -182,6 +181,8 @@
   gap: 1em;
   align-items: center;
   padding: 0 2em;
+  background-color: var(--card-background);
+  z-index: 10;
 }
 
 .reply_dialog {
@@ -279,7 +280,6 @@
 
 @media (max-width: 800px) {
   .comments_button {
-    top: 92dvh;
     right: 1em;
     padding: 12px;
   }
@@ -320,7 +320,6 @@
 
 @media (max-width: 600px) {
   .comments_button {
-    top: 93dvh;
     padding: 10px;
   }
   .btn {
@@ -358,15 +357,15 @@
     padding: 0 1em;
     width: 95%;
   }
+  .comments {
+    height: 65dvh;
+  }
   .reply_dialog {
     width: 380px;
   }
 }
 
 @media (max-width: 500px) {
-  .comments_button {
-    right: 0.3em;
-  }
   .comments_button2 {
     top: 1em;
     right: 0.5em;
@@ -395,6 +394,9 @@
     top: 10px;
     height: 99dvh;
     padding: 1em 0.5em;
+  }
+  .comments {
+    height: 80dvh;
   }
   .add_comment {
     bottom: 1em;

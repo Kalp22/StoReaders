@@ -59,3 +59,64 @@
 .cover form input[type="submit"]:hover {
   background-color: var(--toggle-color-hover);
 }
+
+@media (max-width: 768px) {
+  .cover {
+    padding: 30px;
+  }
+
+  .cover h1 {
+    font-size: 1.8rem;
+  }
+
+  .cover form label div {
+    font-size: 0.7em;
+  }
+
+  .cover form input[type="submit"] {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .cover {
+    width: 80%;
+  }
+}
+
+@media (max-width: 500px) {
+  .cover {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .cover h1 {
+    font-size: 1.6rem;
+  }
+
+  .cover form label div {
+    font-size: 0.6em;
+  }
+
+  .cover form input[type="submit"] {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  .cover {
+    width: 85%;
+  }
+
+  .cover h1 {
+    font-size: 1.4rem;
+  }
+
+  .cover form label div {
+    font-size: 0.5em;
+  }
+
+  .cover form input[type="submit"] {
+    font-size: 12px;
+  }
+}

@@ -148,7 +148,22 @@
     }
   }
   .head_wrapper {
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
     margin-bottom: 1.5rem;
+  }
+  .name_wrapper {
+    margin-left: 0.5em;
+    margin-bottom: 0.5rem;
+  }
+  .genres_wrapper {
+    justify-content: flex-start;
+    width: 100%;
+    padding-left: 1em;
+  }
+  .genres_wrapper > * {
+    flex: none;
   }
   .genres_wrapper,
   .story_description {
