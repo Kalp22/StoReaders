@@ -11,7 +11,7 @@ const User = require("../models/user.model");
 const Review = require("../models/reviews.model");
 
 /*
- *@route GET /api/reviews/get
+ *@route POST /api/reviews/get
  */
 
 router.post("/getAll", async (req, res) => {
@@ -25,7 +25,7 @@ router.post("/getAll", async (req, res) => {
 });
 
 /*
- *@route GET /api/reviews/getUserReviews
+ *@route POST /api/reviews/getUserReviews
  */
 
 router.post("/getUserReviews", auth, async (req, res) => {

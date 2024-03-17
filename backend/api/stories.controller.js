@@ -93,7 +93,7 @@ router.get("/getAll", async (req, res) => {
 });
 
 /*
- *@route GET /api/stories/get
+ *@route POST /api/stories/get
  */
 
 router.post("/get", async (req, res) => {
@@ -156,7 +156,7 @@ router.get("/getLatest", async (req, res) => {
 });
 
 /*
- *@route GET /api/stories/getReadStories
+ *@route POST /api/stories/getReadStories
  */
 
 router.post("/getReadStories", auth, async (req, res) => {
