@@ -19,7 +19,7 @@ stoReaders is a web application that provides users with a seamless and interact
 - User-friendly interface for easy navigation and reading experience.
 - Extensive collection of stories across different genres.
 - Ability to rate and review stories.
-- Bookmarking feature to save favorite stories for later.
+- Ablility to comment and replying to comment on each chapter.
 - Account management functionalities, including login, registration, and password recovery.
 
 ## Tech Stack
