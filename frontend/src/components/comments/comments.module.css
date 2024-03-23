@@ -156,6 +156,7 @@
   color: var(--comment-button-color);
   gap: 0.5em;
   align-items: center;
+  user-select: none;
   cursor: pointer;
 }
 
@@ -391,10 +392,10 @@
     right: 1em;
   }
   .reply_dialog {
-    width: 320px;
+    width: 300px;
   }
   .reply_send_button {
-    margin-left: 280px;
+    margin-left: 270px;
   }
   .comments_container {
     top: 10px;
@@ -407,5 +408,18 @@
   .add_comment {
     bottom: 1em;
     width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .reply_dialog {
+    width: 250px;
+    height: 150px;
+  }
+  .reply_form textarea {
+    height: 80px;
+  }
+  .reply_send_button {
+    margin-left: 220px;
   }
 }

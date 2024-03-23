@@ -47,6 +47,14 @@
 }
 
 @media (max-width: 800px) {
+  .landing_wrapper {
+    background: linear-gradient(
+        0deg,
+        var(--gradient-color),
+        var(--background-color3)
+      ),
+      url(/wallpaper.jpg) no-repeat center center;
+  }
   .title {
     font-size: 3.5rem;
     margin-bottom: 1.5rem;
