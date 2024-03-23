@@ -58,7 +58,9 @@
   margin-top: 10px;
 }
 
-.login_cover form input[type="submit"]:hover {
+.login_cover form input[type="submit"]:hover,
+.login_cover form input[type="submit"]:focus,
+.login_cover form input[type="submit"]:active {
   background-color: var(--toggle-color-hover);
 }
 
@@ -74,7 +76,9 @@
   text-decoration: none;
 }
 
-.login_cover a:hover {
+.login_cover a:hover,
+.login_cover a:focus,
+.login_cover a:active {
   text-decoration: underline;
 }
 

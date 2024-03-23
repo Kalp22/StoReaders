@@ -25,7 +25,11 @@
 }
 
 .comments_button:hover,
-.comments_button2:hover {
+.comments_button:focus,
+.comments_button:active,
+.comments_button2:hover,
+.comments_button2:focus,
+.comments_button2:active {
   transform: scale(1.1);
 }
 
@@ -265,7 +269,9 @@
   cursor: pointer;
 }
 
-.more_option:hover {
+.more_option:hover,
+.more_option:focus,
+.more_option:active {
   background-color: var(--option-hover);
 }
 

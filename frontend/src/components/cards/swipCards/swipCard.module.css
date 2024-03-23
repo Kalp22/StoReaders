@@ -19,7 +19,9 @@
   transition: all 0.3s ease-in-out;
 }
 
-.main_story_wrapper:hover {
+.main_story_wrapper:hover,
+.main_story_wrapper:focus,
+.main_story_wrapper:active {
   .main_story_image {
     box-shadow: 20px 0 5px 10px var(--image-hover);
     animation: image-hover 0.3s ease-out both;
@@ -206,7 +208,9 @@
     width: 200px;
     height: 250px;
   }
-  .main_story_wrapper:hover {
+  .main_story_wrapper:hover,
+  .main_story_wrapper:focus,
+  .main_story_wrapper:active {
     .main_story_image {
       transform: rotate(4deg) scale(1.1) translateX(-7px);
     }

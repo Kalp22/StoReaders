@@ -12,19 +12,19 @@ Welcome to stoReaders, a platform for reading and sharing captivating stories.
 
 ## Description
 
-stoReaders is a web application that provides users with a seamless and interactive experience for reading and sharing stories. It offers a wide range of stories across various genres, allowing users to explore and enjoy captivating narratives.
+stoReaders is a web application that provides users with a seamless and interactive experience for reading and sharing stories. It offers a wide range of fictional stories across various genres, allowing users to explore and enjoy captivating narratives.
 
 ## Features
 
 - User-friendly interface for easy navigation and reading experience.
 - Extensive collection of stories across different genres.
 - Ability to rate and review stories.
-- Ablility to comment and replying to comment on each chapter.
+- Ablility to comment on each chapter.
 - Account management functionalities, including login, registration, and password recovery.
 
 ## Tech Stack
 
-- **Frontend**: Built with Next.js for server-side rendering and React for dynamic user interfaces.
+- **Frontend**: Built with Next.js for server-side rendering and for dynamic user interfaces.
 - **Backend**: Powered by Node.js and Express for server-side logic and API development.
 - **Database**: MongoDB for efficient data storage and retrieval.
 - **Styling**: Utilizes CSS modules for component-specific styling.

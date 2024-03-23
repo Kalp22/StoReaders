@@ -24,7 +24,9 @@
   transition: all 0.15s ease-in;
 }
 
-.latest_chapter:hover {
+.latest_chapter:hover,
+.latest_chapter:focus,
+.latest_chapter:active {
   background: var(--toggle-color);
   transform: translateX(-5px);
   box-shadow: 10px 5px 10px 0px #000000aa;
@@ -83,8 +85,14 @@
 }
 
 .settings_list li:hover,
+.settings_list li:focus,
+.settings_list li:active,
 .settings:hover,
-.keep_reading:hover {
+.settings:focus,
+.settings:active,
+.keep_reading:hover,
+.keep_reading:focus,
+.keep_reading:active {
   background: var(--card-background-hover);
 }
 
@@ -188,7 +196,9 @@
   transition: all 0.15s ease-in;
 }
 
-.ask_dialog_buttons button:nth-child(1):hover {
+.ask_dialog_buttons button:nth-child(1):hover,
+.ask_dialog_buttons button:nth-child(1):focus,
+.ask_dialog_buttons button:nth-child(1):active {
   background: red;
 }
 

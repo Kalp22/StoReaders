@@ -56,7 +56,9 @@
   margin-top: 10px;
 }
 
-.cover form input[type="submit"]:hover {
+.cover form input[type="submit"]:hover,
+.cover form input[type="submit"]:focus,
+.cover form input[type="submit"]:active {
   background-color: var(--toggle-color-hover);
 }
 

@@ -117,7 +117,9 @@
   cursor: pointer;
 }
 
-.menu_dialog div div:hover {
+.menu_dialog div div:hover,
+.menu_dialog div div:focus,
+.menu_dialog div div:active {
   background: var(--card-background);
 }
 

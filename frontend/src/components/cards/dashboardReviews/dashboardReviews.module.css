@@ -9,7 +9,9 @@
   gap: 1rem;
 }
 
-.review_wrapper:hover {
+.review_wrapper:hover,
+.review_wrapper:focus,
+.review_wrapper:active {
   background: var(--card-background-hover);
 }
 

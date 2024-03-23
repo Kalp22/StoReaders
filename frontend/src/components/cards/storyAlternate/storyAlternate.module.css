@@ -7,7 +7,9 @@
   padding: 2em;
 }
 
-.story_wrapper:hover {
+.story_wrapper:hover,
+.story_wrapper:focus,
+.story_wrapper:active {
   background: var(--card-background-hover);
 }
 

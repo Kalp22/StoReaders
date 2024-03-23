@@ -62,7 +62,9 @@
   transition: color 0.3s ease;
 }
 
-.link:hover {
+.link:hover,
+.link:focus,
+.link:active {
   color: var(--text-color);
 }
 

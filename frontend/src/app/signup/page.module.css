@@ -58,7 +58,9 @@
   margin-top: 10px;
 }
 
-.signup_cover form input[type="submit"]:hover {
+.signup_cover form input[type="submit"]:hover,
+.signup_cover form input[type="submit"]:focus,
+.signup_cover form input[type="submit"]:active {
   background-color: var(--toggle-color-hover);
 }
 
@@ -74,7 +76,9 @@
   text-decoration: none;
 }
 
-.signup_cover a:hover {
+.signup_cover a:hover,
+.signup_cover a:focus,
+.signup_cover a:active {
   text-decoration: underline;
 }
 

@@ -37,7 +37,9 @@
   transition: all 0.1s ease;
 }
 
-.read_button:hover {
+.read_button:hover,
+.read_button:focus,
+.read_button:active {
   background: var(--read-button);
   color: #2b2229;
 }

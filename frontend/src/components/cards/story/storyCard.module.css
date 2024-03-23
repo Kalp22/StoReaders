@@ -66,7 +66,9 @@
   -webkit-box-orient: vertical;
 }
 
-.card_wrapper:hover {
+.card_wrapper:hover,
+.card_wrapper:focus,
+.card_wrapper:active {
   background: linear-gradient(
     180deg,
     var(--card-background) 10%,
@@ -100,7 +102,9 @@
     margin-bottom: 1.5em;
     width: 100%;
   }
-  .card_wrapper:hover {
+  .card_wrapper:hover,
+  .card_wrapper:focus,
+  .card_wrapper:active {
     margin-bottom: 2rem;
     box-shadow: 10px 30px 15px 0px rgba(0, 0, 0, 0.2);
     .story_name {
@@ -140,7 +144,9 @@
   .story_name_alt {
     font-size: 2.3rem;
   }
-  .card_wrapper:hover {
+  .card_wrapper:hover,
+  .card_wrapper:focus,
+  .card_wrapper:active {
     margin-bottom: 1.5rem;
     box-shadow: 10px 20px 15px 0px rgba(0, 0, 0, 0.2);
     .story_name {
@@ -181,7 +187,9 @@
   .card_wrapper {
     padding: 20px 10px 20px 10px;
   }
-  .card_wrapper:hover {
+  .card_wrapper:hover,
+  .card_wrapper:focus,
+  .card_wrapper:active {
     margin-bottom: 1.2rem;
     box-shadow: 10px 15px 15px 0px rgba(0, 0, 0, 0.2);
     .story_name {

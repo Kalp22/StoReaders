@@ -133,7 +133,9 @@
   cursor: pointer;
 }
 
-.delete:hover {
+.delete:hover,
+.delete:focus,
+.delete:active {
   background-color: var(--option-hover);
 }
 

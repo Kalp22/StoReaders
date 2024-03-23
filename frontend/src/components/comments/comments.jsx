@@ -39,6 +39,7 @@ export default function Comments({ chapterId, commentIds }) {
   const [loading, setLoading] = useState(true);
 
   const [page, setPage] = useState(1); // Initial page number for comments
+  const [isScrolled, setIsScrolled] = useState(true);
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("user")));
@@ -46,7 +47,7 @@ export default function Comments({ chapterId, commentIds }) {
 
   const fetchComments = async () => {
     try {
-      if (isLastPage) return;
+      if (isLastPage || !isScrolled) return;
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}comments/getAll`,
         {
@@ -56,7 +57,6 @@ export default function Comments({ chapterId, commentIds }) {
           },
           body: JSON.stringify({
             chapterId: chapterId,
-            commentIds: commentIds,
             pageNumber: page,
             moreSkip: moreSkip,
           }),
@@ -71,7 +71,9 @@ export default function Comments({ chapterId, commentIds }) {
       }
 
       setComments((prevComments) => [...prevComments, ...data.comments]);
+
       setIsLastPage(data.isLastPage);
+      setIsScrolled(false);
 
       setLoading(false);
     } catch (e) {
@@ -95,13 +97,16 @@ export default function Comments({ chapterId, commentIds }) {
   const handleScroll = () => {
     const commentsDisplay = commentsDisplayRef.current;
 
-    commentsDisplay &&
-    commentsDisplay.scrollHeight - commentsDisplay.scrollTop <=
-      commentsDisplay.clientHeight + 10 &&
-    !isLastPage
-      ? // User is near the bottom, fetch more comments
-        setPage((prevPage) => prevPage + 1)
-      : null;
+    if (
+      commentsDisplay &&
+      commentsDisplay.scrollHeight - commentsDisplay.scrollTop <=
+        commentsDisplay.clientHeight + 10 &&
+      !isLastPage
+    ) {
+      // User is near the bottom, fetch more comments
+      setPage((prevPage) => prevPage + 1);
+      setIsScrolled(true);
+    }
   };
 
   useEffect(() => {
