@@ -15,6 +15,13 @@
   margin-left: 1rem;
 }
 
+.no_chapters {
+  align-self: center;
+  justify-self: center;
+  font-size: 1.4rem;
+  font-weight: 300;
+}
+
 .chapters_list {
   display: flex;
   flex-direction: column;
@@ -46,6 +53,9 @@
     margin-bottom: 0.5rem;
     margin-left: 0.5rem;
   }
+  .no_chapters {
+    font-size: 1.2rem;
+  }
   .chapters_list {
     padding-right: 0;
     max-height: 500px;
@@ -59,6 +69,9 @@
   }
   .chapters_text {
     font-size: 1.2rem;
+  }
+  .no_chapters {
+    font-size: 1rem;
   }
 }
 

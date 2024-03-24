@@ -151,8 +151,8 @@ export default function StoryOverview({ params: { id } }) {
                 src={imageURLS && imageURLS[0]}
                 height={350}
                 width={250}
-                loading="lazy"
                 className={styles.story_image}
+                title="This image is generated using AI"
               />
               <div className={styles.info_wrapper}>
                 <h1 className={nunito.className}>

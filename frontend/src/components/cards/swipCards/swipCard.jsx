@@ -49,6 +49,7 @@ export default function SwipCard({ story, image }) {
             height={500}
             loading="lazy"
             className={styles.main_story_image}
+            title={story.storyName}
           />
         </Link>
       </div>

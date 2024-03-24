@@ -2,11 +2,19 @@ import { useState, useEffect } from "react";
 
 import styles from "./chapters.module.css";
 
+import { Raleway } from "next/font/google";
+
 import Chapter from "../cards/chapter/chapter";
 require("dotenv").config();
 
+const raleway = Raleway({
+  weight: ["variable"],
+  subsets: ["latin"],
+});
+
 export default function Chapters({ id, story_name }) {
   const [chapters, setChapters] = useState([]);
+  const [isChapter, setIsChapter] = useState(true);
 
   useEffect(() => {
     try {
@@ -24,7 +32,11 @@ export default function Chapters({ id, story_name }) {
           }
         );
         const data = await res.json();
-        setChapters(data.chapters);
+        if (data.chapters.length === 0) {
+          setIsChapter(false);
+        } else {
+          setChapters(data.chapters);
+        }
       }
       fetchData();
     } catch (err) {
@@ -37,14 +49,20 @@ export default function Chapters({ id, story_name }) {
       <div>
         <div className={styles.chapters_text}>Chapters</div>
       </div>
-      <ul className={styles.chapters_list}>
-        {chapters &&
-          chapters.map((chapter, i) => {
-            return (
-              <Chapter chapter={chapter} story_name={story_name} key={i} />
-            );
-          })}
-      </ul>
+      {isChapter ? (
+        <ul className={styles.chapters_list}>
+          {chapters &&
+            chapters.map((chapter, i) => {
+              return (
+                <Chapter chapter={chapter} story_name={story_name} key={i} />
+              );
+            })}
+        </ul>
+      ) : (
+        <div className={`${styles.no_chapters} ${raleway.className}`}>
+          Coming Soon
+        </div>
+      )}
     </div>
   );
 }
