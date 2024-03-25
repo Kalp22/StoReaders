@@ -107,13 +107,16 @@ router.post("/add", async (req, res) => {
       await story.save();
       await newChapter.save();
 
-      res
-        .status(201)
-        .json(
-          isStory
-            ? { message: "Chapter added successfully" }
-            : { message: "Story not found" }
-        );
+      res.status(201).json(
+        isStory
+          ? {
+              status: true,
+              message: "Chapter added successfully",
+              id: newChapter._id,
+              storyId: storyId,
+            }
+          : { message: "Story not found" }
+      );
     }
   } catch (e) {
     console.log(e);

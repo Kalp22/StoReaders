@@ -207,7 +207,13 @@ router.post("/add", async (req, res) => {
 
     await newStory.save();
 
-    res.status(201).json({ status: true, message: "Story added successfully" });
+    res
+      .status(201)
+      .json({
+        status: true,
+        id: newStory._id,
+        message: "Story added successfully",
+      });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: e.message });
