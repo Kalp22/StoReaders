@@ -83,7 +83,7 @@ const CommentsDisplay = forwardRef(
   ) => {
     return (
       <div ref={ref} className={styles.comments} id="commentsDisplay">
-        {comments ? (
+        {comments && comments.length != 0 ? (
           comments.map((comment, i) => (
             <div key={comment._id} className={styles.comment_container}>
               <div className={styles.comment_wrapper}>
