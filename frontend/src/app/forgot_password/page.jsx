@@ -29,7 +29,7 @@ export default function ForgotPasswordPage() {
   const [form1, setForm1] = useState({ email: "" });
   const [form2, setForm2] = useState({ otp: "" });
   const [theme, setTheme] = useState(true);
-  const [timer, setTimer] = useState(120);
+  const [timer, setTimer] = useState(60);
 
   useEffect(() => {
     const handleStorageChange = () => {
