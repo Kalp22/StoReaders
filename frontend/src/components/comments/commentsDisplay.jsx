@@ -83,7 +83,7 @@ const CommentsDisplay = forwardRef(
   ) => {
     return (
       <div ref={ref} className={styles.comments} id="commentsDisplay">
-        {comments &&
+        {comments ? (
           comments.map((comment, i) => (
             <div key={comment._id} className={styles.comment_container}>
               <div className={styles.comment_wrapper}>
@@ -234,7 +234,10 @@ const CommentsDisplay = forwardRef(
                 </div>
               )}
             </div>
-          ))}
+          ))
+        ) : (
+          <div className={styles.no_comments}>No comments yet</div>
+        )}
         {!isLastPage ? (
           <div className={styles.spin_cover}>
             <SpinnerLoad comments={true} />

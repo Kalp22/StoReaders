@@ -10,8 +10,9 @@ const quicksand = Quicksand({
 });
 
 export default function Chapter({ chapter, story_name }) {
-  const storyName = story_name.replace(/\s/g, "-");
-  const chapterName = chapter.chapterName.replace(/\s/g, "-");
+  const storyName = encodeURIComponent(story_name);
+  const chapterName = encodeURIComponent(chapter.chapterName);
+
   return (
     <li className={styles.list}>
       <div className={styles.chapter_label}>

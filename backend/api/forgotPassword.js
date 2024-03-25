@@ -28,7 +28,7 @@ router.put("/sendotp", async (req, res) => {
       return;
     }
 
-    if (email === "deleted") {
+    if (email === "[deleted]") {
       res.status(400).json({ status: false, msg: "Invalid credentials" });
       return;
     }
@@ -58,7 +58,7 @@ router.put("/sendotp", async (req, res) => {
     const expiry = new setTimeout(function () {
       user.otp = null;
       user.save();
-    }, 120000);
+    }, 60000);
 
     // OTP expires in 2 minutes
     expiry;
@@ -117,7 +117,7 @@ router.put("/checkotp", async (req, res) => {
       return;
     }
 
-    if (email === "deleted") {
+    if (email === "[deleted]") {
       res.status(400).json({ status: false, msg: "Invalid credentials" });
       return;
     }
@@ -156,7 +156,7 @@ router.put("/resetpassword", async (req, res) => {
   try {
     const { password, id } = req.body;
 
-    if (id === "deleted" || password === "deleted") {
+    if (password === "[deleted]") {
       res.status(400).json({ status: false, msg: "Invalid credentials" });
       return;
     }

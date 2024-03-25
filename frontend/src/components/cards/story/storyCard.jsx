@@ -17,7 +17,7 @@ const open_sans = Open_Sans({
 });
 
 export default function StoryCard({ descript, story }) {
-  const storyRoute = story.storyName.replace(/\s/g, "-");
+  const storyRoute = encodeURIComponent(story.storyName);
 
   return (
     <Link href={`/story/${storyRoute}`} className={styles.card_wrapper}>

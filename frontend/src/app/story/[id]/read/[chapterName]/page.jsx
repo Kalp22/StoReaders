@@ -28,8 +28,8 @@ const quicksand = Quicksand({
 export default function chapterRead({ params: { id, chapterName } }) {
   const router = useRouter();
 
-  const storyName = id.replace(/-/g, " ");
-  const chapter_name = chapterName.replace(/-/g, " ");
+  const storyName = decodeURIComponent(id);
+  const chapter_name = decodeURIComponent(chapterName);
 
   const [user, setUser] = useState({});
   const [chapter, setChapter] = useState({

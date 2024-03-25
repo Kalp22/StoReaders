@@ -16,6 +16,7 @@ const nunito = Nunito({
 export default function LatestStory() {
   const router = useRouter();
   const [latestStoryName, setLatestStoryName] = useState("");
+
   useEffect(() => {
     try {
       const fetchData = async () => {
@@ -49,7 +50,7 @@ export default function LatestStory() {
         <div
           className={styles.latest_chapter_cover}
           onClick={() =>
-            router.push(`/story/${latestStoryName.replace(/\s/g, "-")}`)
+            router.push(`/story/${encodeURIComponent(latestStoryName)}`)
           }
         >
           <div className={styles.latest_text}>Latest Story :</div>

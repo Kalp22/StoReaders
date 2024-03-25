@@ -226,7 +226,7 @@ export default function Reviews({ storyId, story_name, reviewId }) {
         </form>
       </div>
       <div className={styles.reviews_cover}>
-        {reviews &&
+        {reviews && reviews.length != 0 ? (
           reviews.map((rev, i) => {
             return (
               <div key={i} id={`Card${i}`} className={styles.review_card}>
@@ -272,7 +272,10 @@ export default function Reviews({ storyId, story_name, reviewId }) {
                 </div>
               </div>
             );
-          })}
+          })
+        ) : (
+          <div className={styles.no_reviews}>No reviews yet</div>
+        )}
         <dialog
           id="dialog"
           style={{

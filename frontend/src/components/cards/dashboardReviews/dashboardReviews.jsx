@@ -61,7 +61,7 @@ const getTimeDifference = (dateAdded) => {
 };
 
 export default function DashboardReviews({ storyName, reviewDate, review }) {
-  const storyId = storyName && storyName.replace(/\s/g, "-");
+  const storyId = storyName && encodeURIComponent(storyName);
 
   return (
     <Link href={`/story/${storyId}#reviews`} className={styles.review_wrapper}>

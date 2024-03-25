@@ -10,7 +10,8 @@ const nunito = Nunito({
 });
 
 export default function StoryAlternate({ story, readChapters }) {
-  const storyId = story.storyName && story.storyName.replace(/\s/g, "-");
+  const storyId = story.storyName && encodeURIComponent(story.storyName);
+
   return (
     <Link href={`/story/${storyId}`} className={styles.story_wrapper}>
       <div className={styles.name_wrap}>

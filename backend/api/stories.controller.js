@@ -37,7 +37,7 @@ async function getImageFromGoogleDrive() {
 
   // Retrieve the metadata as a JSON object
   const response = await drive.files.list({
-    q: "mimeType='image/jpeg'",
+    q: "mimeType='image/jpeg' or mimeType='image/png' or mimeType='image/jpg'",
     fields: "files(id, name, webViewLink)",
   });
 

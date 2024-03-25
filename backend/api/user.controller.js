@@ -24,7 +24,7 @@ router.post("/register", async (req, res) => {
         .status(400)
         .json({ status: false, msg: "All fields not provided" });
 
-    if (username === "deleted" || email === "deleted" || password === "deleted")
+    if (username === "[deleted]" || email === "[deleted]" || password === "[deleted]")
       return res
         .status(400)
         .json({ status: false, msg: "Invalid credentials" });
@@ -88,7 +88,7 @@ router.post("/login", async (req, res) => {
     //Finding and storing collection with "username"
     const user = await User.findOne({ email: mail });
 
-    if (!user || user.username === "deleted")
+    if (!user || user.username === "[deleted]")
       return res.status(400).json({ status: false, msg: "No User found" });
 
     //Comparing password
@@ -126,7 +126,7 @@ router.post("/get", auth, async (req, res) => {
   try {
     const { username } = req.body;
     const user = await User.findOne({ username: username });
-    if (!user || user.username === "deleted") {
+    if (!user || user.username === "[deleted]") {
       return res.status(404).json({ status: false, message: "User not found" });
     }
     user.password = undefined;
@@ -161,9 +161,9 @@ router.delete("/delete", auth, async (req, res) => {
     //Finding and deleting collection with "_id"
     if (
       await User.findByIdAndUpdate(_id, {
-        username: "deleted",
-        email: "deleted",
-        password: "deleted",
+        username: "[deleted]",
+        email: "[deleted]",
+        password: "[deleted]",
         readStories: [],
         readChapters: [],
         comments: [],

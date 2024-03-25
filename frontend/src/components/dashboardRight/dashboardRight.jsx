@@ -94,7 +94,7 @@ export default function DashboardRight() {
     <>
       <div className={styles.options_wrapper}>
         <Link
-          href={`/story/${latestStoryName.replace(/\s/g, "-")}`}
+          href={`/story/${encodeURIComponent(latestStoryName)}`}
           className={styles.latest_chapter}
         >
           {loading ? (

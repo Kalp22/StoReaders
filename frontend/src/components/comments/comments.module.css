@@ -91,6 +91,15 @@
   padding: 1em;
 }
 
+.no_comments {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 1.5rem;
+  color: var(--comment-button-color);
+}
+
 .comment {
   display: flex;
   flex-direction: column;
@@ -310,7 +319,8 @@
   .comments_container {
     padding: 1em 1.5em;
   }
-  .comments_title {
+  .comments_title,
+  .no_comments {
     font-size: 1.3rem;
   }
   .replies {
@@ -341,7 +351,8 @@
     top: 6.5em;
     right: 1em;
   }
-  .comments_title {
+  .comments_title,
+  .no_comments {
     font-size: 1.1rem;
   }
   .comment_icon {
@@ -377,7 +388,8 @@
     top: 1em;
     right: 0.5em;
   }
-  .comments_title {
+  .comments_title,
+  .no_comments {
     font-size: 1rem;
   }
   .comment_icon {

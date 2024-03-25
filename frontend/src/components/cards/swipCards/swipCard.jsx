@@ -21,7 +21,7 @@ export default function SwipCard({ story, image }) {
   return (
     <div className={styles.main_story_wrapper}>
       <Link
-        href={`/story/${story.storyName}`}
+        href={`/story/${encodeURIComponent(story.storyName)}`}
         className={styles.main_story_left}
       >
         <div className={styles.name_wrapper}>
@@ -41,7 +41,7 @@ export default function SwipCard({ story, image }) {
         </div>
       </Link>
       <div className={styles.main_story_right}>
-        <Link href={`/story/${story.storyName}`}>
+        <Link href={`/story/${encodeURIComponent(story.storyName)}`}>
           <Image
             src={image}
             alt="story image"

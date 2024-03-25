@@ -53,7 +53,7 @@ export default function StoryOverview({ params: { id } }) {
   }, []);
 
   const router = useRouter();
-  const storyName = id.replace(/-/g, "");
+  const storyName = decodeURIComponent(id);
   const [story, setStory] = useState({
     _id: "",
     storyBasic: { storyName: "" },
