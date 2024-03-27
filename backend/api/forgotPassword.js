@@ -58,7 +58,7 @@ router.put("/sendotp", async (req, res) => {
     const expiry = new setTimeout(function () {
       user.otp = null;
       user.save();
-    }, 60000);
+    }, 300000);
 
     // OTP expires in 2 minutes
     expiry;

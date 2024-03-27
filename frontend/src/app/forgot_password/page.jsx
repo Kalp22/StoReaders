@@ -29,7 +29,8 @@ export default function ForgotPasswordPage() {
   const [form1, setForm1] = useState({ email: "" });
   const [form2, setForm2] = useState({ otp: "" });
   const [theme, setTheme] = useState(true);
-  const [timer, setTimer] = useState(60);
+  const [timerSec, setTimerSec] = useState(59);
+  const [timerMin, setTimerMin] = useState(4);
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -66,24 +67,34 @@ export default function ForgotPasswordPage() {
   }, [isConfirmed]);
 
   useEffect(() => {
-    let interval;
+    let intervalSec, intervalMin;
     if (isConfirmed) {
-      interval = setInterval(() => {
-        setTimer((prevTimer) => {
-          if (prevTimer === 0) {
-            clearInterval(interval);
+      intervalSec = setInterval(() => {
+        setTimerSec((prev) => {
+          if (prev === 0) {
+            setTimerMin((prev) => {
+              if (prev === 0) {
+                clearInterval(intervalSec);
+                clearInterval(intervalMin);
+                return 0;
+              }
+              return prev - 1;
+            });
             return 0;
           }
-          return prevTimer - 1;
+          return prev - 1;
         });
       }, 1000);
     }
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(intervalSec);
+      clearInterval(intervalMin);
+    };
   }, [isConfirmed]);
 
   useEffect(() => {
-    if (timer === 0) {
+    if (timerMin === 0) {
       // Timer is up, redirect to the home page or handle as needed
       toast.error("Time's up! Please try again");
       const interval = setInterval(() => {
@@ -91,7 +102,7 @@ export default function ForgotPasswordPage() {
         router.push("/");
       }, 2000);
     }
-  }, [timer]);
+  }, [timerSec, timerMin]);
 
   async function emailSubmit(e) {
     try {
@@ -154,7 +165,7 @@ export default function ForgotPasswordPage() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        otp: form2.otp,
+        otp: Number(form2.otp),
         email: form1.email,
       }),
     });
@@ -222,7 +233,9 @@ export default function ForgotPasswordPage() {
             </label>
             <input type="submit" value="Check" onClick={otpSubmit} />
             {isConfirmed && (
-              <p className={styles.timer}>{`Enter OTP in ${timer} seconds`}</p>
+              <p
+                className={styles.timer}
+              >{`Enter OTP in ${timerMin}:${timerSec}`}</p>
             )}
           </form>
         </div>
