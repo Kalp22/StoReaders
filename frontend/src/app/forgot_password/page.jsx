@@ -29,8 +29,7 @@ export default function ForgotPasswordPage() {
   const [form1, setForm1] = useState({ email: "" });
   const [form2, setForm2] = useState({ otp: "" });
   const [theme, setTheme] = useState(true);
-  const [timerSec, setTimerSec] = useState(59);
-  const [timerMin, setTimerMin] = useState(4);
+  const [timer, setTimer] = useState({ min: 4, sec: 59 });
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -67,42 +66,33 @@ export default function ForgotPasswordPage() {
   }, [isConfirmed]);
 
   useEffect(() => {
-    let intervalSec, intervalMin;
+    let interval;
     if (isConfirmed) {
-      intervalSec = setInterval(() => {
-        setTimerSec((prev) => {
-          if (prev === 0) {
-            setTimerMin((prev) => {
-              if (prev === 0) {
-                clearInterval(intervalSec);
-                clearInterval(intervalMin);
-                return 0;
-              }
-              return prev - 1;
-            });
-            return 0;
-          }
-          return prev - 1;
+      interval = setInterval(() => {
+        setTimer((prev) => {
+          if (prev.sec === 0) {
+            if (prev.min === 0) {
+              clearInterval(interval);
+              timeUp();
+              return { min: 0, sec: 0 };
+            }
+            return { min: prev.min - 1, sec: 59 };
+          } else return { min: prev.min, sec: prev.sec - 1 };
         });
       }, 1000);
     }
 
-    return () => {
-      clearInterval(intervalSec);
-      clearInterval(intervalMin);
-    };
+    return () => clearInterval(interval);
   }, [isConfirmed]);
 
-  useEffect(() => {
-    if (timerMin === 0) {
-      // Timer is up, redirect to the home page or handle as needed
-      toast.error("Time's up! Please try again");
-      const interval = setInterval(() => {
-        clearInterval(interval);
-        router.push("/");
-      }, 2000);
-    }
-  }, [timerSec, timerMin]);
+  const timeUp = () => {
+    // Timer is up, redirect to the home page or handle as needed
+    toast.error("Time's up! Please try again");
+    const interval = setInterval(() => {
+      clearInterval(interval);
+      router.push("/");
+    }, 2000);
+  };
 
   async function emailSubmit(e) {
     try {
@@ -235,7 +225,7 @@ export default function ForgotPasswordPage() {
             {isConfirmed && (
               <p
                 className={styles.timer}
-              >{`Enter OTP in ${timerMin}:${timerSec}`}</p>
+              >{`Enter OTP in ${timer.min}:${timer.sec}`}</p>
             )}
           </form>
         </div>

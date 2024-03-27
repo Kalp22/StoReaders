@@ -47,7 +47,7 @@ router.post("/getOne", async (req, res) => {
     if (!hasReadStory) {
       // Increment views and add story to user's readStories
       await Stories.findByIdAndUpdate(chapter.storyId, {
-        $inc: { "storyBasic.views": 1 },
+        $inc: { views: 1 },
       });
 
       user.readStories.push({
@@ -82,42 +82,36 @@ router.post("/add", async (req, res) => {
   try {
     const { storyId, storyName, chapterNumber, chapterName, chapterContent } =
       req.body;
-
     const releaseDate = new Date().toJSON();
 
-    const story = await Stories.findById(storyId);
+    // Increment noOfChapters directly in the database
+    const updatedStory = await Stories.findOneAndUpdate(
+      { _id: storyId },
+      { $inc: { "storyBasic.totalNumberOfChapters": 1 } },
+      { new: true } // To return the updated document
+    );
 
-    var isStory;
-
-    if (!story) {
-      isStory = false;
-    } else {
-      isStory = true;
-      story.storyBasic.noOfChapters = story.storyBasic.noOfChapters + 1;
-
-      const newChapter = new Chapters({
-        storyId,
-        storyName,
-        chapterNumber,
-        chapterName,
-        releaseDate,
-        chapterContent,
-      });
-
-      await story.save();
-      await newChapter.save();
-
-      res.status(201).json(
-        isStory
-          ? {
-              status: true,
-              message: "Chapter added successfully",
-              id: newChapter._id,
-              storyId: storyId,
-            }
-          : { message: "Story not found" }
-      );
+    if (!updatedStory) {
+      return res.status(404).json({ message: "Story not found" });
     }
+
+    const newChapter = new Chapters({
+      storyId,
+      storyName,
+      chapterNumber,
+      chapterName,
+      releaseDate,
+      chapterContent,
+    });
+
+    await newChapter.save();
+
+    res.status(201).json({
+      status: true,
+      message: "Chapter added successfully",
+      id: newChapter._id,
+      storyId: storyId,
+    });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: e.message });
