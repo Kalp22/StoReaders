@@ -7,6 +7,10 @@ const auth = require("../middleware/authServer.middleware");
 
 //Story model
 const StoryDetail = require("../models/storyDetail.model");
+//User model
+const User = require("../models/user.model");
+
+const nodemailer = require("nodemailer");
 
 const { google } = require("googleapis");
 
@@ -181,6 +185,54 @@ router.post("/getReadStories", auth, async (req, res) => {
  *@route POST /api/stories/add
  */
 
+const notifyUsers = async (storyName, storyDescription) => {
+  const users = await User.find().exec();
+
+  const emails = users.map((user) => {
+    return user.email;
+  });
+  const storyRoute = encodeURIComponent(storyName);
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_SENDER,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  const emailHTML = `
+    <div style="background-color: #f5f5f5; padding: 20px;">
+      <div style="background-color: white; padding: 20px; border-radius: 10px;">
+        <h1 style="font-family: 'Arial'; color: #333;">Get Ready for an Adventure! 📚</h1>
+        <p style="font-family: 'Arial'; color: #333;">Exciting news! We've just added a brand new story to our collection, and we think you're going to love it!</p>
+        <p style="font-family: 'Arial'; color: #333;">Titled "<strong>${storyName}</strong>",</p>
+        <p style="font-family: 'Arial'; color: #333;">${storyDescription.slice(
+          0,
+          150
+        )}...</p>
+        <p style="font-family: 'Arial'; color: #333;">Ready to start reading? Click <a href="https://storeaders.vercel.app/story/${storyRoute}">here</a> to dive into the adventure right away!</p>
+        <p style="font-family: 'Arial'; color: #333;">Don't miss out on this exciting new addition. Happy reading!</p>
+      </div>
+    </div>
+  `;
+
+  const mailOptions = {
+    from: process.env.EMAIL_SENDER,
+    to: emails,
+    subject: "Get Ready for an Adventure! 📚",
+    html: emailHTML,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Story notified: " + info.response);
+    }
+  });
+};
+
 router.post("/add", async (req, res) => {
   try {
     const { storyName, storyDescription, genre, imageId } = req.body;
@@ -205,15 +257,15 @@ router.post("/add", async (req, res) => {
       noOfRatings,
     });
 
+    await notifyUsers(storyName, storyDescription);
+
     await newStory.save();
 
-    res
-      .status(201)
-      .json({
-        status: true,
-        id: newStory._id,
-        message: "Story added successfully",
-      });
+    res.status(201).json({
+      status: true,
+      id: newStory._id,
+      message: "Story added successfully",
+    });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: e.message });
