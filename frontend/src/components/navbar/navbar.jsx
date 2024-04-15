@@ -4,7 +4,7 @@ import styles from "./navbar.module.css";
 import { Quicksand } from "next/font/google";
 import { Merriweather } from "next/font/google";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import Link from "next/link";
 
@@ -27,6 +27,7 @@ export default function Navbar({ landing }) {
   const [user, setUser] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolling, setScrolling] = useState(false);
+  const navbarRef = useRef(null);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -47,15 +48,27 @@ export default function Navbar({ landing }) {
           setScrolling(true);
         };
 
+    const handleClickOutside = (event) => {
+      if (
+        navbarRef.current &&
+        !navbarRef.current.contains(event.target) &&
+        menuOpen
+      ) {
+        setMenuOpen(false);
+      }
+    };
+
     window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", handleScroll);
+    document.addEventListener("mousedown", handleClickOutside);
 
     // Cleanup the event listeners on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []); // No need to include window.innerWidth in the dependency array
+  }, [landing, menuOpen]); // Re-run the effect when the menuOpen state changes
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -67,6 +80,7 @@ export default function Navbar({ landing }) {
       className={`${styles.navbar_wrapper} ${
         scrolling ? styles.scrolling : ""
       }`}
+      ref={navbarRef}
     >
       <div className={styles.navbar_cover}>
         <div className={`${styles.navbar_left_cover} ${quicksand.className}`}>

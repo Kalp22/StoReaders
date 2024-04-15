@@ -117,25 +117,17 @@
   .basic_info_cover {
     align-items: flex-start;
   }
-  .icon_wrapper {
-    height: 70px;
-    width: 70px;
-  }
-  .user_icon {
-    margin: 0 0 0.4em 0;
-    height: 50px;
-    width: 50px;
-  }
   .basic_info_cover {
     align-items: flex-start;
     gap: 0.8em;
   }
   .user_name {
     margin-top: 0;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
   }
   .user_email {
     margin-top: 0;
+    font-size: 1.2rem;
   }
   .user_stats {
     width: 150px;
@@ -147,8 +139,6 @@
     color: var(--foreground-color);
     border-left: 1px solid var(--line-color);
     border-radius: 0;
-    padding: 7px 10px;
-    font-size: 0.9rem;
   }
 }
 
@@ -158,18 +148,14 @@
     gap: 1em;
   }
   .user_name {
-    font-size: 1.1rem;
+    font-size: 1.4rem;
   }
   .user_email {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     margin-top: 0.3em;
   }
   .user_stats {
     margin: 1em 0 0 2em;
-  }
-  .no_of {
-    padding: 10px 5px;
-    font-size: 0.8rem;
   }
 }
 
@@ -179,29 +165,25 @@
     gap: 0.5em;
   }
   .icon_wrapper {
-    height: 50px;
-    width: 50px;
+    height: 70px;
+    width: 70px;
   }
   .user_icon {
-    margin: 0 0 0.2em 0;
-    height: 35px;
-    width: 35px;
+    margin: 0 0 0.4em 0;
+    height: 50px;
+    width: 50px;
   }
   .basic_info_cover {
     gap: 0.3em;
   }
   .user_name {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
   .user_email {
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
   .user_stats {
     margin: 1em 0 0 1.5em;
     width: 120px;
-  }
-  .no_of {
-    padding: 10px 5px;
-    font-size: 0.7rem;
   }
 }
