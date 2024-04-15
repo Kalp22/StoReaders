@@ -130,7 +130,7 @@
     font-size: 1.2rem;
   }
   .user_stats {
-    width: 150px;
+    width: 250px;
     margin: 0 0 0 8.3em;
     gap: 0.5em;
   }
@@ -184,6 +184,6 @@
   }
   .user_stats {
     margin: 1em 0 0 1.5em;
-    width: 120px;
+    width: 200px;
   }
 }
