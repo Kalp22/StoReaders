@@ -37,7 +37,13 @@
   --arrow-background: #dedede;
   --comment-button-color: #382e35;
   --nothing-color: #5e5e5e;
-  --main-background: linear-gradient( 180deg, #eae6e9 0%, #e1e0e0 10%, #dcdcdc 30%, #cccccc 100% );
+  --main-background: linear-gradient(
+    180deg,
+    #eae6e9 0%,
+    #e1e0e0 10%,
+    #dcdcdc 30%,
+    #cccccc 100%
+  );
   --image-hover: #00000020;
 }
 
@@ -80,7 +86,13 @@
   --arrow-background: #212121;
   --comment-button-color: #c6b9c2;
   --nothing-color: #a0a0a0;
-  --main-background: linear-gradient( 180deg, #191518 0%, #1e1d1d 10%, #201f1f 30%, #2b2b2b 100% );
+  --main-background: linear-gradient(
+    180deg,
+    #191518 0%,
+    #1e1d1d 10%,
+    #201f1f 30%,
+    #2b2b2b 100%
+  );
   --image-hover: #000000c0;
 }
 
