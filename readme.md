@@ -1,4 +1,4 @@
-# stoReaders
+# StoReaders
 
 Welcome to stoReaders, a platform for reading and sharing captivating stories.
 
