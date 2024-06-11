@@ -2,8 +2,12 @@
 import styles from "./page.module.css";
 
 import { Nunito } from "next/font/google";
-import { Baskervville } from "next/font/google";
 import { Quicksand } from "next/font/google";
+import { Baskervville } from "next/font/google";
+import { Noto_Serif_Georgian } from "next/font/google";
+import { Roboto } from "next/font/google";
+import { Lora } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 
 import Comments from "@/components/comments/comments";
 import SpinnerLoad from "@/components/loading/spinnerLoad";
@@ -20,9 +24,25 @@ const nunito = Nunito({
   weight: ["300", "400", "600", "700"],
   subsets: ["latin"],
 });
-const baskervville = Baskervville({ weight: ["400"], subsets: ["latin"] });
 const quicksand = Quicksand({
   weight: ["400", "500", "700"],
+  subsets: ["latin"],
+});
+const baskervville = Baskervville({ weight: ["400"], subsets: ["latin"] });
+const notoSerifGeorgian = Noto_Serif_Georgian({
+  weight: ["100", "200", "300", "400", "700"],
+  subsets: ["latin"],
+});
+const roboto = Roboto({
+  weight: ["100", "300", "400", "500", "700"],
+  subsets: ["latin"],
+});
+const lora = Lora({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
+const openSans = Open_Sans({
+  weight: ["300", "400", "600", "700", "800"],
   subsets: ["latin"],
 });
 
@@ -44,8 +64,12 @@ export default function ChapterRead({ params: { id, chapterName } }) {
   const [isActive, setIsActive] = useState(true);
   const idleTimer = useRef(null);
 
-  const getInitialFontSize = () => {
+  const getInitialFontSize = (initial) => {
     if (typeof window !== "undefined") {
+      if (localStorage.getItem("fontSize") && initial)
+        return parseFloat(localStorage.getItem("fontSize"));
+      // Check if window is defined to ensure it's executed on the client side
+
       const width = window.innerWidth;
       if (width < 600) return 1.0;
       if (width < 800) return 1.2;
@@ -54,9 +78,16 @@ export default function ChapterRead({ params: { id, chapterName } }) {
     return 1.4; // Default value if window is undefined
   };
 
-  const [fontSize, setFontSize] = useState(getInitialFontSize()); // [12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
+  const getInitialFontStyle = () => {
+    if (typeof window !== "undefined" && localStorage.getItem("fontStyle"))
+      return localStorage.getItem("fontStyle");
+    return "baskervville"; // Default value if no font style is saved
+  };
+
+  const [fontSize, setFontSize] = useState(getInitialFontSize(true));
   const [theme, setTheme] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [fontStyle, setFontStyle] = useState(getInitialFontStyle()); // Default font style
 
   useEffect(() => {
     // Check if window is defined to ensure it's executed on the client side
@@ -126,13 +157,28 @@ export default function ChapterRead({ params: { id, chapterName } }) {
   }, [chapter_name, storyName, user?.id]); // Only run when chapter_name, storyName, or user.id changes
 
   const handleFontSize = (size) => () => {
-    if (size === 1 && fontSize > 0.8) {
-      setFontSize(fontSize - 0.2);
-    } else if (size === 2) {
-      setFontSize(getInitialFontSize());
-    } else if (size === 3 && fontSize < 3) {
-      setFontSize(fontSize + 0.2);
-    }
+    setFontSize((prevFontSize) => {
+      let newFontSize = prevFontSize; // Initialize with previous font size
+
+      if (size === 1 && prevFontSize > 0.8) {
+        newFontSize = prevFontSize - 0.2;
+      } else if (size === 2) {
+        newFontSize = getInitialFontSize(false);
+      } else if (size === 3 && prevFontSize < 3) {
+        newFontSize = prevFontSize + 0.2;
+      }
+
+      localStorage.setItem("fontSize", newFontSize); // Save font size in local storage
+
+      return newFontSize; // Return the new font size
+    });
+  };
+
+  // Function to handle font style change
+  const handleFontStyle = (event) => {
+    const selectedFontStyle = event.target.value;
+    setFontStyle(selectedFontStyle);
+    localStorage.setItem("fontStyle", selectedFontStyle); // Save font style in local storage
   };
 
   const handleUserActivity = () => {
@@ -167,9 +213,7 @@ export default function ChapterRead({ params: { id, chapterName } }) {
 
   return (
     <>
-      <div
-        className={`${styles.quick_settings} ${!isActive ? styles.hidden : ""}`}
-      >
+      <div className={`${styles.quick_settings} ${!isActive && styles.hidden}`}>
         <DarkLight />
         <div className={styles.font_size}>
           <div className={styles.font_size_btn1} onClick={handleFontSize(1)}>
@@ -182,7 +226,20 @@ export default function ChapterRead({ params: { id, chapterName } }) {
             +
           </div>
         </div>
-        <div></div>
+        <div className={styles.font_style}>
+          <select
+            id="fontStyleSelect"
+            className={styles.font_style_dropdown}
+            value={fontStyle}
+            onChange={handleFontStyle}
+          >
+            <option value="baskervville">Baskerville</option>
+            <option value="notoSerifGeorgian">Georgia</option>
+            <option value="roboto">Roboto</option>
+            <option value="lora">Lora</option>
+            <option value="openSans">Open Sans</option>
+          </select>
+        </div>
       </div>
       <div className={styles.read_container}>
         {loading ? (
@@ -204,7 +261,19 @@ export default function ChapterRead({ params: { id, chapterName } }) {
                 <span className={quicksand.className}>{chapter_name}</span>
               </div>
               <div
-                className={`${styles.content} ${baskervville.className}`}
+                className={`${styles.content} ${
+                  fontStyle === "baskervville"
+                    ? baskervville.className
+                    : fontStyle === "notoSerifGeorgian"
+                    ? notoSerifGeorgian.className
+                    : fontStyle === "merriweather"
+                    ? merriweather.className
+                    : fontStyle === "lora"
+                    ? lora.className
+                    : fontStyle === "openSans"
+                    ? openSans.className
+                    : ""
+                }`}
                 style={{
                   fontSize: `${fontSize}rem`,
                 }}
