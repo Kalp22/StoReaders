@@ -52,7 +52,7 @@ const getTimeDifference = (dateAdded) => {
 
       if (monthsDifference < 12) {
         // Comment added within the last year
-        return `${monthsDifference}Month`;
+        return `${monthsDifference} Month`;
       } else {
         // Comment added more than a year ago, display the date itself
         const options = { year: "numeric", month: "long", day: "numeric" };

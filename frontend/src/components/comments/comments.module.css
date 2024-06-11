@@ -223,6 +223,10 @@
   border-radius: 10px;
   resize: none;
   outline: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-color) var(--chapter-list-background);
+  overflow: auto;
+  scroll-behavior: smooth;
 }
 
 .comment_form textarea {
