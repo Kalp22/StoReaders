@@ -1,6 +1,6 @@
 # StoReaders
 
-Welcome to stoReaders, a platform for reading and sharing captivating stories.
+Welcome to StoReaders, a platform for reading and sharing captivating stories.
 
 ## Table of Contents
 
@@ -12,7 +12,7 @@ Welcome to stoReaders, a platform for reading and sharing captivating stories.
 
 ## Description
 
-stoReaders is a web application that provides users with a seamless and interactive experience for reading and sharing stories. It offers a wide range of fictional stories across various genres, allowing users to explore and enjoy captivating narratives.
+StoReaders is a web application that provides users with a seamless and interactive experience for reading and sharing stories. It offers a wide range of fictional stories across various genres, allowing users to explore and enjoy captivating narratives.
 
 ## Features
 
@@ -33,18 +33,18 @@ stoReaders is a web application that provides users with a seamless and interact
 
 ## Setup Instructions
 
-To run the stoReaders application locally, follow these steps:
+To run the StoReaders application locally, follow these steps:
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Kalp22/stoReaders.git
+   git clone https://github.com/Kalp22/StoReaders.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd stoReaders
+   cd StoReaders
    ```
 
 3. Install dependencies:

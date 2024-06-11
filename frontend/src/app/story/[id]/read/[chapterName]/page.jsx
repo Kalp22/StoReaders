@@ -9,7 +9,7 @@ import Comments from "@/components/comments/comments";
 import SpinnerLoad from "@/components/loading/spinnerLoad";
 import DarkLight from "@/components/ui/darklight/page";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 import { Toaster } from "sonner";
@@ -40,6 +40,9 @@ export default function ChapterRead({ params: { id, chapterName } }) {
     chapterNumber: "",
     commentId: [],
   });
+
+  const [isActive, setIsActive] = useState(true);
+  const idleTimer = useRef(null);
 
   const getInitialFontSize = () => {
     if (typeof window !== "undefined") {
@@ -132,9 +135,41 @@ export default function ChapterRead({ params: { id, chapterName } }) {
     }
   };
 
+  const handleUserActivity = () => {
+    setIsActive(true);
+
+    // Clear the existing timer
+    clearTimeout(idleTimer.current);
+
+    // Set a new timer to set isActive to false after 2 seconds of inactivity
+    idleTimer.current = setTimeout(() => {
+      setIsActive(false);
+    }, 2000);
+  };
+
+  useEffect(() => {
+    // List of events that signify user activity
+    const events = ["mousemove", "scroll", "keydown", "click"];
+
+    // Attach event listeners to each event
+    events.forEach((event) => {
+      window.addEventListener(event, handleUserActivity);
+    });
+
+    // Clean up event listeners on component unmount
+    return () => {
+      events.forEach((event) => {
+        window.removeEventListener(event, handleUserActivity);
+      });
+      clearTimeout(idleTimer.current);
+    };
+  }, []);
+
   return (
     <>
-      <div className={styles.quick_settings}>
+      <div
+        className={`${styles.quick_settings} ${!isActive ? styles.hidden : ""}`}
+      >
         <DarkLight />
         <div className={styles.font_size}>
           <div className={styles.font_size_btn1} onClick={handleFontSize(1)}>
