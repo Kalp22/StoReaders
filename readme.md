@@ -12,7 +12,7 @@ Welcome to StoReaders, a platform for reading and sharing captivating stories.
 
 ## Description
 
-StoReaders is a web application that provides users with a seamless and interactive experience for reading and sharing stories. It offers a wide range of fictional stories across various genres, allowing users to explore and enjoy captivating narratives.
+StoReaders is a web application that provides users with a seamless and interactive experience for reading and discussing stories. It offers a range of fictional stories across various genres, allowing users to explore and enjoy captivating narratives.
 
 ## Features
 
