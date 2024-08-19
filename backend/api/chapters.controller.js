@@ -7,6 +7,8 @@ const Users = require("../models/user.model");
 //Story model
 const Stories = require("../models/storyDetail.model");
 
+const nodemailer = require("nodemailer");
+
 /*
  *@route POST /api/chapters/getAll
  */
@@ -78,6 +80,47 @@ router.post("/getOne", async (req, res) => {
  *@route POST /api/chapters/add
  */
 
+// Send email to all users when a new chapter is added
+const sendEmail = async (storyName, chapterName) => {
+  const users = await Users.find().exec();
+
+  const storyRoute = encodeURIComponent(storyName);
+
+  // create reusable transporter object using the default SMTP transport
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_SENDER,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  // send mail with defined transport object
+  const emailHTML = `
+    <h1 style="font-size: 24px; font-weight: bold; color: #333;">New Chapter Alert!</h1>
+    <p style="font-size: 16px; line-height: 1.5;">A new chapter <strong>${chapterName}</strong> has just been released for the story <strong>${storyName}</strong></p>
+    <p style="font-size: 16px; line-height: 1.5;"><em>Don't miss out!</em></p>
+    <p style="font-size: 16px; line-height: 1.5;">Click <a href="${process.env.BASE_URL}/story/${storyRoute}" style="color: #007bff; text-decoration: none;">here</a> to read the new chapter</p>
+    <p style="font-family: 'Arial'; color: #333;"><a href="${process.env.BASE_URL}">Storeaders</a></p>
+  `;
+
+  const mailOptions = {
+    from: process.env.EMAIL_SENDER,
+    bcc: users.map((user) => user.email),
+    subject: "New Chapter Alert! 📚",
+    html: emailHTML,
+  };
+
+  // Send the email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+};
+
 router.post("/add", async (req, res) => {
   try {
     const { storyId, storyName, chapterNumber, chapterName, chapterContent } =
@@ -105,6 +148,9 @@ router.post("/add", async (req, res) => {
     });
 
     await newChapter.save();
+
+    // Send email to all users
+    await sendEmail(storyName, chapterName);
 
     res.status(201).json({
       status: true,
