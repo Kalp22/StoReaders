@@ -5,30 +5,34 @@ import { createContext, useEffect, useState } from "react";
 export const ThemeContext = createContext();
 
 export default function ThemeContextProvider({ children }) {
-  // Check user's OS theme preference
-  const prefersDarkScheme = window.matchMedia(
-    "(prefers-color-scheme: dark)"
-  ).matches;
-  const defaultTheme = prefersDarkScheme ? false : true;
-
-  // This is the state that will be used to store the theme
-  const [theme, setTheme] = useState(defaultTheme);
+  // Set a default theme based on the OS preference or light mode if window is not available
+  const [theme, setTheme] = useState(true); // default to light mode
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
-    // After the component has mounted, get the theme from localStorage
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme !== null) {
-      setTheme(JSON.parse(storedTheme));
+    if (typeof window !== "undefined") {
+      // Check user's OS theme preference
+      const prefersDarkScheme = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      const defaultTheme = prefersDarkScheme ? false : true;
+
+      // Fetch theme from localStorage or use the OS preference
+      const storedTheme = localStorage.getItem("theme");
+      if (storedTheme !== null) {
+        setTheme(JSON.parse(storedTheme));
+      } else {
+        setTheme(defaultTheme);
+      }
     }
     setHasMounted(true);
   }, []);
 
   useEffect(() => {
-    // Update the theme class after the initial render
-    document.documentElement.className = theme ? "light" : "dark";
-    // Save the current theme in localStorage
     if (hasMounted) {
+      // Update the theme class after the initial render
+      document.documentElement.className = theme ? "light" : "dark";
+      // Save the current theme in localStorage
       localStorage.setItem("theme", JSON.stringify(theme));
     }
   }, [theme, hasMounted]);
