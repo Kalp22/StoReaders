@@ -1,34 +1,37 @@
 "use client";
 import { createContext, useEffect, useState } from "react";
-import useLocalStorage from "use-local-storage";
-import { usePathname } from "next/navigation";
 
 // This is the context that will be used to provide the theme and the toggle function to the children
 export const ThemeContext = createContext();
 
 export default function ThemeContextProvider({ children }) {
-  const currentPath = usePathname();
+  // Check user's OS theme preference
+  const prefersDarkScheme = window.matchMedia(
+    "(prefers-color-scheme: dark)"
+  ).matches;
+  const defaultTheme = prefersDarkScheme ? false : true;
 
   // This is the state that will be used to store the theme
-  const [theme, setTheme] = useLocalStorage("theme", true);
-  // const [loading, setLoading] = useState(true); // New loading state
+  const [theme, setTheme] = useState(defaultTheme);
+  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
-    // Update theme class after the initial render
+    // After the component has mounted, get the theme from localStorage
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme !== null) {
+      setTheme(JSON.parse(storedTheme));
+    }
+    setHasMounted(true);
+  }, []);
+
+  useEffect(() => {
+    // Update the theme class after the initial render
     document.documentElement.className = theme ? "light" : "dark";
-  }, [theme]);
-
-  // useEffect(() => {
-  //   // Simulate loading for a few seconds before setting loading to false
-  //   const timeout = setTimeout(() => {
-  //     setLoading(false);
-  //   }, 2000);
-
-  //   // Cleanup the timeout on component unmount
-  //   return () => {
-  //     clearTimeout(timeout);
-  //   };
-  // }, []);
+    // Save the current theme in localStorage
+    if (hasMounted) {
+      localStorage.setItem("theme", JSON.stringify(theme));
+    }
+  }, [theme, hasMounted]);
 
   // This is a function that will toggle the theme
   const toggleTheme = () => {
@@ -37,7 +40,7 @@ export default function ThemeContextProvider({ children }) {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <>{children}</>
+      {children}
     </ThemeContext.Provider>
   );
 }
