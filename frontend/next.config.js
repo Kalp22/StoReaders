@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["drive.google.com"],
+    remotePatterns: [
+      {
+        protocol: "https", // Explicitly specify HTTPS for Google Drive
+        hostname: "drive.google.com",
+      },
+    ],
   },
 };
 

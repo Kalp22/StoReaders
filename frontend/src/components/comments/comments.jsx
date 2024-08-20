@@ -14,25 +14,33 @@ import CommentForm from "./commentForm";
 import CommentsLoad from "../loading/commentsLoad";
 
 export default function Comments({ chapterId, commentIds }) {
-  const commentsDisplayRef = useRef(null);
-  const [user, setUser] = useState({});
+  const commentsDisplayRef = useRef(null); // Reference to the comments display div
+  const [user, setUser] = useState({}); // User state
 
-  const [commentsToggle, setCommentsToggle] = useState(false);
-  const [comments, setComments] = useState([]);
+  const [commentsToggle, setCommentsToggle] = useState(false); // Toggle state for comments display
+  const [comments, setComments] = useState([]); // Comments state
 
-  const [comment, setComment] = useState("");
-  const [reply, setReply] = useState("");
+  const [comment, setComment] = useState(""); // State for the comment content
+  const [reply, setReply] = useState(""); // State for the reply content
+
+  // States for the coordinates of the selected comment and more options
   const [coordinates, setCoordinates] = useState({ top: 0, left: 0 });
   const [moreCoordinates, setMoreCoordinates] = useState({ top: 0, left: 0 });
+
+  // States for the selected comment and reply IDs
   const [commentId, setCommentId] = useState("");
   const [deleteId, setDeleteId] = useState({
     isComment: true,
     id: "",
     commentId: "",
   });
+
+  // States for the commentator and content of the selected comment
   const [canDelete, setCanDelete] = useState(false);
   const [commentator, setCommentator] = useState("");
   const [content, setContent] = useState("");
+
+  // States for the comment replies and moreSkip value
   const [commentReplies, setCommentReplies] = useState({});
   const [moreSkip, setMoreSkip] = useState(0); // Skip value for fetching more comments when a comment is added or deleted
   const [isLastPage, setIsLastPage] = useState(false); // Check if the last page of comments has been reached
@@ -246,18 +254,20 @@ export default function Comments({ chapterId, commentIds }) {
       toast.success("Reply added");
       setReply("");
 
-      // Update commentReplies
+      // Update commentReplies with the new reply
+      // Structure: { commentId: [reply1, reply2, ...] }
       setCommentReplies((prevReplies) => ({
         ...prevReplies,
         [commentId]: [...(prevReplies[commentId] || []), data.updatedReply],
       }));
 
       // Update comments and set showReplies to true for all comments with replies
+      // Structure: { _id: commentId, replies: [reply1, reply2, ...], replyId: [replyId1,
       const updatedComments = comments.map((c) =>
         c._id === commentId
           ? {
               ...c,
-              replies: c.replies.length
+              replies: c.replies?.length
                 ? [...c.replies, data.updatedReply]
                 : [data.updatedReply],
               replyId: c.replyId.length
@@ -405,6 +415,7 @@ export default function Comments({ chapterId, commentIds }) {
 
   const toggleComments = () => setCommentsToggle(!commentsToggle);
 
+  console.log(comments);
   return (
     <>
       <div

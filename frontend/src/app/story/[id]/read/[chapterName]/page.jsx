@@ -139,7 +139,6 @@ export default function ChapterRead({ params: { id, chapterName } }) {
             }
           );
           const data = await res.json();
-          console.log(fontSize);
           if (data.chapter == null) {
             router.push(`/story/${id}`);
           }
