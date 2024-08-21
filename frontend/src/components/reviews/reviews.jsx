@@ -114,6 +114,7 @@ export default function Reviews({ storyId, story_name, reviewId }) {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(user).token}`,
         },
         body: JSON.stringify({
           userId: JSON.parse(user).id,
@@ -171,6 +172,7 @@ export default function Reviews({ storyId, story_name, reviewId }) {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${JSON.parse(user).token}`,
           },
           body: JSON.stringify({
             userId: JSON.parse(user).id,

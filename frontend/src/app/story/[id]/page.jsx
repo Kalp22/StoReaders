@@ -153,6 +153,7 @@ export default function StoryOverview({ params: { id } }) {
                 width={250}
                 className={styles.story_image}
                 title="This image is generated using AI"
+                priority={true}
               />
               <div className={styles.info_wrapper}>
                 <h1 className={nunito.className}>
