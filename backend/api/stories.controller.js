@@ -199,40 +199,44 @@ const notifyUsers = async (storyName, storyDescription) => {
     },
   });
 
-  const emailHTML = `
-    <div style="background-color: #f5f5f5; padding: 20px;">
-      <div style="background-color: white; padding: 20px; border-radius: 10px;">
-        <h1 style="font-family: 'Arial'; color: #333;">Get Ready for an Adventure! 📚</h1>
-        <p style="font-family: 'Arial'; color: #333;">Exciting news! just added a brand new story to our collection, and we think you're going to love it!</p>
-        <p style="font-family: 'Arial'; color: #333;">Titled "<strong>${storyName}</strong>",</p>
-        <p style="font-family: 'Arial'; color: #333;">${storyDescription.slice(
-          0,
-          150
-        )}...</p>
-        <p style="font-family: 'Arial'; color: #333;">Ready to start reading? Click <a href="${
-          process.env.BASE_URL
-        }/story/${storyRoute}">here</a> to dive into the adventure right away!</p>
-        <p style="font-family: 'Arial'; color: #333;">Don't miss out on this exciting new addition. Happy reading!</p>
-        <p style="font-family: 'Arial'; color: #333;"><a href="${
-          process.env.BASE_URL
-        }">Storeaders</a></p>
+  const emailHTML = (user) => `
+      <div style="background-color: #f5f5f5; padding: 20px;">
+          <div style="background-color: white; padding: 20px; border-radius: 10px;">
+              <h1 style="font-family: 'Arial'; color: #333;">Hi ${
+                user.username
+              },</h1>
+              <p style="font-family: 'Arial'; color: #333;">Exciting news! Just added a brand new story to our collection, and we think you're going to love it!</p>
+              <p style="font-family: 'Arial'; color: #333;">Titled "<strong>${storyName}</strong>",</p>
+              <p style="font-family: 'Arial'; color: #333;">${storyDescription.slice(
+                0,
+                150
+              )}...</p>
+              <p style="font-family: 'Arial'; color: #333;">Ready to start reading? Click <a href="${
+                process.env.BASE_URL
+              }/story/${storyRoute}">here</a> to dive into the adventure right away!</p>
+              <p style="font-family: 'Arial'; color: #333;">Don't miss out on this exciting new addition. Happy reading!</p>
+              <p style="font-family: 'Arial'; color: #333;"><a href="${
+                process.env.BASE_URL
+              }">Storeaders</a></p>
+          </div>
       </div>
-    </div>
   `;
 
-  const mailOptions = {
+  const mailOptions = (user) => ({
     from: process.env.EMAIL_SENDER,
-    bcc: users.map((user) => user.email),
-    subject: "Get Ready for a new Adventure! 📚",
-    html: emailHTML,
-  };
+    bcc: user.email, // Send to each user individually
+    subject: `${user.username}, Get Ready for a new Adventure! 📚`,
+    html: emailHTML(user),
+  });
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Story notified: " + info.response);
-    }
+  users.forEach((user) => {
+    transporter.sendMail(mailOptions(user), (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Story notified to " + user.email);
+      }
+    });
   });
 };
 

@@ -96,28 +96,31 @@ const sendEmail = async (storyName, chapterName) => {
   });
 
   // send mail with defined transport object
-  const emailHTML = `
+  const emailHTML = (user) => `
     <h1 style="font-size: 24px; font-weight: bold; color: #333;">New Chapter Alert!</h1>
+    <h1 style="font-size: 24px; font-weight: bold; color: #333;">Hi ${user.username},</h1>
     <p style="font-size: 16px; line-height: 1.5;">A new chapter <strong>${chapterName}</strong> has just been released for the story <strong>${storyName}</strong></p>
     <p style="font-size: 16px; line-height: 1.5;"><em>Don't miss out!</em></p>
     <p style="font-size: 16px; line-height: 1.5;">Click <a href="${process.env.BASE_URL}/story/${storyRoute}" style="color: #007bff; text-decoration: none;">here</a> to read the new chapter</p>
     <p style="font-family: 'Arial'; color: #333;"><a href="${process.env.BASE_URL}">Storeaders</a></p>
   `;
 
-  const mailOptions = {
+  const mailOptions = (user) => ({
     from: process.env.EMAIL_SENDER,
-    bcc: users.map((user) => user.email),
-    subject: "New Chapter Alert! 📚",
-    html: emailHTML,
-  };
+    bcc: user.email,
+    subject: `Hi ${user.username}, a New Chapter is here! 📚`,
+    html: emailHTML(user),
+  });
 
   // Send the email
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error(error);
-    } else {
-      console.log("Email sent: " + info.response);
-    }
+  users.forEach((user) => {
+    transporter.sendMail(mailOptions(user), (error, info) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
   });
 };
 
